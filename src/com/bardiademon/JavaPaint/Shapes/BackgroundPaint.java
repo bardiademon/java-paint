@@ -1,6 +1,7 @@
 package com.bardiademon.JavaPaint.Shapes;
 
 import com.bardiademon.JavaPaint.Mth;
+import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import com.sun.glass.ui.Size;
 import java.awt.BasicStroke;
@@ -37,6 +38,9 @@ public final class BackgroundPaint
                     break;
                 case four_point_star:
                     fourStar (g , getShape (size));
+                    break;
+                case five_point_star:
+                    fiveStar (g , getShape (size));
                     break;
                 default:
                     break;
@@ -105,6 +109,13 @@ public final class BackgroundPaint
     private void fourStar (final Graphics2D g , final Shape shape)
     {
         final FourPointStar fourPointStar = new FourPointStar ();
+        fourPointStar.shape (shape);
+        fourPointStar.paint (g);
+    }
+
+    private void fiveStar (final Graphics2D g , final Shape shape)
+    {
+        final FivePointStar fourPointStar = new FivePointStar ();
         fourPointStar.shape (shape);
         fourPointStar.paint (g);
     }

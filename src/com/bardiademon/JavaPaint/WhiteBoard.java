@@ -1,6 +1,7 @@
 package com.bardiademon.JavaPaint;
 
 import com.bardiademon.JavaPaint.Shapes.Shape;
+import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,21 +15,19 @@ import javax.swing.JPanel;
 public class WhiteBoard extends JPanel
 {
 
+    private FivePointStar fivePointStar;
+
     private final PaintView paintView;
 
-    public final List <Paint> paints = new ArrayList <> ();
-    public FourPointStar fourPointStar;
-
-    private Paint paint = graphics2D -> fourPointStar.paint (graphics2D);
+    private Paint paint = graphics2D -> fivePointStar.paint (graphics2D);
+    private final List <Paint> paints = new ArrayList <> ();
 
     public WhiteBoard (final PaintView _PaintView)
     {
 
         this.paintView = _PaintView;
-
-
-        fourPointStar = new FourPointStar ();
-        fourPointStar.setThickness (paintView.thickness.getValue ());
+        fivePointStar = new FivePointStar ();
+        fivePointStar.setThickness (paintView.thickness.getValue ());
         addPaint (paint);
         repaint ();
 
@@ -37,16 +36,16 @@ public class WhiteBoard extends JPanel
             @Override
             public void mousePressed (MouseEvent e)
             {
-                fourPointStar.setPoint (e.getPoint ());
+                fivePointStar.setPoint (e.getPoint ());
             }
 
             @Override
             public void mouseReleased (MouseEvent e)
             {
-                fourPointStar = new FourPointStar ();
-                fourPointStar.setThickness (paintView.thickness.getValue ());
-                FourPointStar fourPointStar1 = fourPointStar;
-                addPaint (fourPointStar1::paint);
+                fivePointStar = new FivePointStar ();
+                fivePointStar.setThickness (paintView.thickness.getValue ());
+                FivePointStar fivePointStar1 = fivePointStar;
+                addPaint (fivePointStar1::paint);
             }
         });
 
@@ -56,8 +55,8 @@ public class WhiteBoard extends JPanel
             @Override
             public void mouseDragged (MouseEvent e)
             {
-                if (fourPointStar.getPoint () != null)
-                    fourPointStar.setSize (Shape.size (Math.abs (e.getX () - fourPointStar.getPoint ().x) , Math.abs (e.getY () - fourPointStar.getPoint ().y)));
+                if (fivePointStar.getPoint () != null)
+                    fivePointStar.setSize (Shape.size (Math.abs (e.getX () - fivePointStar.getPoint ().x) , Math.abs (e.getY () - fivePointStar.getPoint ().y)));
 
                 repaint ();
             }
@@ -75,6 +74,12 @@ public class WhiteBoard extends JPanel
     {
         super.paint (g);
         Graphics2D g2 = (Graphics2D) g;
+
+//        FivePointStar fivePointStar = new FivePointStar ();
+//        fivePointStar.setSize (Shape.size (500 , 500));
+//        fivePointStar.setPoint (Shape.point (20 , 20));
+//        fivePointStar.paint (g2);
+
         for (Paint paint : paints) paint.paint (g2);
     }
 

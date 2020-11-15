@@ -3,6 +3,8 @@ package com.bardiademon.JavaPaint.Shapes.Stars;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Shape;
 
 public final class FourPointStar extends Stars
 {
@@ -17,6 +19,8 @@ public final class FourPointStar extends Stars
             Point allPoint = getAllPoint ();
 
             Point lineUpStart = point (halfPoint.x , point.y);
+
+
             Point lineUpLeftEnd = point (ctpFirstHalfX (80) , ctpFirstHalfY (80));
             Point lineUpRightEnd = point (ctpSecondHalfX (20) , lineUpLeftEnd.y);
             Point lineDownStart = point (lineUpStart.x , allPoint.y);
@@ -36,6 +40,5 @@ public final class FourPointStar extends Stars
             g.drawLine (lineUpLeftEnd.x , lineUpLeftEnd.y , point.x , halfPoint.y);
             g.drawLine (lineDownLeftEnd.x , lineDownLeftEnd.y , point.x , halfPoint.y);
         }
-
     }
 }
