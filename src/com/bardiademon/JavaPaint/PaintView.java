@@ -4,6 +4,7 @@ import com.bardiademon.JavaPaint.Shapes.BackgroundPaint;
 
 import com.bardiademon.JavaPaint.Shapes.ShapeName;
 
+import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -17,17 +18,12 @@ public class PaintView extends JFrame
 
     public static final BackgroundPaint BACKGROUND_PAINT = new BackgroundPaint ();
 
-
     public PaintView ()
     {
         initComponents ();
         setLocationRelativeTo (null);
         setVisible (true);
-
-
         thickness.addChangeListener (e -> whiteBoard.repaint ());
-
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -673,7 +669,6 @@ public class PaintView extends JFrame
 
         pack ();
     }// </editor-fold>
-
 
     // Variables declaration - do not modify
     private JButton btnColor;

@@ -1,6 +1,5 @@
 package com.bardiademon.JavaPaint.Shapes.Stars;
 
-import com.bardiademon.JavaPaint.Shapes.Shape;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
