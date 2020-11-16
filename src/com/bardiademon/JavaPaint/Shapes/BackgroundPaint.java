@@ -3,6 +3,7 @@ package com.bardiademon.JavaPaint.Shapes;
 import com.bardiademon.JavaPaint.Mth;
 import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.sun.glass.ui.Size;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,11 +13,11 @@ import java.awt.Point;
 public final class BackgroundPaint
 {
 
-    public void paint (final Graphics2D g , final ShapeName shapeName , final Point point , final Size size)
+    public void paint (final Graphics2D g , final SelectedTool selectedTool , final Point point , final Size size)
     {
-        if (shapeName != null)
+        if (selectedTool != null)
         {
-            switch (shapeName)
+            switch (selectedTool)
             {
                 case circle:
                     circle (g , getShape (size));

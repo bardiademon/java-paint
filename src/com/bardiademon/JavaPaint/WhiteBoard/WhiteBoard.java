@@ -1,63 +1,59 @@
 package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.PaintView;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.JPanel;
 
 public final class WhiteBoard extends JPanel
 {
 
-    private SelectedTool selectedTool = SelectedTool.four_point_star;
+    public static SelectedTool selectedTool = SelectedTool.pen;
 
     private final PaintView paintView;
 
-    private final Pen pen;
-    private final FourPointStarTool fourPointStarTool;
+    private final Map <String, Tools> tools = new LinkedHashMap <> ();
 
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
 
-        pen = new Pen (this);
-        fourPointStarTool = new FourPointStarTool ();
+        tools.put (SelectedTool.pen.name () , new Pen (this));
+        tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
+        tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
 
         addMouseListener (new MouseAdapter ()
         {
             @Override
             public void mousePressed (MouseEvent e)
             {
-                switch (selectedTool)
+                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                if (tools != null)
                 {
-                    case pen:
-                        pen.mousePressed (e.getPoint ());
-                        break;
-                    case four_point_star:
-                        fourPointStarTool.mousePressed (e.getPoint ());
-                        break;
+                    tools.mousePressed (e.getPoint ());
+                    repaint ();
                 }
-                repaint ();
             }
 
             @Override
             public void mouseReleased (MouseEvent e)
             {
-                switch (selectedTool)
+                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                if (tools != null)
                 {
-                    case pen:
-                        pen.mouseReleased (e.getPoint ());
-                        break;
-                    case four_point_star:
-                        fourPointStarTool.mouseReleased (e.getPoint ());
-                        break;
+                    tools.mouseReleased (e.getPoint ());
+                    repaint ();
                 }
-                repaint ();
             }
         });
 
@@ -66,16 +62,12 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseDragged (MouseEvent e)
             {
-                switch (selectedTool)
+                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                if (tools != null)
                 {
-                    case pen:
-                        pen.mouseDragged (e.getPoint ());
-                        break;
-                    case four_point_star:
-                        fourPointStarTool.mouseDragged (e.getPoint ());
-                        break;
+                    tools.mouseDragged (e.getPoint ());
+                    repaint ();
                 }
-                repaint ();
             }
 
             @Override
@@ -91,9 +83,7 @@ public final class WhiteBoard extends JPanel
     {
         super.paint (g);
         Graphics2D g2 = (Graphics2D) g;
-
-        pen.paint (g2);
-        fourPointStarTool.paint (g2);
+        tools.forEach ((s , tools) -> tools.paint (g2));
     }
 
 }

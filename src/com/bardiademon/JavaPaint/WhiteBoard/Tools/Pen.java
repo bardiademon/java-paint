@@ -14,19 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 
-public final class Pen implements Tools
+public final class Pen extends ShapeTool implements Tools
 {
 
     private List <Rectangle> rec = new ArrayList <> ();
 
     public Pen (final WhiteBoard whiteBoard)
     {
+        super (whiteBoard);
         Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
         try
         {
-            File icPen = Main.getFile ("ic_pen");
+            final File icPen = Main.getFile ("ic_pen");
             if (icPen != null)
-                whiteBoard.setCursor ((defaultToolkit.createCustomCursor ((ImageIO.read (icPen).getScaledInstance (20 , 20 , BufferedImage.TYPE_INT_ARGB)) , Shape.point (0 , 0) , "pen")));
+            {
+                BufferedImage read = ImageIO.read (icPen);
+                whiteBoard.setCursor ((defaultToolkit.createCustomCursor ((read.getScaledInstance (read.getWidth () , read.getHeight () , BufferedImage.TYPE_INT_ARGB)) , Shape.point (10 , 10) , "pen")));
+            }
         }
         catch (IOException ignored)
         {
