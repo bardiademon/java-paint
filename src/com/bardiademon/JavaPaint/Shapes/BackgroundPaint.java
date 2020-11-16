@@ -51,6 +51,9 @@ public final class BackgroundPaint
                 case pen:
                     pen (g , getShape (size));
                     break;
+                case line:
+                    line (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -113,6 +116,16 @@ public final class BackgroundPaint
 
     public void heart (final Graphics2D g , final Size size)
     {
+    }
+
+    private void line (final Graphics2D g , final Shape shape)
+    {
+        final Line line = new Line ();
+        line.setPoint1 (shape.getPoint ());
+        line.setPoint2 (Shape.point (shape.getSize ().width , shape.getSize ().height));
+        line.setColor (Color.BLACK);
+        line.setThickness (2);
+        g.drawLine (line.getPoint1 ().x , line.getPoint1 ().y , line.getPoint2 ().x , line.getPoint2 ().y);
     }
 
     private void fourStar (final Graphics2D g , final Shape shape)

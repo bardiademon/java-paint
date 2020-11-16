@@ -5,17 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class Shape
+public class Shape extends Pen
 {
-
-    private Color color;
     private Color backgroundColor;
 
     private boolean fill;
 
     private Point point;
-
-    private int thickness;
 
     private Size size;
 
@@ -33,16 +29,6 @@ public class Shape
     public static Size size (final int width , final int height)
     {
         return new Size (width , height);
-    }
-
-    public Color getColor ()
-    {
-        return color;
-    }
-
-    public void setColor (Color color)
-    {
-        this.color = color;
     }
 
     public boolean isFill ()
@@ -63,16 +49,6 @@ public class Shape
     public void setPoint (Point point)
     {
         this.point = point;
-    }
-
-    public int getThickness ()
-    {
-        return thickness;
-    }
-
-    public void setThickness (int thickness)
-    {
-        this.thickness = thickness;
     }
 
     public Size getSize ()
@@ -114,10 +90,10 @@ public class Shape
     public String toString ()
     {
         return "Shape{" +
-                "color=" + color +
+                "color=" + getColor () +
                 ", fill=" + fill +
                 ", point=" + point +
-                ", thickness=" + thickness +
+                ", thickness=" + getThickness () +
                 ", size=" + size +
                 '}';
     }

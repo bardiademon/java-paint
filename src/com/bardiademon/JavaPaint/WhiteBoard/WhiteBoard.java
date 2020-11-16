@@ -6,6 +6,7 @@ import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
@@ -44,6 +45,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
         tools.put (SelectedTool.circle.name () , new CircleTool (this));
         tools.put (SelectedTool.rect.name () , new RectTool (this));
+        tools.put (SelectedTool.line.name () , new LineTool (this));
 
         addMouseListener (new MouseAdapter ()
         {

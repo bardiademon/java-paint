@@ -22,7 +22,7 @@ public class ShapeTool implements Tools
     @Override
     public void select ()
     {
-
+        setCursor ();
     }
 
     @Override
