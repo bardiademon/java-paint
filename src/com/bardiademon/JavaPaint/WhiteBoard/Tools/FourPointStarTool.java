@@ -38,16 +38,19 @@ public final class FourPointStarTool extends ShapeTool implements Tools
         fourPointStar.setPoint (point);
         fourPointStar.setColor (whiteBoard.getPaintView ().getColor ());
         fourPointStars.add (fourPointStar);
+        index = fourPointStars.size () - 1;
     }
 
     @Override
     public void mouseReleased (Point point)
     {
+        index = fourPointStars.size () - 1;
     }
 
     @Override
-    public void paint (final Graphics2D g)
+    public void paint (final Graphics2D g , final int index)
     {
-        for (FourPointStar pointStar : fourPointStars) pointStar.paint (g);
+        if (index >= 0 && index < fourPointStars.size ())
+            fourPointStars.get (index).paint (g);
     }
 }

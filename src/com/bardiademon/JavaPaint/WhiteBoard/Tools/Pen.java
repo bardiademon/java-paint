@@ -15,7 +15,8 @@ public final class Pen implements Tools
 {
 
     private final WhiteBoard whiteBoard;
-    private final List <Rectangle> rec = new ArrayList <> ();
+    private final List <List <Rectangle>> rec = new ArrayList <> ();
+    private final List <Rectangle> rectangles = new ArrayList <> ();
 
     public Pen (final WhiteBoard _WhiteBoard)
     {
@@ -30,21 +31,22 @@ public final class Pen implements Tools
     }
 
     @Override
-    public void mouseDragged (Point point)
+    public void mouseDragged (final Point point)
     {
-        mousePressed (point);
+        rec.get (rec.size () - 1).add (pen (point));
     }
 
     @Override
-    public void mousePressed (Point point)
+    public void mousePressed (final Point point)
     {
-        rec.add (pen (point));
+        rectangles.add (pen (point));
+        rec.add (rectangles);
     }
 
     @Override
     public void mouseReleased (Point point)
     {
-
+        rec.add (rectangles);
     }
 
     private Rectangle pen (Point point)
@@ -58,17 +60,27 @@ public final class Pen implements Tools
     }
 
     @Override
-    public void paint (final Graphics2D g)
+    public void paint (final Graphics2D g , final int index)
     {
-        for (Rectangle rectangle : rec)
+        if (index >= 0 && index < rec.size ())
         {
-            g.setColor (rectangle.getColor ());
-            if (rectangle.getBackgroundColor () != null)
-                g.setBackground (rectangle.getBackgroundColor ());
+            final List <Rectangle> rectangle = this.rec.get (index);
+            for (Rectangle rec : rectangle)
+            {
+                g.setColor (rec.getColor ());
+                if (rec.getBackgroundColor () != null)
+                    g.setBackground (rec.getBackgroundColor ());
 
-            g.setStroke (new BasicStroke (rectangle.getThickness ()));
+                g.setStroke (new BasicStroke (rec.getThickness ()));
 
-            g.drawRect (rectangle.getPoint ().x , rectangle.getPoint ().y , rectangle.getSize ().width , rectangle.getSize ().height);
+                g.drawRect (rec.getPoint ().x , rec.getPoint ().y , rec.getSize ().width , rec.getSize ().height);
+            }
         }
+    }
+
+    @Override
+    public int getIndex ()
+    {
+        return rec.size () - 1;
     }
 }

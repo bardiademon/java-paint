@@ -19,7 +19,7 @@ public final class LineTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        lines.get (lines.size () - 1).setPoint2 (point);
+        lines.get (index).setPoint2 (point);
     }
 
     @Override
@@ -30,11 +30,19 @@ public final class LineTool extends ShapeTool implements Tools
         line.setColor (whiteBoard.getPaintView ().getColor ());
         line.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         lines.add (line);
+        index = lines.size () - 1;
     }
 
     @Override
-    public void paint (Graphics2D g)
+    public void mouseReleased (final Point point)
     {
-        for (Line line : lines) line.paint (g);
+        index = lines.size () - 1;
     }
+
+    @Override
+    public void paint (final Graphics2D g , final int index)
+    {
+        if (index >= 0 && index < lines.size ()) lines.get (index).paint (g);
+    }
+
 }

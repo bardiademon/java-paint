@@ -7,6 +7,8 @@ import java.awt.Point;
 
 public class ShapeTool implements Tools
 {
+    protected int index;
+
     protected final WhiteBoard whiteBoard;
 
     protected ShapeTool (final WhiteBoard _WhiteBoard)
@@ -44,8 +46,13 @@ public class ShapeTool implements Tools
     }
 
     @Override
-    public void paint (Graphics2D g)
+    public void paint (Graphics2D g , final int index)
     {
 
+    }
+
+    public int getIndex ()
+    {
+        return index;
     }
 }

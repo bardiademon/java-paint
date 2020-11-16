@@ -9,6 +9,22 @@ import java.awt.Point;
 public class Rectangle extends Shape
 {
     private Point allPoint, allPoint2, halfPoint, halfPoint2;
+    private Size arc;
+
+    public Rectangle ()
+    {
+        arc = new Size (0 , 0);
+    }
+
+    public Size getArc ()
+    {
+        return arc;
+    }
+
+    public void setArc (Size arc)
+    {
+        this.arc = arc;
+    }
 
     public void apply ()
     {
@@ -92,9 +108,9 @@ public class Rectangle extends Shape
             g.setStroke (new BasicStroke (getThickness ()));
 
             if (isFill ())
-                g.fillRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
+                g.fillRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
             else
-                g.drawRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
+                g.drawRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
         }
     }
 }

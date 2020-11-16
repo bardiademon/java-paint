@@ -8,9 +8,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class RectTool extends ShapeTool implements Tools
+public class RectTool extends ShapeTool implements Tools
 {
-    private final List <Rectangle> rectangles = new ArrayList <> ();
+    protected final List <Rectangle> rectangles = new ArrayList <> ();
 
     public RectTool (final WhiteBoard _WhiteBoard)
     {
@@ -26,7 +26,7 @@ public final class RectTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        rectangles.get (rectangles.size () - 1).setSizeWithPoint (point);
+        rectangles.get (index).setSizeWithPoint (point);
     }
 
     @Override
@@ -39,17 +39,20 @@ public final class RectTool extends ShapeTool implements Tools
         rectangle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
         rectangle.setBackgroundColor (Color.BLACK);
         rectangles.add (rectangle);
+        index = rectangles.size () - 1;
     }
 
     @Override
     public void mouseReleased (final Point point)
     {
-        super.mouseReleased (point);
+        index = rectangles.size () - 1;
     }
 
     @Override
-    public void paint (final Graphics2D g)
+    public void paint (final Graphics2D g , final int index)
     {
-        for (Rectangle rectangle : rectangles) rectangle.paint (g);
+        if (index >= 0 && index < rectangles.size ())
+            rectangles.get (index).paint (g);
     }
+
 }

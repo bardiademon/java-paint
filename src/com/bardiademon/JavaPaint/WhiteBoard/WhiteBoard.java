@@ -9,6 +9,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.RoundRectangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import java.awt.Graphics;
@@ -20,7 +21,9 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -34,6 +37,8 @@ public final class WhiteBoard extends JPanel
 
     private final Map <String, Tools> tools = new LinkedHashMap <> ();
 
+    private final List <ArrangePainting> arrangePaintings = new ArrayList <> ();
+
     private final Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
 
     public WhiteBoard (final PaintView _PaintView)
@@ -46,17 +51,24 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.circle.name () , new CircleTool (this));
         tools.put (SelectedTool.rect.name () , new RectTool (this));
         tools.put (SelectedTool.line.name () , new LineTool (this));
+        tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
+
+        paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
         addMouseListener (new MouseAdapter ()
         {
             @Override
             public void mousePressed (MouseEvent e)
             {
-                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                final Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+
                 if (tools != null)
                 {
                     tools.select ();
                     tools.mousePressed (e.getPoint ());
+                    final ArrangePainting arrangePainting = new ArrangePainting (selectedTool.name ());
+                    arrangePainting.setIndex (tools.getIndex ());
+                    arrangePaintings.add (arrangePainting);
                     repaint ();
                 }
             }
@@ -64,7 +76,7 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseReleased (MouseEvent e)
             {
-                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                final Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
                 if (tools != null)
                 {
                     tools.mouseReleased (e.getPoint ());
@@ -78,7 +90,7 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseDragged (MouseEvent e)
             {
-                Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
+                final Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
                 if (tools != null)
                 {
                     tools.mouseDragged (e.getPoint ());
@@ -98,8 +110,31 @@ public final class WhiteBoard extends JPanel
     public void paint (Graphics g)
     {
         super.paint (g);
-        Graphics2D g2 = (Graphics2D) g;
-        tools.forEach ((s , tools) -> tools.paint (g2));
+        final Graphics2D g2 = (Graphics2D) g;
+
+        arrangePaintings.forEach ((ap) ->
+                tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
+    }
+
+    private static final class ArrangePainting
+    {
+        private final String selectedTool;
+        private int index;
+
+        public ArrangePainting (final String _SelectedTool)
+        {
+            this.selectedTool = _SelectedTool;
+        }
+
+        public int getIndex ()
+        {
+            return index;
+        }
+
+        public void setIndex (int index)
+        {
+            this.index = index;
+        }
     }
 
     public void setCursor (final String name)

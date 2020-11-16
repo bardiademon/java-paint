@@ -26,7 +26,7 @@ public class CircleTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        circles.get (circles.size () - 1).setSizeWithPoint (point);
+        circles.get (index).setSizeWithPoint (point);
     }
 
     @Override
@@ -38,17 +38,19 @@ public class CircleTool extends ShapeTool implements Tools
         circle.setColor (whiteBoard.getPaintView ().getColor ());
         circle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
         circles.add (circle);
+        index = circles.size () - 1;
     }
 
     @Override
     public void mouseReleased (final Point point)
     {
-
+        index = circles.size () - 1;
     }
 
     @Override
-    public void paint (final Graphics2D g)
+    public void paint (final Graphics2D g , final int index)
     {
-        for (Circle circle : circles) circle.paint (g);
+        if (index >= 0 && index < circles.size ())
+            circles.get (index).paint (g);
     }
 }

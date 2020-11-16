@@ -28,7 +28,7 @@ public final class FivePointStarTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        fivePointStars.get (fivePointStars.size () - 1).setSizeWithPoint (point);
+        fivePointStars.get (index).setSizeWithPoint (point);
     }
 
     @Override
@@ -39,17 +39,25 @@ public final class FivePointStarTool extends ShapeTool implements Tools
         fivePointStar.setPoint (point);
         fivePointStar.setColor (whiteBoard.getPaintView ().getColor ());
         fivePointStars.add (fivePointStar);
+        index = fivePointStars.size () - 1;
     }
 
     @Override
     public void mouseReleased (final Point point)
     {
-
+        index = fivePointStars.size () - 1;
     }
 
     @Override
-    public void paint (final Graphics2D g)
+    public void paint (final Graphics2D g , final int index)
     {
-        for (FivePointStar fivePointStar : fivePointStars) fivePointStar.paint (g);
+        if (index >= 0 && index < fivePointStars.size ())
+            fivePointStars.get (index).paint (g);
+    }
+
+    @Override
+    public int getIndex ()
+    {
+        return index;
     }
 }

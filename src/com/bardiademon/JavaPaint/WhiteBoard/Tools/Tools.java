@@ -13,5 +13,7 @@ public interface Tools
 
     void mouseReleased (final Point point);
 
-    void paint (final Graphics2D g);
+    void paint (final Graphics2D g , int index);
+
+    int getIndex ();
 }
