@@ -10,10 +10,18 @@ import java.util.List;
 public final class FourPointStarTool extends ShapeTool implements Tools
 {
     private final List <FourPointStar> fourPointStars = new ArrayList <> ();
+    private final WhiteBoard whiteBoard;
 
     public FourPointStarTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
+        this.whiteBoard = _WhiteBoard;
+    }
+
+    @Override
+    public void select ()
+    {
+        setCursor ();
     }
 
     @Override
@@ -25,8 +33,10 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     @Override
     public void mousePressed (final Point point)
     {
-        FourPointStar fourPointStar = new FourPointStar ();
+        final FourPointStar fourPointStar = new FourPointStar ();
+        fourPointStar.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         fourPointStar.setPoint (point);
+        fourPointStar.setColor (whiteBoard.getPaintView ().getColor ());
         fourPointStars.add (fourPointStar);
     }
 

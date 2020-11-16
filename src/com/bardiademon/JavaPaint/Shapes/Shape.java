@@ -24,6 +24,12 @@ public class Shape
         return new Point (x , y);
     }
 
+    public void setSizeWithPoint (final Point point)
+    {
+        if (getPoint () != null)
+            setSize (Shape.size (Math.abs (point.x - getPoint ().x) , Math.abs (point.y - getPoint ().y)));
+    }
+
     public static Size size (final int width , final int height)
     {
         return new Size (width , height);

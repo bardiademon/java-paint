@@ -12,20 +12,21 @@ public final class FourPointStar extends Stars
         if (getPoint () != null && getSize () != null)
         {
             apply ();
-            Point point = getPoint ();
-            Point halfPoint = getHalfPoint ();
-            Point allPoint = getAllPoint ();
-
-            Point lineUpStart = point (halfPoint.x , point.y);
-
-            Point lineUpLeftEnd = point (ctpFirstHalfX (80) , ctpFirstHalfY (80));
-            Point lineUpRightEnd = point (ctpSecondHalfX (20) , lineUpLeftEnd.y);
-            Point lineDownStart = point (lineUpStart.x , allPoint.y);
-            Point lineDownLeftEnd = point (lineUpLeftEnd.x , ctpSecondHalfY (20));
-            Point lineDownRightEnd = point (lineUpRightEnd.x , lineDownLeftEnd.y);
 
             g.setColor (getColor ());
             g.setStroke (new BasicStroke (getThickness ()));
+
+            final Point point = getPoint ();
+            final Point halfPoint = getHalfPoint ();
+            final Point allPoint = getAllPoint ();
+
+            final Point lineUpStart = point (halfPoint.x , point.y);
+
+            final Point lineUpLeftEnd = point (ctpFirstHalfX (80) , ctpFirstHalfY (80));
+            final Point lineUpRightEnd = point (ctpSecondHalfX (20) , lineUpLeftEnd.y);
+            final Point lineDownStart = point (lineUpStart.x , allPoint.y);
+            final Point lineDownLeftEnd = point (lineUpLeftEnd.x , ctpSecondHalfY (20));
+            final Point lineDownRightEnd = point (lineUpRightEnd.x , lineDownLeftEnd.y);
 
             g.drawLine (lineUpStart.x , lineUpStart.y , lineUpLeftEnd.x , lineUpLeftEnd.y);
             g.drawLine (lineUpStart.x , lineUpStart.y , lineUpLeftEnd.x , lineUpLeftEnd.y);

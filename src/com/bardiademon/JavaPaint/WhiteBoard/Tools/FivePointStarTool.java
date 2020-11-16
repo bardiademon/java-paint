@@ -11,10 +11,18 @@ public final class FivePointStarTool extends ShapeTool implements Tools
 {
 
     private final List <FivePointStar> fivePointStars = new ArrayList <> ();
+    private final WhiteBoard whiteBoard;
 
     public FivePointStarTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
+        this.whiteBoard = _WhiteBoard;
+    }
+
+    @Override
+    public void select ()
+    {
+        setCursor ();
     }
 
     @Override
@@ -27,7 +35,9 @@ public final class FivePointStarTool extends ShapeTool implements Tools
     public void mousePressed (final Point point)
     {
         FivePointStar fivePointStar = new FivePointStar ();
+        fivePointStar.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         fivePointStar.setPoint (point);
+        fivePointStar.setColor (whiteBoard.getPaintView ().getColor ());
         fivePointStars.add (fivePointStar);
     }
 

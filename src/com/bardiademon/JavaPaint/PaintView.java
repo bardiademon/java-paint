@@ -5,8 +5,13 @@ import com.bardiademon.JavaPaint.Shapes.BackgroundPaint;
 
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,12 +23,30 @@ public class PaintView extends JFrame
 
     public static final BackgroundPaint BACKGROUND_PAINT = new BackgroundPaint ();
 
+    private Color color;
+
     public PaintView ()
     {
         initComponents ();
         setLocationRelativeTo (null);
         setVisible (true);
-        thickness.addChangeListener (e -> whiteBoard.repaint ());
+
+        setOnClick ();
+    }
+
+    private void setOnClick ()
+    {
+        btnColor.addActionListener (e ->
+        {
+            Color selectColor = JColorChooser.showDialog (null , "Select color" , null);
+            if (selectColor != null) color = selectColor;
+            else color = Color.BLACK;
+        });
+    }
+
+    public Color getColor ()
+    {
+        return color;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -572,12 +595,12 @@ public class PaintView extends JFrame
         );
 
         isFill.setBackground (new java.awt.Color (204 , 204 , 204));
-        isFill.setFont (new java.awt.Font ("Dubai" , 0 , 14)); // NOI18N
+        isFill.setFont (new java.awt.Font ("Dubai" , Font.PLAIN , 14)); // NOI18N
         isFill.setForeground (new java.awt.Color (0 , 0 , 0));
         isFill.setText ("Fill");
 
-        btnColor.setFont (new java.awt.Font ("Dialog" , 0 , 12)); // NOI18N
-        btnColor.setText ("Colot");
+        btnColor.setFont (new java.awt.Font ("Dialog" , Font.PLAIN , 12)); // NOI18N
+        btnColor.setText ("Color");
 
         thickness.setBackground (new java.awt.Color (255 , 255 , 255));
         thickness.setForeground (new java.awt.Color (0 , 0 , 0));
@@ -683,7 +706,7 @@ public class PaintView extends JFrame
     private BtnPanel fourPointStarShape;
     private BtnPanel heartShape;
     private JPanel hexagonShape;
-    private JCheckBox isFill;
+    public JCheckBox isFill;
     private JLabel jLabel1;
     private JPanel jPanel1;
     private JPanel jPanel3;

@@ -9,12 +9,6 @@ public class Rectangle extends Shape
 {
     private Point allPoint, allPoint2, halfPoint, halfPoint2;
 
-    public void setSizeWithPoint (final Point point)
-    {
-        if (getPoint () != null)
-            setSize (Shape.size (Math.abs (point.x - getPoint ().x) , Math.abs (point.y - getPoint ().y)));
-    }
-
     public void apply ()
     {
         final Point point = getPoint ();

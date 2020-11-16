@@ -5,6 +5,8 @@ import java.awt.Point;
 
 public interface Tools
 {
+    void select ();
+
     void mouseDragged (final Point point);
 
     void mousePressed (final Point point);

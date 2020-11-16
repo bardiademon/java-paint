@@ -1,5 +1,6 @@
 package com.bardiademon.JavaPaint.Shapes.Stars;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
@@ -12,16 +13,20 @@ public class FivePointStar extends Stars implements Star
         {
             apply ();
 
-            Point point1 = point (getHalfPoint ().x , getPoint ().y);
-            Point point2 = point (ctpFirstHalfX (80) , ctpFirstHalfY (80));
-            Point point3 = point (getPoint ().x , ctpFirstHalfY (80));
-            Point point4 = point (ctpFirstHalfX (60) , ctpSecondHalfY (20));
-            Point point5 = point (ctpFirstHalfX (50) , getAllPoint ().y);
-            Point point6 = point (getHalfPoint ().x , ctpSecondHalfY (50));
-            Point point7 = point (ctpSecondHalfX (50) , getAllPoint ().y);
-            Point point8 = point (ctpSecondHalfX (40) , point4.y);
-            Point point9 = point (getAllPoint ().x , point3.y);
-            Point point11 = point (ctpSecondHalfX (20) , point2.y);
+//            g.setBackground (getBackgroundColor ());
+            g.setColor (getColor ());
+            g.setStroke (new BasicStroke (getThickness ()));
+
+            final Point point1 = point (getHalfPoint ().x , getPoint ().y);
+            final Point point2 = point (ctpFirstHalfX (80) , ctpFirstHalfY (80));
+            final Point point3 = point (getPoint ().x , ctpFirstHalfY (80));
+            final Point point4 = point (ctpFirstHalfX (60) , ctpSecondHalfY (20));
+            final Point point5 = point (ctpFirstHalfX (50) , getAllPoint ().y);
+            final Point point6 = point (getHalfPoint ().x , ctpSecondHalfY (50));
+            final Point point7 = point (ctpSecondHalfX (50) , getAllPoint ().y);
+            final Point point8 = point (ctpSecondHalfX (40) , point4.y);
+            final Point point9 = point (getAllPoint ().x , point3.y);
+            final Point point11 = point (ctpSecondHalfX (20) , point2.y);
 
             // g.drawRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
             g.drawLine (point1.x , point1.y , point2.x , point2.y);

@@ -4,37 +4,33 @@ import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import java.awt.BasicStroke;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
-public final class Pen extends ShapeTool implements Tools
+
+public final class Pen implements Tools
 {
 
-    private List <Rectangle> rec = new ArrayList <> ();
+    private final WhiteBoard whiteBoard;
+    private final List <Rectangle> rec = new ArrayList <> ();
 
-    public Pen (final WhiteBoard whiteBoard)
+    public Pen (final WhiteBoard _WhiteBoard)
     {
-        super (whiteBoard);
-        Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
-        try
-        {
-            final File icPen = Main.getFile ("ic_pen");
-            if (icPen != null)
-            {
-                BufferedImage read = ImageIO.read (icPen);
-                whiteBoard.setCursor ((defaultToolkit.createCustomCursor ((read.getScaledInstance (read.getWidth () , read.getHeight () , BufferedImage.TYPE_INT_ARGB)) , Shape.point (10 , 10) , "pen")));
-            }
-        }
-        catch (IOException ignored)
-        {
-        }
+        this.whiteBoard = _WhiteBoard;
+        select ();
+    }
+
+    @Override
+    public void select ()
+    {
+        whiteBoard.setCursor ("ic_pen");
     }
 
     @Override
@@ -59,7 +55,9 @@ public final class Pen extends ShapeTool implements Tools
     {
         Rectangle rectangle = new Rectangle ();
         rectangle.setSize (Shape.size (1 , 1));
+        rectangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         rectangle.setPoint (point);
+        rectangle.setColor (whiteBoard.getPaintView ().getColor ());
         return rectangle;
     }
 
@@ -67,6 +65,14 @@ public final class Pen extends ShapeTool implements Tools
     public void paint (final Graphics2D g)
     {
         for (Rectangle rectangle : rec)
+        {
+            g.setColor (rectangle.getColor ());
+            if (rectangle.getBackgroundColor () != null)
+                g.setBackground (rectangle.getBackgroundColor ());
+
+            g.setStroke (new BasicStroke (rectangle.getThickness ()));
+
             g.drawRect (rectangle.getPoint ().x , rectangle.getPoint ().y , rectangle.getSize ().width , rectangle.getSize ().height);
+        }
     }
 }

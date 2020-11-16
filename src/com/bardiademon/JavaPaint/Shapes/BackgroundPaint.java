@@ -1,5 +1,6 @@
 package com.bardiademon.JavaPaint.Shapes;
 
+import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.Mth;
 import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
@@ -9,6 +10,10 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public final class BackgroundPaint
 {
@@ -42,6 +47,9 @@ public final class BackgroundPaint
                     break;
                 case five_point_star:
                     fiveStar (g , getShape (size));
+                    break;
+                case pen:
+                    pen (g , getShape (size));
                     break;
                 default:
                     break;
@@ -119,6 +127,21 @@ public final class BackgroundPaint
         final FivePointStar fourPointStar = new FivePointStar ();
         fourPointStar.shape (shape);
         fourPointStar.paint (g);
+    }
+
+    private void pen (final Graphics2D g , final Shape shape)
+    {
+        File icPen = Main.getFile ("ic_pen");
+        if (icPen != null)
+        {
+            try
+            {
+                g.drawImage (ImageIO.read (icPen).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR) , shape.getPoint ().x , shape.getPoint ().y , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
     }
 
     private Shape getShape (final Size size)
