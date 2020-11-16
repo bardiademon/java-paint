@@ -12,6 +12,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RoundRectangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -52,6 +53,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.rect.name () , new RectTool (this));
         tools.put (SelectedTool.line.name () , new LineTool (this));
         tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
+        tools.put (SelectedTool.triangle.name () , new TriangleTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 

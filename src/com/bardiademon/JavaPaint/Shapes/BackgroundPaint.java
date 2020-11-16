@@ -121,11 +121,11 @@ public final class BackgroundPaint
     private void line (final Graphics2D g , final Shape shape)
     {
         final Line line = new Line ();
-        line.setPoint1 (shape.getPoint ());
+        line.setPoint1 (Shape.point (0 , 0));
         line.setPoint2 (Shape.point (shape.getSize ().width , shape.getSize ().height));
         line.setColor (Color.BLACK);
         line.setThickness (2);
-        g.drawLine (line.getPoint1 ().x , line.getPoint1 ().y , line.getPoint2 ().x , line.getPoint2 ().y);
+        line.paint (g);
     }
 
     private void fourStar (final Graphics2D g , final Shape shape)
