@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiamondTool extends ShapeTool implements Tools
+public final class DiamondTool extends ShapeTool implements Tools
 {
     private final List <Diamond> diamonds = new ArrayList <> ();
 

@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TriangleTool extends ShapeTool implements Tools
+public final class TriangleTool extends ShapeTool implements Tools
 {
     private final List <Triangle> triangles = new ArrayList <> ();
 
