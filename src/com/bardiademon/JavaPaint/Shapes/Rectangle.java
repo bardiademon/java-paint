@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.Shapes;
 
 import com.bardiademon.JavaPaint.Mth;
 import com.sun.glass.ui.Size;
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
@@ -82,12 +83,18 @@ public class Rectangle extends Shape
     @Override
     public void paint (Graphics2D g)
     {
-        apply ();
+        if (getSize () != null && getPoint () != null)
+        {
+            apply ();
 
-        g.drawRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
+            g.setColor (getColor ());
+            g.setBackground (getBackgroundColor ());
+            g.setStroke (new BasicStroke (getThickness ()));
 
-        g.drawLine (getHalfPoint ().x , getPoint ().y , ctpFirstHalfX (80) , ctpFirstHalfY (80));
-
-        g.drawLine (getHalfPoint ().x , getPoint ().y , ctpSecondHalfX (20) , ctpFirstHalfY (80));
+            if (isFill ())
+                g.fillRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
+            else
+                g.drawRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
+        }
     }
 }

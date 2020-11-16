@@ -1,15 +1,11 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
-import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import java.awt.BasicStroke;
-import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +49,7 @@ public final class Pen implements Tools
 
     private Rectangle pen (Point point)
     {
-        Rectangle rectangle = new Rectangle ();
+        final Rectangle rectangle = new Rectangle ();
         rectangle.setSize (Shape.size (1 , 1));
         rectangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         rectangle.setPoint (point);

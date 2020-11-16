@@ -32,7 +32,7 @@ public class CircleTool extends ShapeTool implements Tools
     @Override
     public void mousePressed (final Point point)
     {
-        Circle circle = new Circle ();
+        final Circle circle = new Circle ();
         circle.setPoint (point);
         circle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         circle.setColor (whiteBoard.getPaintView ().getColor ());
