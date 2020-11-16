@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TriangleTool extends ShapeTool implements Tools
 {
-    private List <Triangle> triangles = new ArrayList <> ();
+    private final List <Triangle> triangles = new ArrayList <> ();
 
     public TriangleTool (final WhiteBoard _WhiteBoard)
     {

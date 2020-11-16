@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class Triangle extends Rectangle
+public final class Triangle extends Rectangle
 {
     @Override
     public void paint (Graphics2D g)

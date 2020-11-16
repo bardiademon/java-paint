@@ -54,6 +54,9 @@ public final class BackgroundPaint
                 case line:
                     line (g , getShape (size));
                     break;
+                case diamond:
+                    diamond (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -116,6 +119,13 @@ public final class BackgroundPaint
 
     public void heart (final Graphics2D g , final Size size)
     {
+    }
+
+    private void diamond (final Graphics2D g , final Shape shape)
+    {
+        final Diamond diamond = new Diamond ();
+        diamond.shape (shape);
+        diamond.paint (g);
     }
 
     private void line (final Graphics2D g , final Shape shape)

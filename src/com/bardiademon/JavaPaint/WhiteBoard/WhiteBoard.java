@@ -4,6 +4,7 @@ import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
@@ -54,6 +55,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.line.name () , new LineTool (this));
         tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
         tools.put (SelectedTool.triangle.name () , new TriangleTool (this));
+        tools.put (SelectedTool.diamond.name () , new DiamondTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
