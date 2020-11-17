@@ -51,6 +51,12 @@ public class ShapeTool implements Tools
 
     }
 
+    @Override
+    public void remove (int index)
+    {
+
+    }
+
     public int getIndex ()
     {
         return index;

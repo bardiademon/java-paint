@@ -49,6 +49,13 @@ public final class FivePointStarTool extends ShapeTool implements Tools
     }
 
     @Override
+    public void remove (int index)
+    {
+        if (index >= 0 && index < fivePointStars.size ())
+            fivePointStars.remove (index);
+    }
+
+    @Override
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < fivePointStars.size ())

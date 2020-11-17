@@ -15,5 +15,7 @@ public interface Tools
 
     void paint (final Graphics2D g , final int index);
 
+    void remove (final int index);
+
     int getIndex ();
 }

@@ -21,6 +21,13 @@ public final class RoundRectangleTool extends RectTool implements Tools
     }
 
     @Override
+    public void remove (int index)
+    {
+        if (index >= 0 && index < rectangles.size ())
+            rectangles.remove (index);
+    }
+
+    @Override
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < rectangles.size ())

@@ -19,6 +19,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -31,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public final class WhiteBoard extends JPanel
 {
@@ -50,7 +54,6 @@ public final class WhiteBoard extends JPanel
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
-
         tools.put (SelectedTool.pen.name () , new Pen (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
         tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
@@ -62,6 +65,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.diamond.name () , new DiamondTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
+
 
         addMouseListener (new MouseAdapter ()
         {
@@ -92,6 +96,14 @@ public final class WhiteBoard extends JPanel
                     repaint ();
                 }
             }
+
+            @Override
+            public void mouseClicked (MouseEvent e)
+            {
+                WhiteBoard.this.setFocusable (true);
+                WhiteBoard.this.setRequestFocusEnabled (true);
+                System.out.println (WhiteBoard.this.requestFocusInWindow ());
+            }
         });
 
         addMouseMotionListener (new MouseMotionListener ()
@@ -115,6 +127,46 @@ public final class WhiteBoard extends JPanel
                 paintView.setCursorPoint (e.getPoint ());
             }
         });
+
+        super.addKeyListener (new KeyListener ()
+        {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+            }
+
+            @Override
+            public void keyPressed (KeyEvent e)
+            {
+                if (e.getKeyCode () == 90)
+                {
+                    if (arrangePaintings.size () > 0)
+                        ctrlZ ();
+                }
+            }
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+                if (e.getKeyCode () == 90)
+                {
+                    if (arrangePaintings.size () > 0)
+                        ctrlZ ();
+                }
+            }
+        });
+    }
+
+    private void ctrlZ ()
+    {
+        int size = arrangePaintings.size ();
+        if (size > 0)
+        {
+            ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
+            tools.get (arrangePainting.selectedTool).remove (arrangePainting.index);
+            arrangePaintings.remove (size - 1);
+            repaint ();
+        }
     }
 
     @Override
@@ -126,6 +178,7 @@ public final class WhiteBoard extends JPanel
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
+
 
     private static final class ArrangePainting
     {

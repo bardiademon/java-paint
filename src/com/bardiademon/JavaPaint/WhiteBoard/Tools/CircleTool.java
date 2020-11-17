@@ -48,6 +48,13 @@ public final class CircleTool extends ShapeTool implements Tools
     }
 
     @Override
+    public void remove (int index)
+    {
+        if (index >= 0 && index < circles.size ())
+            circles.remove (index);
+    }
+
+    @Override
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < circles.size ())

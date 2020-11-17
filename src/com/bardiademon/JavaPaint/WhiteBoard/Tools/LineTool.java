@@ -35,6 +35,13 @@ public final class LineTool extends ShapeTool implements Tools
     }
 
     @Override
+    public void remove (int index)
+    {
+        if (index >= 0 && index < lines.size ())
+            lines.remove (index);
+    }
+
+    @Override
     public void mouseReleased (final Point point)
     {
         index = lines.size () - 1;

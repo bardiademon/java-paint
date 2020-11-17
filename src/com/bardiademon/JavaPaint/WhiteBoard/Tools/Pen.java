@@ -33,7 +33,8 @@ public final class Pen implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        rec.get (rec.size () - 1).add (pen (point));
+        List <Rectangle> rectangles = rec.get (rec.size () - 1);
+        rectangles.add (pen (point));
     }
 
     @Override
@@ -41,6 +42,7 @@ public final class Pen implements Tools
     {
         rectangles = new ArrayList <> ();
         rectangles.add (pen (point));
+        whiteBoard.setWHXY (null , point);
         rec.add (rectangles);
     }
 
@@ -82,9 +84,15 @@ public final class Pen implements Tools
                     g.drawLine (pre.x , pre.y , rec.getPoint ().x , rec.getPoint ().y);
 
                 pre = rec.getPoint ();
-
             }
         }
+    }
+
+    @Override
+    public void remove (int index)
+    {
+        if (index >= 0 && index < rec.size ())
+            rec.remove (index);
     }
 
     @Override
