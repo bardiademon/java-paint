@@ -38,13 +38,13 @@ public final class LineTool extends ShapeTool implements Tools
     @Override
     public void setPoint (final Point point)
     {
-        lines.get (index).setPoint1 (point);
+        lines.get (index).setPoint2 (point);
     }
 
     @Override
     public void mouseDragged (final Size size)
     {
-        mouseDragged (Shape.point (size.width , size.height));
+        lines.get (index).setPoint1 (Shape.point (size.width , size.height));
     }
 
     @Override

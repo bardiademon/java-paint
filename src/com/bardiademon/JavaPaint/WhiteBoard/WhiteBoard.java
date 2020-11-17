@@ -17,6 +17,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SixPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.UpDownArrowTool;
 import com.sun.glass.ui.Size;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -68,6 +69,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.diamond.name () , new DiamondTool (this));
         tools.put (SelectedTool.six_point_star.name () , new SixPointStarTool (this));
         tools.put (SelectedTool.right_arrow.name () , new RightLeftArrowTool (this));
+        tools.put (SelectedTool.up_arrow.name () , new UpDownArrowTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 

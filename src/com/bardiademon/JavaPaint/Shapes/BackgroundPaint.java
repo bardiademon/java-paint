@@ -3,6 +3,7 @@ package com.bardiademon.JavaPaint.Shapes;
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.Mth;
 import com.bardiademon.JavaPaint.Shapes.Arrow.RightLeftArrow;
+import com.bardiademon.JavaPaint.Shapes.Arrow.UpDownArrow;
 import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.SixPointStar;
@@ -65,6 +66,9 @@ public final class BackgroundPaint
                 case right_arrow:
                     rightArrow (g , getShape (size));
                     break;
+                case up_arrow:
+                    upArrow (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -85,6 +89,13 @@ public final class BackgroundPaint
         final RightLeftArrow rightLeftArrow = new RightLeftArrow ();
         rightLeftArrow.shape (shape);
         rightLeftArrow.paint (g);
+    }
+
+    private void upArrow (final Graphics2D g , final Shape shape)
+    {
+        final UpDownArrow upDownArrow = new UpDownArrow ();
+        upDownArrow.shape (shape);
+        upDownArrow.paint (g);
     }
 
     private void rect (final Graphics2D g , final Shape shape)
