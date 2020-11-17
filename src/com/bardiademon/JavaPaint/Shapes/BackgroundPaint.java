@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.Shapes;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.Mth;
+import com.bardiademon.JavaPaint.Shapes.Arrow.RightLeftArrow;
 import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.SixPointStar;
@@ -61,6 +62,9 @@ public final class BackgroundPaint
                 case six_point_star:
                     sixStar (g , getShape (size));
                     break;
+                case right_arrow:
+                    rightArrow (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -74,6 +78,13 @@ public final class BackgroundPaint
 
         g.setStroke (new BasicStroke (shape.getThickness ()));
         g.fillOval (point.x , point.y , widthHeight.width , widthHeight.height);
+    }
+
+    private void rightArrow (final Graphics2D g , final Shape shape)
+    {
+        final RightLeftArrow rightLeftArrow = new RightLeftArrow ();
+        rightLeftArrow.shape (shape);
+        rightLeftArrow.paint (g);
     }
 
     private void rect (final Graphics2D g , final Shape shape)

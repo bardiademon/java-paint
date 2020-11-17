@@ -30,7 +30,6 @@ public final class SixPointStar extends Stars implements Star
             final Point point11 = point (allPoint.x , point2.y);
             final Point point12 = point (point8.x , point2.y);
 
-
             g.setStroke (new BasicStroke (getThickness ()));
             g.setColor (getColor ());
             g.setBackground (getBackgroundColor ());
