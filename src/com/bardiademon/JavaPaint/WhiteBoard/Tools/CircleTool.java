@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Circle;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.sun.glass.ui.Size;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -30,6 +31,12 @@ public final class CircleTool extends ShapeTool implements Tools
     }
 
     @Override
+    public void mouseDragged (final Size size)
+    {
+        circles.get (index).setSize (size);
+    }
+
+    @Override
     public void mousePressed (final Point point)
     {
         final Circle circle = new Circle ();
@@ -38,7 +45,13 @@ public final class CircleTool extends ShapeTool implements Tools
         circle.setColor (whiteBoard.getPaintView ().getColor ());
         circle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
         circles.add (circle);
-        index = circles.size () - 1;
+        setIndex (circles.size () - 1);
+    }
+
+    @Override
+    public void setPoint (final Point point)
+    {
+        circles.get (index).setPoint (point);
     }
 
     @Override

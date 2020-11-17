@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.sun.glass.ui.Size;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -27,7 +28,13 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        fourPointStars.get (fourPointStars.size () - 1).setSizeWithPoint (point);
+        fourPointStars.get (index).setSizeWithPoint (point);
+    }
+
+    @Override
+    public void mouseDragged (final Size size)
+    {
+        fourPointStars.get (index).setSize (size);
     }
 
     @Override
@@ -39,6 +46,12 @@ public final class FourPointStarTool extends ShapeTool implements Tools
         fourPointStar.setColor (whiteBoard.getPaintView ().getColor ());
         fourPointStars.add (fourPointStar);
         index = fourPointStars.size () - 1;
+    }
+
+    @Override
+    public void setPoint (final Point point)
+    {
+        fourPointStars.get (index).setPoint (point);
     }
 
     @Override

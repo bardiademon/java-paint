@@ -3,6 +3,7 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.sun.glass.ui.Size;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,16 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class Pen implements Tools
+public final class Pen extends ShapeTool implements Tools
 {
 
-    private final WhiteBoard whiteBoard;
     private final List <List <Rectangle>> rec = new ArrayList <> ();
     private List <Rectangle> rectangles;
 
     public Pen (final WhiteBoard _WhiteBoard)
     {
-        this.whiteBoard = _WhiteBoard;
+        super (_WhiteBoard);
         select ();
     }
 
@@ -33,8 +33,15 @@ public final class Pen implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        List <Rectangle> rectangles = rec.get (rec.size () - 1);
+        List <Rectangle> rectangles = rec.get (getIndex ());
         rectangles.add (pen (point));
+    }
+
+    @Override
+    public void mouseDragged (final Size size)
+    {
+        List <Rectangle> rectangles = rec.get (getIndex ());
+        rectangles.add (pen (Shape.point (size.width , size.height)));
     }
 
     @Override
@@ -44,6 +51,7 @@ public final class Pen implements Tools
         rectangles.add (pen (point));
         whiteBoard.setWHXY (null , point);
         rec.add (rectangles);
+        setIndex (rec.size () - 1);
     }
 
     @Override
@@ -98,6 +106,6 @@ public final class Pen implements Tools
     @Override
     public int getIndex ()
     {
-        return rec.size () - 1;
+        return index;
     }
 }

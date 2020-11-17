@@ -17,7 +17,7 @@ public final class RoundRectangleTool extends RectTool implements Tools
     public void mousePressed (Point point)
     {
         super.mousePressed (point);
-        rectangles.get (index).setArc (new Size (20 , 20));
+        rectangles.get (getIndex ()).setArc (new Size (20 , 20));
     }
 
     @Override

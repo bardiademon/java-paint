@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.sun.glass.ui.Size;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -30,6 +31,12 @@ public class RectTool extends ShapeTool implements Tools
     }
 
     @Override
+    public void mouseDragged (final Size size)
+    {
+        rectangles.get (index).setSize (size);
+    }
+
+    @Override
     public void mousePressed (final Point point)
     {
         final Rectangle rectangle = new Rectangle ();
@@ -46,6 +53,12 @@ public class RectTool extends ShapeTool implements Tools
     public void mouseReleased (final Point point)
     {
         index = rectangles.size () - 1;
+    }
+
+    @Override
+    public void setPoint (final Point point)
+    {
+        rectangles.get (index).setPoint (point);
     }
 
     @Override

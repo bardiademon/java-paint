@@ -19,7 +19,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -34,7 +34,8 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JTextField;
+
 
 public final class WhiteBoard extends JPanel
 {
@@ -155,6 +156,185 @@ public final class WhiteBoard extends JPanel
                 }
             }
         });
+
+        final KeyListener wListener = new KeyListener ()
+        {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+            }
+
+            @Override
+            public void keyPressed (KeyEvent e)
+            {
+                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
+                {
+                    changeWHXY (e , WitchWHXY.w);
+                    invokeKeyReleased = false;
+                }
+                else invokeKeyReleased = true;
+            }
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.w);
+            }
+        };
+        final KeyListener hListener = new KeyListener ()
+        {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+            }
+
+            @Override
+            public void keyPressed (KeyEvent e)
+            {
+                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
+                {
+                    changeWHXY (e , WitchWHXY.h);
+                    invokeKeyReleased = false;
+                }
+                else invokeKeyReleased = true;
+            }
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.h);
+            }
+        };
+        final KeyListener xListener = new KeyListener ()
+        {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+            }
+
+            @Override
+            public void keyPressed (KeyEvent e)
+            {
+                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
+                {
+                    changeWHXY (e , WitchWHXY.x);
+                    invokeKeyReleased = false;
+                }
+                else invokeKeyReleased = true;
+            }
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.x);
+            }
+        };
+        final KeyListener yListener = new KeyListener ()
+        {
+            @Override
+            public void keyTyped (KeyEvent e)
+            {
+            }
+
+            @Override
+            public void keyPressed (KeyEvent e)
+            {
+                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
+                {
+                    changeWHXY (e , WitchWHXY.y);
+                    invokeKeyReleased = false;
+                }
+                else invokeKeyReleased = true;
+            }
+
+            @Override
+            public void keyReleased (KeyEvent e)
+            {
+                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.y);
+            }
+        };
+        paintView.txtWidth.addKeyListener (wListener);
+        paintView.txtHeight.addKeyListener (hListener);
+        paintView.txtX.addKeyListener (xListener);
+        paintView.txtY.addKeyListener (yListener);
+    }
+
+    private boolean invokeKeyReleased = true;
+
+    private enum WitchWHXY
+    {
+        w, h, x, y
+    }
+
+    private void changeWHXY (final KeyEvent e , final WitchWHXY witchWHXY)
+    {
+        final String txtWidth = paintView.txtWidth.getText ();
+        final String txtHeight = paintView.txtHeight.getText ();
+        final String txtX = paintView.txtX.getText ();
+        final String txtY = paintView.txtY.getText ();
+
+        if ((txtWidth != null && !txtWidth.equals ("")) && (txtHeight != null && !txtHeight.equals ("")) && (txtX != null && !txtX.equals ("")) && (txtY != null && !txtY.equals ("")))
+        {
+            try
+            {
+                int width = Integer.parseInt (txtWidth);
+                int height = Integer.parseInt (txtHeight);
+                int x = Integer.parseInt (txtX);
+                int y = Integer.parseInt (txtY);
+
+                if (e.getKeyCode () == 38)
+                {
+                    switch (witchWHXY)
+                    {
+                        case w:
+                            paintView.txtWidth.setText (String.valueOf (++width));
+                            break;
+                        case h:
+                            paintView.txtHeight.setText (String.valueOf (++height));
+                            break;
+                        case x:
+                            paintView.txtX.setText (String.valueOf (++x));
+                            break;
+                        case y:
+                            paintView.txtY.setText (String.valueOf (++y));
+                            break;
+                    }
+                }
+                else if (e.getKeyCode () == 40)
+                {
+                    switch (witchWHXY)
+                    {
+                        case w:
+                            paintView.txtWidth.setText (String.valueOf (--width));
+                            break;
+                        case h:
+                            paintView.txtHeight.setText (String.valueOf (--height));
+                            break;
+                        case x:
+                            paintView.txtX.setText (String.valueOf (--x));
+                            break;
+                        case y:
+                            paintView.txtY.setText (String.valueOf (--y));
+                            break;
+                    }
+                }
+
+                final Point point = Shape.point (x , y);
+                final Size size = Shape.size (width , height);
+
+                if (selectedArrangePainting != null)
+                {
+                    Tools tools = this.tools.get (selectedArrangePainting.selectedTool);
+                    tools.setIndex (selectedArrangePainting.getIndex ());
+                    tools.setPoint (point);
+                    tools.mouseDragged (size);
+                    repaint ();
+                }
+            }
+            catch (Exception ignored)
+            {
+            }
+        }
     }
 
     private void ctrlZ ()
@@ -178,7 +358,6 @@ public final class WhiteBoard extends JPanel
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
-
 
     private static final class ArrangePainting
     {

@@ -91,7 +91,6 @@ public class PaintView extends JFrame
         thickness = new JSlider ();
         jLabel1 = new JLabel ();
         rectShape = new BtnPanel (SelectedTool.rect);
-        whiteBoard = new WhiteBoard (this);
 
         txtX = new JTextField ();
         lX = new JLabel ();
@@ -104,6 +103,9 @@ public class PaintView extends JFrame
         pWHXY = new JPanel ();
 
         lblCursorPoint = new JLabel ("X = 0 , Y = 0");
+
+
+        whiteBoard = new WhiteBoard (this);
 
         jRadioButton1.setText ("jRadioButton1");
 

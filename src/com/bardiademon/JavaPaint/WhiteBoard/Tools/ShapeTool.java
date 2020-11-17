@@ -1,6 +1,7 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.sun.glass.ui.Size;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -34,6 +35,12 @@ public class ShapeTool implements Tools
     }
 
     @Override
+    public void mouseDragged (Size size)
+    {
+
+    }
+
+    @Override
     public void mousePressed (Point point)
     {
 
@@ -52,9 +59,21 @@ public class ShapeTool implements Tools
     }
 
     @Override
+    public void setPoint (Point point)
+    {
+
+    }
+
+    @Override
     public void remove (int index)
     {
 
+    }
+
+    @Override
+    public void setIndex (final int index)
+    {
+        this.index = index;
     }
 
     public int getIndex ()
