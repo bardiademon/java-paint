@@ -3,6 +3,7 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
 import com.bardiademon.JavaPaint.Shapes.Shape;
+import com.bardiademon.JavaPaint.Shapes.Stars.SixPointStar;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
@@ -12,6 +13,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RoundRectangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.SixPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
 import com.sun.glass.ui.Size;
@@ -34,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public final class WhiteBoard extends JPanel
@@ -64,6 +65,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
         tools.put (SelectedTool.triangle.name () , new TriangleTool (this));
         tools.put (SelectedTool.diamond.name () , new DiamondTool (this));
+        tools.put (SelectedTool.six_point_star.name () , new SixPointStarTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
@@ -129,6 +131,11 @@ public final class WhiteBoard extends JPanel
             }
         });
 
+        onKeyListener ();
+    }
+
+    private void onKeyListener ()
+    {
         super.addKeyListener (new KeyListener ()
         {
             @Override
@@ -354,7 +361,6 @@ public final class WhiteBoard extends JPanel
     {
         super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
-
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
