@@ -40,6 +40,10 @@ public final class DiamondTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < diamonds.size ())
+        {
+            Diamond diamond = diamonds.get (index);
+            whiteBoard.setWHXY (diamond.getSize () , diamond.getPoint ());
             diamonds.get (index).paint (g);
+        }
     }
 }

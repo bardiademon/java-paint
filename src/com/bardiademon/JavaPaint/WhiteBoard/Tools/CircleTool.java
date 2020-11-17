@@ -51,6 +51,10 @@ public final class CircleTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < circles.size ())
-            circles.get (index).paint (g);
+        {
+            Circle circle = circles.get (index);
+            whiteBoard.setWHXY (circle.getSize () , circle.getPoint ());
+            circle.paint (g);
+        }
     }
 }

@@ -16,7 +16,7 @@ public final class Pen implements Tools
 
     private final WhiteBoard whiteBoard;
     private final List <List <Rectangle>> rec = new ArrayList <> ();
-    private final List <Rectangle> rectangles = new ArrayList <> ();
+    private List <Rectangle> rectangles;
 
     public Pen (final WhiteBoard _WhiteBoard)
     {
@@ -39,6 +39,7 @@ public final class Pen implements Tools
     @Override
     public void mousePressed (final Point point)
     {
+        rectangles = new ArrayList <> ();
         rectangles.add (pen (point));
         rec.add (rectangles);
     }
@@ -65,6 +66,8 @@ public final class Pen implements Tools
         if (index >= 0 && index < rec.size ())
         {
             final List <Rectangle> rectangle = this.rec.get (index);
+
+            Point pre = null;
             for (Rectangle rec : rectangle)
             {
                 g.setColor (rec.getColor ());
@@ -73,7 +76,13 @@ public final class Pen implements Tools
 
                 g.setStroke (new BasicStroke (rec.getThickness ()));
 
-                g.drawRect (rec.getPoint ().x , rec.getPoint ().y , rec.getSize ().width , rec.getSize ().height);
+                g.drawLine (rec.getPoint ().x , rec.getPoint ().y , rec.getPoint ().x , rec.getPoint ().y);
+
+                if (pre != null)
+                    g.drawLine (pre.x , pre.y , rec.getPoint ().x , rec.getPoint ().y);
+
+                pre = rec.getPoint ();
+
             }
         }
     }

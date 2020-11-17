@@ -52,7 +52,11 @@ public class RectTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < rectangles.size ())
-            rectangles.get (index).paint (g);
+        {
+            Rectangle rectangle = rectangles.get (index);
+            whiteBoard.setWHXY (rectangle.getSize () , rectangle.getPoint ());
+            rectangle.paint (g);
+        }
     }
 
 }

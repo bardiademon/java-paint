@@ -1,5 +1,6 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
+import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.sun.glass.ui.Size;
 import java.awt.Graphics2D;
@@ -23,6 +24,10 @@ public final class RoundRectangleTool extends RectTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < rectangles.size ())
-            rectangles.get (index).paint (g);
+        {
+            Rectangle rectangle = rectangles.get (index);
+            whiteBoard.setWHXY (rectangle.getSize () , rectangle.getPoint ());
+            rectangle.paint (g);
+        }
     }
 }

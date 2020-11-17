@@ -51,6 +51,10 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < fourPointStars.size ())
-            fourPointStars.get (index).paint (g);
+        {
+            FourPointStar fourPointStar = fourPointStars.get (index);
+            whiteBoard.setWHXY (fourPointStar.getSize () , fourPointStar.getPoint ());
+            fourPointStar.paint (g);
+        }
     }
 }

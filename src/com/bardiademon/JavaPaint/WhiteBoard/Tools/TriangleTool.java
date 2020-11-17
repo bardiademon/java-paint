@@ -46,6 +46,10 @@ public final class TriangleTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < triangles.size ())
-            triangles.get (index).paint (g);
+        {
+            Triangle triangle = triangles.get (index);
+            whiteBoard.setWHXY (triangle.getSize () , triangle.getPoint ());
+            triangle.paint (g);
+        }
     }
 }

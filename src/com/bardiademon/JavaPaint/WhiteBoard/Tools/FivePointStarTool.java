@@ -52,12 +52,10 @@ public final class FivePointStarTool extends ShapeTool implements Tools
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < fivePointStars.size ())
-            fivePointStars.get (index).paint (g);
-    }
-
-    @Override
-    public int getIndex ()
-    {
-        return index;
+        {
+            FivePointStar fivePointStar = fivePointStars.get (index);
+            whiteBoard.setWHXY (fivePointStar.getSize () , fivePointStar.getPoint ());
+            fivePointStar.paint (g);
+        }
     }
 }

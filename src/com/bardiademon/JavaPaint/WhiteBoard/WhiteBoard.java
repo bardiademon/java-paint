@@ -14,8 +14,10 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.RoundRectangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
+import com.sun.glass.ui.Size;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +44,8 @@ public final class WhiteBoard extends JPanel
     private final List <ArrangePainting> arrangePaintings = new ArrayList <> ();
 
     private final Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
+
+    private ArrangePainting selectedArrangePainting;
 
     public WhiteBoard (final PaintView _PaintView)
     {
@@ -70,8 +74,9 @@ public final class WhiteBoard extends JPanel
                 {
                     tools.select ();
                     tools.mousePressed (e.getPoint ());
-                    final ArrangePainting arrangePainting = new ArrangePainting (selectedTool.name ());
-                    arrangePainting.setIndex (tools.getIndex ());
+                    selectedArrangePainting = new ArrangePainting (selectedTool.name ());
+                    selectedArrangePainting.setIndex (tools.getIndex ());
+                    final ArrangePainting arrangePainting = selectedArrangePainting;
                     arrangePaintings.add (arrangePainting);
                     repaint ();
                 }
@@ -94,6 +99,8 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseDragged (MouseEvent e)
             {
+                paintView.setCursorPoint (e.getPoint ());
+
                 final Tools tools = WhiteBoard.this.tools.get (selectedTool.name ());
                 if (tools != null)
                 {
@@ -105,7 +112,7 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseMoved (MouseEvent e)
             {
-
+                paintView.setCursorPoint (e.getPoint ());
             }
         });
     }
@@ -154,6 +161,20 @@ public final class WhiteBoard extends JPanel
         }
         catch (IOException ignored)
         {
+        }
+    }
+
+    public void setWHXY (final Size size , final Point point)
+    {
+        if (size != null)
+        {
+            paintView.txtWidth.setText (String.valueOf (size.width));
+            paintView.txtHeight.setText (String.valueOf (size.height));
+        }
+        if (point != null)
+        {
+            paintView.txtX.setText (String.valueOf (point.x));
+            paintView.txtY.setText (String.valueOf (point.y));
         }
     }
 

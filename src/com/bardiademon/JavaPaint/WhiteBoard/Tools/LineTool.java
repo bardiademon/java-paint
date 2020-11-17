@@ -1,6 +1,7 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Line;
+import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -42,7 +43,12 @@ public final class LineTool extends ShapeTool implements Tools
     @Override
     public void paint (final Graphics2D g , final int index)
     {
-        if (index >= 0 && index < lines.size ()) lines.get (index).paint (g);
+        if (index >= 0 && index < lines.size ())
+        {
+            Line line = lines.get (index);
+            whiteBoard.setWHXY (Shape.size (line.getPoint1 ().x , line.getPoint1 ().y) , line.getPoint2 ());
+            line.paint (g);
+        }
     }
 
 }
