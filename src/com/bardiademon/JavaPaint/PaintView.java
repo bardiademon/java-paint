@@ -843,7 +843,7 @@ public class PaintView extends JFrame
     // pWHXY => panel width height x y
     private JPanel pWHXY;
 
-    private JLabel lblCursorPoint;
+    public JLabel lblCursorPoint;
 
     // End of variables declaration
 }

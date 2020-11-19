@@ -2,8 +2,8 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.Shapes.Arrow.RightLeftArrow;
 import com.bardiademon.JavaPaint.Shapes.Shape;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
@@ -12,6 +12,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RightLeftArrowTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.RightTriangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RoundRectangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SixPointStarTool;
@@ -19,9 +20,12 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.UpDownArrowTool;
 import com.sun.glass.ui.Size;
+import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Robot;
 import java.awt.Toolkit;
 
 import java.awt.event.KeyEvent;
@@ -43,6 +47,8 @@ import javax.swing.JPanel;
 public final class WhiteBoard extends JPanel
 {
 
+    private Robot robot;
+
     public static SelectedTool selectedTool = SelectedTool.pen;
 
     private final PaintView paintView;
@@ -55,9 +61,20 @@ public final class WhiteBoard extends JPanel
 
     private ArrangePainting selectedArrangePainting;
 
+    private Color backgroundColor;
+
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
+
+        try
+        {
+            this.robot = new Robot ();
+        }
+        catch (AWTException ignored)
+        {
+        }
+
         tools.put (SelectedTool.pen.name () , new Pen (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
         tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
@@ -70,6 +87,8 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.six_point_star.name () , new SixPointStarTool (this));
         tools.put (SelectedTool.right_arrow.name () , new RightLeftArrowTool (this));
         tools.put (SelectedTool.up_arrow.name () , new UpDownArrowTool (this));
+        tools.put (SelectedTool.bucket_of_paint.name () , new BucketOfPaint (this));
+        tools.put (SelectedTool.right_triangle.name () , new RightTriangleTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
@@ -107,9 +126,10 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseClicked (MouseEvent e)
             {
+                setFocus ();
+
                 WhiteBoard.this.setFocusable (true);
                 WhiteBoard.this.setRequestFocusEnabled (true);
-                System.out.println (WhiteBoard.this.requestFocusInWindow ());
             }
         });
 
@@ -131,11 +151,19 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseMoved (MouseEvent e)
             {
+                setFocus ();
                 paintView.setCursorPoint (e.getPoint ());
             }
         });
 
         onKeyListener ();
+    }
+
+    private void setFocus ()
+    {
+        setFocusable (true);
+        setRequestFocusEnabled (true);
+        requestFocusInWindow ();
     }
 
     private void onKeyListener ()
@@ -405,6 +433,11 @@ public final class WhiteBoard extends JPanel
         catch (IOException ignored)
         {
         }
+    }
+
+    public Robot getRobot ()
+    {
+        return robot;
     }
 
     public void setWHXY (final Size size , final Point point)

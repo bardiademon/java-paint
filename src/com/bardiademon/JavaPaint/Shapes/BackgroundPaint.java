@@ -12,6 +12,7 @@ import com.sun.glass.ui.Size;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -69,6 +70,12 @@ public final class BackgroundPaint
                 case up_arrow:
                     upArrow (g , getShape (size));
                     break;
+                case bucket_of_paint:
+                    bucketOfPaint (g , getShape (size));
+                    break;
+                case right_triangle:
+                    rightTriangle (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -98,6 +105,22 @@ public final class BackgroundPaint
         upDownArrow.paint (g);
     }
 
+    private void bucketOfPaint (final Graphics2D g , final Shape shape)
+    {
+        final File file = Main.getFile ("ic_paint_bucket");
+        if (file != null)
+        {
+            try
+            {
+                Image imgBucketOfPaint = ImageIO.read (file).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR);
+                g.drawImage (imgBucketOfPaint , shape.getPoint ().x , shape.getSize ().height , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
+    }
+
     private void rect (final Graphics2D g , final Shape shape)
     {
         Point point = shape.getPoint ();
@@ -114,6 +137,13 @@ public final class BackgroundPaint
 
         g.setStroke (new BasicStroke (shape.getThickness ()));
         g.fillRoundRect (point.x , point.y , size.width , size.height , 3 , 3);
+    }
+
+    private void rightTriangle (final Graphics2D g , final Shape shape)
+    {
+        final RightTriangle rightTriangle = new RightTriangle ();
+        rightTriangle.shape (shape);
+        rightTriangle.paint (g);
     }
 
     private void polygon (final Graphics2D g , final Shape shape)

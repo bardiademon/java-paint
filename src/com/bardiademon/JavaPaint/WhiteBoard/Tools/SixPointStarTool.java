@@ -46,7 +46,7 @@ public final class SixPointStarTool extends ShapeTool implements Tools
     @Override
     public void paint (final Graphics2D g , final int index)
     {
-        if (index > 0 && index < sixPointStars.size ())
+        if (index >= 0 && index < sixPointStars.size ())
         {
             SixPointStar sixPointStar = sixPointStars.get (index);
             whiteBoard.setWHXY (sixPointStar.getSize () , sixPointStar.getPoint ());
@@ -57,13 +57,14 @@ public final class SixPointStarTool extends ShapeTool implements Tools
     @Override
     public void setPoint (final Point point)
     {
-        sixPointStars.get (index).setPoint (point);
+        if (index >= 0 && index < sixPointStars.size ())
+            sixPointStars.get (index).setPoint (point);
     }
 
     @Override
-    public void remove (int index)
+    public void remove (final int index)
     {
-        if (index > 0 && index < sixPointStars.size ())
+        if (index >= 0 && index < sixPointStars.size ())
             sixPointStars.remove (index);
     }
 }
