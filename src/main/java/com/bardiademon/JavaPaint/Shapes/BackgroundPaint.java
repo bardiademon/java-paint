@@ -77,7 +77,7 @@ public final class BackgroundPaint
                     rightTriangle (g , getShape (size));
                     break;
                 case text:
-                    rightTriangle (g , getShape (size));
+                    text (g , getShape (size));
                     break;
                 default:
                     break;
@@ -147,6 +147,21 @@ public final class BackgroundPaint
         final RightTriangle rightTriangle = new RightTriangle ();
         rightTriangle.shape (shape);
         rightTriangle.paint (g);
+    }
+
+    private void text (final Graphics2D g , final Shape shape)
+    {
+        File icA = Main.getFile ("ic_a");
+        if (icA != null)
+        {
+            try
+            {
+                g.drawImage (ImageIO.read (icA).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR) , shape.getPoint ().x , shape.getPoint ().y , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
     }
 
     private void polygon (final Graphics2D g , final Shape shape)

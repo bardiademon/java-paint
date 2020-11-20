@@ -98,4 +98,8 @@ public final class TextTool extends ShapeTool implements Tools
             texts.remove (index);
     }
 
+    public WhiteBoard getWhiteBoard ()
+    {
+        return super.whiteBoard;
+    }
 }

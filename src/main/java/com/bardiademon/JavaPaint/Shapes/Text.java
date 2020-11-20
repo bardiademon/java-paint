@@ -115,6 +115,20 @@ public final class Text extends Rectangle
             g.setColor (getColor ());
             g.setStroke (new BasicStroke (getThickness ()));
 
+            if (!ultimate || (backGroundColor != null) || ((getArc () != null) && getArc ().width > 0))
+            {
+                if (backGroundColor == null)
+                {
+                    g.setColor (Color.BLACK);
+                    g.drawRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
+                }
+                else
+                {
+                    g.setColor (backGroundColor);
+                    g.fillRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
+                }
+            }
+
             if (textPoint == null)
                 textPoint = point (ctpFirstHalfX (2) , ctpFirstHalfY (20));
 
@@ -126,24 +140,19 @@ public final class Text extends Rectangle
 
                 textWidth = g.getFontMetrics ().stringWidth (text);
 
+                if (textWidth > getSize ().width)
+                {
+                    setSize (size ((textWidth - getSize ().width + getSize ().width) , getSize ().height));
+                    textTool.repaint ();
+                    return;
+                }
+
                 fText.setNullSlidersListener ();
                 g.drawString (text , textPoint.x , textPoint.y);
                 fText.setMinMaxSlider ();
             }
 
-            if (!ultimate || (backGroundColor != null) || ((getArc () != null) && getArc ().width > 0))
-            {
-                if (textWidth > getSize ().width)
-                    setSize (size ((textWidth - getSize ().width + getSize ().width) , getSize ().height));
 
-                if (backGroundColor == null)
-                    g.drawRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
-                else
-                {
-                    g.setColor (backGroundColor);
-                    g.fillRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
-                }
-            }
         }
     }
 

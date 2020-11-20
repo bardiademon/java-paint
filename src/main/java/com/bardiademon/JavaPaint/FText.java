@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -40,6 +42,16 @@ public final class FText extends JFrame
         else
         {
             initComponents ();
+
+            addWindowListener (new WindowAdapter ()
+            {
+                @Override
+                public void windowClosing (WindowEvent e)
+                {
+                    on.onCancel ();
+                }
+            });
+
             setLocationRelativeTo (null);
             setVisible (true);
             on ();
@@ -149,6 +161,10 @@ public final class FText extends JFrame
             {
                 font = jFontChooser.getSelectedFont ();
                 on.onChangedFont (font);
+                lblShowFont.setText (font.toString ()
+                        .replace (font.getClass ().getName () , "")
+                        .replace ("[" , "")
+                        .replace ("]" , ""));
             }
         });
 
@@ -202,7 +218,7 @@ public final class FText extends JFrame
         JLabel lblTC = new JLabel ();
         JLabel lblBC = new JLabel ();
         btnFont = new JButton ();
-        JLabel lblShowFont = new JLabel ();
+        lblShowFont = new JLabel ();
         btnApply = new JButton ();
         btnCancel = new JButton ();
         sHorizontal = new JSlider ();
@@ -226,8 +242,6 @@ public final class FText extends JFrame
                 jPanel3Layout.createParallelGroup (GroupLayout.Alignment.LEADING)
                         .addGap (0 , 37 , Short.MAX_VALUE)
         );
-
-        setDefaultCloseOperation (javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         cLocation.setFont (new java.awt.Font ("Dialog" , Font.PLAIN , 12)); // NOI18N
         cLocation.setModel (new javax.swing.DefaultComboBoxModel <> (new String[] { "Left" , "Right" , "Up" , "Down" , "Center" }));
@@ -403,6 +417,7 @@ public final class FText extends JFrame
     private JSlider sHorizontal;
     private JSlider sVertical;
     private JTextField txtText;
+    private JLabel lblShowFont;
     // End of variables declaration
 
 }
