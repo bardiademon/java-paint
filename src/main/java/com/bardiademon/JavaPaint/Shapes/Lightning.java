@@ -7,19 +7,22 @@ import java.awt.Point;
 public final class Lightning extends Rectangle
 {
     @Override
-    public void paint (Graphics2D g)
+    public void paint (final Graphics2D g)
     {
-        if (getSize () != null && getPoint () != null)
+        final Point point = getPoint ();
+        if (getSize () != null && point != null)
         {
             apply ();
 
-            final Point point1 = point (ctpFirstHalfX (80) , getPoint ().y);
-            final Point point2 = point (getPoint ().x , ctpFirstHalfY (40));
+            final Point allPoint = getAllPoint ();
+
+            final Point point1 = point (ctpFirstHalfX (80) , point.y);
+            final Point point2 = point (point.x , ctpFirstHalfY (40));
             final Point point3 = point (ctpFirstHalfX (70) , ctpFirstHalfY (80));
             final Point point4 = point (ctpFirstHalfX (50) , ctpFirstHalfY (90));
             final Point point5 = point (ctpSecondHalfX (10) , ctpSecondHalfY (35));
             final Point point6 = point (ctpFirstHalfX (98) , ctpSecondHalfY (45));
-            final Point point7 = point (getAllPoint ().x , getAllPoint ().y);
+            final Point point7 = point (allPoint.x , allPoint.y);
             final Point point8 = point (ctpSecondHalfX (40) , ctpSecondHalfY (20));
             final Point point9 = point (ctpSecondHalfX (50) , ctpSecondHalfY (10));
             final Point point10 = point (ctpSecondHalfX (5) , ctpFirstHalfY (60));

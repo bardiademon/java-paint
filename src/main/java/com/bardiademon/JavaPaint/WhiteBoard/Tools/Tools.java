@@ -29,4 +29,6 @@ public interface Tools
     Point getAllPoint (final int index);
 
     void setIndex (final int index);
+
+    void mouseDbClick (final Point point);
 }

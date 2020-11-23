@@ -2,8 +2,6 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.Shapes.Lightning;
-import com.bardiademon.JavaPaint.Shapes.Pentagon;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
@@ -15,6 +13,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.LightningTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.PentagonTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.PolygonTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RightLeftArrowTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RightTriangleTool;
@@ -76,6 +75,8 @@ public final class WhiteBoard extends JPanel
 
     private Tools tool;
 
+    private boolean polygonFinish = true;
+
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
@@ -106,6 +107,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.pentagon.name () , new PentagonTool (this));
         tools.put (SelectedTool.hexagon.name () , new HexagonTool (this));
         tools.put (SelectedTool.lightning.name () , new LightningTool (this));
+        tools.put (SelectedTool.polygon.name () , new PolygonTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
@@ -122,11 +124,26 @@ public final class WhiteBoard extends JPanel
                     if (tool != null)
                     {
                         tool.select ();
-                        tool.mousePressed (e.getPoint ());
-                        selectedArrangePainting = new ArrangePainting (selectedTool.name ());
-                        selectedArrangePainting.setIndex (tool.getIndex ());
-                        final ArrangePainting arrangePainting = selectedArrangePainting;
-                        arrangePaintings.add (arrangePainting);
+
+                        if (polygonFinish)
+                        {
+                            if (selectedTool.equals (SelectedTool.polygon) && e.getClickCount () >= 2)
+                                tool.mouseDbClick (e.getPoint ());
+                            else
+                                tool.mousePressed (e.getPoint ());
+
+                            selectedArrangePainting = new ArrangePainting (selectedTool.name ());
+                            selectedArrangePainting.setIndex (tool.getIndex ());
+
+                            final ArrangePainting arrangePainting = selectedArrangePainting;
+                            arrangePaintings.add (arrangePainting);
+                        }
+                        else tool.mousePressed (e.getPoint ());
+
+                        if (selectedTool.equals (SelectedTool.polygon))
+                            polygonFinish = e.getClickCount () >= 2;
+                        else polygonFinish = true;
+
                         repaint ();
                     }
                 }
@@ -141,7 +158,6 @@ public final class WhiteBoard extends JPanel
                     tool.mouseReleased (e.getPoint ());
                     repaint ();
                 }
-
             }
 
             @Override
@@ -159,53 +175,56 @@ public final class WhiteBoard extends JPanel
             @Override
             public void mouseDragged (MouseEvent e)
             {
-                tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
-                if (tool != null)
+                if (selectedArrangePainting != null)
                 {
-                    if (moving || resizing)
+                    tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
+                    if (tool != null)
                     {
-                        final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
-                        if (point != null)
+                        if (moving || resizing)
                         {
-                            int x = point.x, y = point.y;
-
-                            final int xM = Math.abs (selectedMousePoint.x - e.getX ());
-                            if (xM != 0)
+                            final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
+                            if (point != null)
                             {
-                                if (selectedMousePoint.x > e.getX ())
-                                    x = point.x - xM;
-                                else x = point.x + xM;
+                                int x = point.x, y = point.y;
+
+                                final int xM = Math.abs (selectedMousePoint.x - e.getX ());
+                                if (xM != 0)
+                                {
+                                    if (selectedMousePoint.x > e.getX ())
+                                        x = point.x - xM;
+                                    else x = point.x + xM;
+                                }
+
+                                final int yM = Math.abs (selectedMousePoint.y - e.getY ());
+                                if (yM != 0)
+                                {
+                                    if (selectedMousePoint.y > e.getY ())
+                                        y = point.y - yM;
+                                    else y = point.y + yM;
+                                }
+
+                                selectedMousePoint = e.getPoint ();
+
+                                tool.setIndex (selectedArrangePainting.getIndex ());
+
+
+                                if (moving)
+                                    tool.setPoint (Shape.point (x , y));
+                                else if (resizing)
+                                    tool.mouseDragged (Shape.sizeWithPoint (e.getPoint () , Shape.point (x , y)));
+
+                                setWHXY (null , tool.getPoint (selectedArrangePainting.getIndex ()));
+                                repaint ();
+
+                                resizing = false;
+
+                                return;
                             }
-
-                            final int yM = Math.abs (selectedMousePoint.y - e.getY ());
-                            if (yM != 0)
-                            {
-                                if (selectedMousePoint.y > e.getY ())
-                                    y = point.y - yM;
-                                else y = point.y + yM;
-                            }
-
-                            selectedMousePoint = e.getPoint ();
-
-                            tool.setIndex (selectedArrangePainting.getIndex ());
-
-
-                            if (moving)
-                                tool.setPoint (Shape.point (x , y));
-                            else if (resizing)
-                                tool.mouseDragged (Shape.sizeWithPoint (e.getPoint () , Shape.point (x , y)));
-
-                            setWHXY (null , tool.getPoint (selectedArrangePainting.getIndex ()));
-                            repaint ();
-
-                            resizing = false;
-
-                            return;
                         }
-                    }
 
-                    tool.mouseDragged (e.getPoint ());
-                    repaint ();
+                        tool.mouseDragged (e.getPoint ());
+                        repaint ();
+                    }
                 }
             }
 

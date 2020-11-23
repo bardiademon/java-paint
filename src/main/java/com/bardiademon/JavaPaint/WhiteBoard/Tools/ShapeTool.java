@@ -87,6 +87,12 @@ public class ShapeTool implements Tools
         this.index = index;
     }
 
+    @Override
+    public void mouseDbClick (Point point)
+    {
+
+    }
+
     public int getIndex ()
     {
         return index;

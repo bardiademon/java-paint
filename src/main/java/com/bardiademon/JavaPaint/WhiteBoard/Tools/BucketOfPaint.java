@@ -85,4 +85,10 @@ public final class BucketOfPaint implements Tools
     {
 
     }
+
+    @Override
+    public void mouseDbClick (Point point)
+    {
+
+    }
 }
