@@ -78,4 +78,20 @@ public final class FivePointStarTool extends ShapeTool implements Tools
             fivePointStar.paint (g);
         }
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < fivePointStars.size ())
+            return fivePointStars.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < fivePointStars.size ())
+            return fivePointStars.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

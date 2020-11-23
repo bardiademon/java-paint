@@ -79,6 +79,9 @@ public final class BackgroundPaint
                 case text:
                     text (g , getShape (size));
                     break;
+                case pentagon:
+                    pentagon (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -231,6 +234,13 @@ public final class BackgroundPaint
         final FivePointStar fourPointStar = new FivePointStar ();
         fourPointStar.shape (shape);
         fourPointStar.paint (g);
+    }
+
+    private void pentagon (final Graphics2D g , final Shape shape)
+    {
+        final Pentagon pentagon = new Pentagon ();
+        pentagon.shape (shape);
+        pentagon.paint (g);
     }
 
     private void pen (final Graphics2D g , final Shape shape)

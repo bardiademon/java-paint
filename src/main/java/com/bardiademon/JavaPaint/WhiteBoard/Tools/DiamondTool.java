@@ -66,4 +66,20 @@ public final class DiamondTool extends ShapeTool implements Tools
             diamonds.get (index).paint (g);
         }
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < diamonds.size ())
+            return diamonds.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < diamonds.size ())
+            return diamonds.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

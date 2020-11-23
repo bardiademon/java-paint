@@ -12,6 +12,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.rover12421.opensource:JFontChooser:1.0.5-3" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.8.0" level="project" />
   </component>
   <component name="POM File Configuration" pomFile="" />
 </module>

@@ -69,4 +69,20 @@ public final class RightTriangleTool extends ShapeTool implements Tools
         if (index >= 0 && index < rightTriangles.size ())
             rightTriangles.remove (index);
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < rightTriangles.size ())
+            return rightTriangles.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < rightTriangles.size ())
+            return rightTriangles.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

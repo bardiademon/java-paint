@@ -1,7 +1,9 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
+import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.sun.glass.ui.Size;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,6 +17,15 @@ public class ShapeTool implements Tools
     protected ShapeTool (final WhiteBoard _WhiteBoard)
     {
         whiteBoard = _WhiteBoard;
+    }
+
+    public Shape setShape (final Shape shape)
+    {
+        shape.setColor (whiteBoard.getPaintView ().getColor ());
+        shape.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
+        shape.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
+        shape.setBackgroundColor (Color.BLACK);
+        return shape;
     }
 
     protected void setCursor ()
@@ -79,5 +90,17 @@ public class ShapeTool implements Tools
     public int getIndex ()
     {
         return index;
+    }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        return null;
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        return null;
     }
 }

@@ -24,5 +24,9 @@ public interface Tools
 
     int getIndex ();
 
+    Point getPoint (final int index);
+
+    Point getAllPoint (final int index);
+
     void setIndex (final int index);
 }

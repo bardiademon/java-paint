@@ -69,6 +69,18 @@ public final class BucketOfPaint implements Tools
     }
 
     @Override
+    public Point getPoint (final int index)
+    {
+        return null;
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        return null;
+    }
+
+    @Override
     public void setIndex (int index)
     {
 

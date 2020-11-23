@@ -67,4 +67,20 @@ public final class RightLeftArrowTool extends ShapeTool implements Tools
         if (index >= 0 && index < rightLeftArrows.size ())
             rightLeftArrows.remove (index);
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < rightLeftArrows.size ())
+            return rightLeftArrows.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < rightLeftArrows.size ())
+            return rightLeftArrows.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

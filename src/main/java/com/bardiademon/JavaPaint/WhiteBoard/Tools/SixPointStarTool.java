@@ -67,4 +67,20 @@ public final class SixPointStarTool extends ShapeTool implements Tools
         if (index >= 0 && index < sixPointStars.size ())
             sixPointStars.remove (index);
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < sixPointStars.size ())
+            return sixPointStars.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < sixPointStars.size ())
+            return sixPointStars.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

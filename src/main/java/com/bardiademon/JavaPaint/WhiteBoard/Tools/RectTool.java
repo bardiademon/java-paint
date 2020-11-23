@@ -3,7 +3,6 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.sun.glass.ui.Size;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class RectTool extends ShapeTool implements Tools
     public void mouseDragged (final Point point)
     {
         rectangles.get (index).setSizeWithPoint (point);
+        rectangles.get (index).apply ();
     }
 
     @Override
@@ -40,11 +40,8 @@ public class RectTool extends ShapeTool implements Tools
     public void mousePressed (final Point point)
     {
         final Rectangle rectangle = new Rectangle ();
-        rectangle.setColor (whiteBoard.getPaintView ().getColor ());
-        rectangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         rectangle.setPoint (point);
-        rectangle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        rectangle.setBackgroundColor (Color.BLACK);
+        rectangle.shape (setShape (rectangle));
         rectangles.add (rectangle);
         index = rectangles.size () - 1;
     }
@@ -79,4 +76,19 @@ public class RectTool extends ShapeTool implements Tools
         }
     }
 
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < rectangles.size ())
+            return rectangles.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < rectangles.size ())
+            return rectangles.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

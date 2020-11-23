@@ -77,4 +77,20 @@ public final class CircleTool extends ShapeTool implements Tools
             circle.paint (g);
         }
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < circles.size ())
+            return circles.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < circles.size ())
+            return circles.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

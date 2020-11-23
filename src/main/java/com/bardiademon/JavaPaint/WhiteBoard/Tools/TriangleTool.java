@@ -59,4 +59,20 @@ public final class TriangleTool extends ShapeTool implements Tools
             triangle.paint (g);
         }
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < triangles.size ())
+            return triangles.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < triangles.size ())
+            return triangles.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }

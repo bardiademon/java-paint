@@ -70,5 +70,4 @@ public final class LineTool extends ShapeTool implements Tools
             line.paint (g);
         }
     }
-
 }

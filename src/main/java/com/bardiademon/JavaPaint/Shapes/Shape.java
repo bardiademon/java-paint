@@ -20,10 +20,20 @@ public class Shape extends Pen
         return new Point (x , y);
     }
 
+    public static boolean PointComparison (Point point1 , Point point2)
+    {
+        return (point1.x == point2.x && point1.y == point2.y);
+    }
+
     public void setSizeWithPoint (final Point point)
     {
         if (getPoint () != null)
             setSize (Shape.size (point.x - getPoint ().x , point.y - getPoint ().y));
+    }
+
+    public static Size sizeWithPoint (final Point point1 , Point point2)
+    {
+        return Shape.size (point1.x - point2.x , point1.y - point2.y);
     }
 
     public static Size size (final int width , final int height)

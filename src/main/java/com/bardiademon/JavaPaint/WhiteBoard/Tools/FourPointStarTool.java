@@ -77,4 +77,20 @@ public final class FourPointStarTool extends ShapeTool implements Tools
             fourPointStar.paint (g);
         }
     }
+
+    @Override
+    public Point getPoint (final int index)
+    {
+        if (index >= 0 && index < fourPointStars.size ())
+            return fourPointStars.get (getIndex ()).getPoint ();
+        else return super.getPoint (index);
+    }
+
+    @Override
+    public Point getAllPoint (final int index)
+    {
+        if (index >= 0 && index < fourPointStars.size ())
+            return fourPointStars.get (index).getAllPoint ();
+        else return super.getAllPoint (index);
+    }
 }
