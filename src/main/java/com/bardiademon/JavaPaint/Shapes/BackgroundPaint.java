@@ -82,10 +82,20 @@ public final class BackgroundPaint
                 case pentagon:
                     pentagon (g , getShape (size));
                     break;
+                case hexagon:
+                    hexagon (g , getShape (size));
+                    break;
                 default:
                     break;
             }
         }
+    }
+
+    private void hexagon (Graphics2D g , Shape shape)
+    {
+        final Hexagon hexagon = new Hexagon ();
+        hexagon.shape (shape);
+        hexagon.paint (g);
     }
 
     private void circle (final Graphics2D g , final Shape shape)

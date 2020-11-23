@@ -9,6 +9,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.HexagonTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.PentagonTool;
@@ -101,6 +102,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.right_triangle.name () , new RightTriangleTool (this));
         tools.put (SelectedTool.text.name () , new TextTool (this));
         tools.put (SelectedTool.pentagon.name () , new PentagonTool (this));
+        tools.put (SelectedTool.hexagon.name () , new HexagonTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
