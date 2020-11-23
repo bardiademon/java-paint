@@ -3,7 +3,6 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 import com.bardiademon.JavaPaint.Shapes.RightTriangle;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.sun.glass.ui.Size;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
