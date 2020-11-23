@@ -85,6 +85,9 @@ public final class BackgroundPaint
                 case hexagon:
                     hexagon (g , getShape (size));
                     break;
+                case lightning:
+                    lightning (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -105,6 +108,13 @@ public final class BackgroundPaint
 
         g.setStroke (new BasicStroke (shape.getThickness ()));
         g.fillOval (point.x , point.y , widthHeight.width , widthHeight.height);
+    }
+
+    private void lightning (final Graphics2D g , final Shape shape)
+    {
+        final Lightning lightning = new Lightning ();
+        lightning.shape (shape);
+        lightning.paint (g);
     }
 
     private void rightArrow (final Graphics2D g , final Shape shape)

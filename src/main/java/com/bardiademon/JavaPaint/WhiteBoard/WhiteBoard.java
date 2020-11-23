@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
+import com.bardiademon.JavaPaint.Shapes.Lightning;
 import com.bardiademon.JavaPaint.Shapes.Pentagon;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
@@ -10,6 +11,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.HexagonTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.LightningTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.PentagonTool;
@@ -103,6 +105,7 @@ public final class WhiteBoard extends JPanel
         tools.put (SelectedTool.text.name () , new TextTool (this));
         tools.put (SelectedTool.pentagon.name () , new PentagonTool (this));
         tools.put (SelectedTool.hexagon.name () , new HexagonTool (this));
+        tools.put (SelectedTool.lightning.name () , new LightningTool (this));
 
         paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
 
@@ -485,6 +488,7 @@ public final class WhiteBoard extends JPanel
     {
         super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
+
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
