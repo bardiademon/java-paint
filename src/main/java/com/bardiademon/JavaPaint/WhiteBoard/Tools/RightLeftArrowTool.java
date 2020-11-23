@@ -35,10 +35,7 @@ public final class RightLeftArrowTool extends ShapeTool implements Tools
     {
         final RightLeftArrow rightLeftArrow = new RightLeftArrow ();
         rightLeftArrow.setPoint (point);
-        rightLeftArrow.setColor (whiteBoard.getPaintView ().getColor ());
-        rightLeftArrow.setBackgroundColor (Color.BLACK);
-        rightLeftArrow.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        rightLeftArrow.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
+        rightLeftArrow.shape (setShape (rightLeftArrow));
         rightLeftArrows.add (rightLeftArrow);
         setIndex (rightLeftArrows.size () - 1);
     }

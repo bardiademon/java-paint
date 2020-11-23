@@ -53,11 +53,8 @@ public final class TextTool extends ShapeTool implements Tools
 
         final Text text = new Text (this);
         text.setArc (Shape.size (10 , 10));
-        text.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        text.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         text.setPoint (point);
-        text.setColor (whiteBoard.getPaintView ().getColor ());
-        text.setBackgroundColor (Color.BLACK);
+        text.shape (setShape (text));
         texts.add (text);
         setIndex (texts.size () - 1);
     }

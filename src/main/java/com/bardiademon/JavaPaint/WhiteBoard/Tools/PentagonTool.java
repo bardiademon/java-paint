@@ -35,10 +35,7 @@ public final class PentagonTool extends ShapeTool implements Tools
     {
         final Pentagon pentagon = new Pentagon ();
         pentagon.setPoint (point);
-        pentagon.setBackgroundColor (Color.BLACK);
-        pentagon.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        pentagon.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
-        pentagon.setColor (whiteBoard.getPaintView ().getColor ());
+        pentagon.shape (setShape (pentagon));
         pentagons.add (pentagon);
         setIndex (pentagons.size () - 1);
     }

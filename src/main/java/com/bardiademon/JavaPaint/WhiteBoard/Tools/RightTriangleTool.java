@@ -35,10 +35,7 @@ public final class RightTriangleTool extends ShapeTool implements Tools
     {
         final RightTriangle rightTriangle = new RightTriangle ();
         rightTriangle.setPoint (point);
-        rightTriangle.setColor (whiteBoard.getPaintView ().getColor ());
-        rightTriangle.setBackgroundColor (Color.BLACK);
-        rightTriangle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        rightTriangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
+        rightTriangle.shape (setShape (rightTriangle));
         rightTriangles.add (rightTriangle);
         setIndex (rightTriangles.size () - 1);
     }

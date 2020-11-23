@@ -35,10 +35,7 @@ public final class SixPointStarTool extends ShapeTool implements Tools
     {
         SixPointStar sixPointStar = new SixPointStar ();
         sixPointStar.setPoint (point);
-        sixPointStar.setBackgroundColor (Color.BLACK);
-        sixPointStar.setColor (whiteBoard.getPaintView ().getColor ());
-        sixPointStar.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        sixPointStar.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
+        sixPointStar.shape (setShape (sixPointStar));
         sixPointStars.add (sixPointStar);
         setIndex (sixPointStars.size () - 1);
     }

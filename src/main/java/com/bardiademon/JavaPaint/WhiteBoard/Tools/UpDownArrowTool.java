@@ -35,10 +35,7 @@ public final class UpDownArrowTool extends ShapeTool implements Tools
     {
         final UpDownArrow upDownArrow = new UpDownArrow ();
         upDownArrow.setPoint (point);
-        upDownArrow.setColor (whiteBoard.getPaintView ().getColor ());
-        upDownArrow.setBackgroundColor (Color.BLACK);
-        upDownArrow.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
-        upDownArrow.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
+        upDownArrow.shape (setShape (upDownArrow));
         upDownArrows.add (upDownArrow);
         setIndex (upDownArrows.size () - 1);
     }

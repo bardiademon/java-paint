@@ -42,9 +42,8 @@ public final class FivePointStarTool extends ShapeTool implements Tools
     public void mousePressed (final Point point)
     {
         FivePointStar fivePointStar = new FivePointStar ();
-        fivePointStar.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         fivePointStar.setPoint (point);
-        fivePointStar.setColor (whiteBoard.getPaintView ().getColor ());
+        fivePointStar.shape (setShape (fivePointStar));
         fivePointStars.add (fivePointStar);
         index = fivePointStars.size () - 1;
     }

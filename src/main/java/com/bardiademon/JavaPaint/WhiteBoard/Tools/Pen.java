@@ -64,9 +64,8 @@ public final class Pen extends ShapeTool implements Tools
     {
         final Rectangle rectangle = new Rectangle ();
         rectangle.setSize (Shape.size (1 , 1));
-        rectangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         rectangle.setPoint (point);
-        rectangle.setColor (whiteBoard.getPaintView ().getColor ());
+        rectangle.shape (setShape (rectangle));
         return rectangle;
     }
 

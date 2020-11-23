@@ -41,9 +41,8 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     public void mousePressed (final Point point)
     {
         final FourPointStar fourPointStar = new FourPointStar ();
-        fourPointStar.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         fourPointStar.setPoint (point);
-        fourPointStar.setColor (whiteBoard.getPaintView ().getColor ());
+        fourPointStar.shape (setShape (fourPointStar));
         fourPointStars.add (fourPointStar);
         index = fourPointStars.size () - 1;
     }

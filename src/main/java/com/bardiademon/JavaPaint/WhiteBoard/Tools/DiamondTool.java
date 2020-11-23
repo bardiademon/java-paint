@@ -34,11 +34,8 @@ public final class DiamondTool extends ShapeTool implements Tools
     public void mousePressed (final Point point)
     {
         final Diamond diamond = new Diamond ();
-        diamond.setColor (whiteBoard.getPaintView ().getColor ());
         diamond.setPoint (point);
-        diamond.setBackgroundColor (Color.BLACK);
-        diamond.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        diamond.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
+        diamond.shape (setShape (diamond));
         diamonds.add (diamond);
         index = diamonds.size () - 1;
     }

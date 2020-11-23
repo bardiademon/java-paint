@@ -41,9 +41,7 @@ public final class CircleTool extends ShapeTool implements Tools
     {
         final Circle circle = new Circle ();
         circle.setPoint (point);
-        circle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
-        circle.setColor (whiteBoard.getPaintView ().getColor ());
-        circle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
+        circle.shape (setShape (circle));
         circles.add (circle);
         setIndex (circles.size () - 1);
     }

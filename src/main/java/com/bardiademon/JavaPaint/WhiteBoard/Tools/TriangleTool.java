@@ -41,10 +41,7 @@ public final class TriangleTool extends ShapeTool implements Tools
     {
         final Triangle triangle = new Triangle ();
         triangle.setPoint (point);
-        triangle.setColor (whiteBoard.getPaintView ().getColor ());
-        triangle.setBackgroundColor (Color.BLACK);
-        triangle.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
-        triangle.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
+        triangle.shape (setShape (triangle));
         triangles.add (triangle);
         index = triangles.size () - 1;
     }
