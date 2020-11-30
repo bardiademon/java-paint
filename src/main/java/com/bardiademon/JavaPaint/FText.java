@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint;
 
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.Shapes.Text;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
@@ -20,17 +21,30 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import say.swing.JFontChooser;
 
+@bardiademon
 public final class FText extends JFrame
 {
+
+
+    @bardiademon
     private Color color = Color.BLACK;
+
+    @bardiademon
     private Color backgroundColor = Color.WHITE;
+
+    @bardiademon
     private Font font;
+
+    @bardiademon
     private final Text text;
 
+    @bardiademon
     private final On on;
 
+    @bardiademon
     /**
      * Creates new form FText
      */
@@ -58,6 +72,7 @@ public final class FText extends JFrame
         }
     }
 
+    @bardiademon
     public void setMinMaxSlider ()
     {
         sVertical.setMinimum (text.ctpY (10));
@@ -67,12 +82,14 @@ public final class FText extends JFrame
         sHorizontal.setMaximum (Math.abs (text.getAllPoint ().x - text.allX2 (text.getTextWidth () , text.getTextPoint ().x)));
     }
 
+    @bardiademon
     public void setNullSlidersListener ()
     {
         sVertical.addChangeListener (null);
         sHorizontal.addChangeListener (null);
     }
 
+    @bardiademon
     public void setSlider ()
     {
         setMinMaxSlider ();
@@ -97,6 +114,7 @@ public final class FText extends JFrame
         });
     }
 
+    @bardiademon
     private void on ()
     {
         jpTextColor.addMouseListener (new MouseAdapter ()
@@ -244,7 +262,7 @@ public final class FText extends JFrame
         );
 
         cLocation.setFont (new java.awt.Font ("Dialog" , Font.PLAIN , 12)); // NOI18N
-        cLocation.setModel (new javax.swing.DefaultComboBoxModel <> (new String[] { "Left" , "Right" , "Up" , "Down" , "Center" }));
+        cLocation.setModel (new javax.swing.DefaultComboBoxModel <> (new String[]{ "Left" , "Right" , "Up" , "Down" , "Center" }));
 
         btnCenterVertical.setText ("Center Vertical");
 
@@ -386,6 +404,7 @@ public final class FText extends JFrame
     }// </editor-fold>
 
 
+    @bardiademon
     public interface On
     {
         void onChangedFont (final Font _Font);
@@ -405,6 +424,8 @@ public final class FText extends JFrame
         void onApply ();
     }
 
+
+    @bardiademon
     // Variables declaration - do not modify
     private JButton btnApply;
     private JButton btnCancel;

@@ -1,18 +1,23 @@
 package com.bardiademon.JavaPaint;
 
 import java.io.File;
+
 import org.apache.commons.io.FilenameUtils;
 
-public class Main
+@bardiademon
+public final class Main
 {
 
+    @bardiademon
     public static final String PATH_ICON = System.getProperty ("user.dir") + File.separator + "Icon" + File.separator;
 
+    @bardiademon
     public static void main (String[] args)
     {
         new PaintView ();
     }
 
+    @bardiademon
     public static File getFile (String name)
     {
         final String extension = FilenameUtils.getExtension (name);

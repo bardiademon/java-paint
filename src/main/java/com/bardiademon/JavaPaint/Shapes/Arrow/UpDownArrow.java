@@ -1,11 +1,15 @@
 package com.bardiademon.JavaPaint.Shapes.Arrow;
 
+import com.bardiademon.JavaPaint.bardiademon;
+
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+@bardiademon
 public final class UpDownArrow extends Arrow
 {
+    @bardiademon
     @Override
     public void paint (final Graphics2D g)
     {

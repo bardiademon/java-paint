@@ -2,38 +2,57 @@ package com.bardiademon.JavaPaint.Shapes;
 
 import com.bardiademon.JavaPaint.FText;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TextTool;
+import com.bardiademon.JavaPaint.bardiademon;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+@bardiademon
 public final class Text extends Rectangle
 {
+    @bardiademon
     private final TextTool textTool;
+
+    @bardiademon
     private boolean ultimate;
 
+    @bardiademon
     private FText fText;
 
+    @bardiademon
     private Font font;
+
+    @bardiademon
     private Color color;
+
+    @bardiademon
     private Color backGroundColor;
+
+    @bardiademon
     private String text;
 
+    @bardiademon
     private Point textPoint;
 
+    @bardiademon
     private int textWidth;
 
+    @bardiademon
     public Text (final TextTool textTool)
     {
         this.textTool = textTool;
     }
 
+    @bardiademon
     public void close ()
     {
         if (fText != null) fText.dispose ();
     }
 
+    @bardiademon
     public void afterPaint ()
     {
         fText = new FText (new FText.On ()
@@ -103,7 +122,7 @@ public final class Text extends Rectangle
         textTool.repaint ();
     }
 
-
+    @bardiademon
     @Override
     public void paint (Graphics2D g)
     {
@@ -156,11 +175,13 @@ public final class Text extends Rectangle
         }
     }
 
+    @bardiademon
     public int getTextWidth ()
     {
         return textWidth;
     }
 
+    @bardiademon
     public Point getTextPoint ()
     {
         return textPoint;

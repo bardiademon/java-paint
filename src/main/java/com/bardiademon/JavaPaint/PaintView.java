@@ -3,9 +3,14 @@ package com.bardiademon.JavaPaint;
 import com.bardiademon.JavaPaint.Shapes.BackgroundPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Point;
-import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -15,13 +20,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-public class PaintView extends JFrame
+@bardiademon
+public final class PaintView extends JFrame
 {
 
+    @bardiademon
     public static final BackgroundPaint BACKGROUND_PAINT = new BackgroundPaint ();
 
+    @bardiademon
     private Color color;
 
+    @bardiademon
     public PaintView ()
     {
         initComponents ();
@@ -30,23 +39,33 @@ public class PaintView extends JFrame
 
         setOnClick ();
 
+        whiteBoard.setBackground (Color.WHITE);
     }
 
+    @bardiademon
     private void setOnClick ()
     {
-        btnColor.addActionListener (e ->
+        btnColor.addMouseListener (new MouseAdapter ()
         {
-            Color selectColor = JColorChooser.showDialog (null , "Select color" , null);
-            if (selectColor != null) color = selectColor;
-            else color = Color.BLACK;
+            @Override
+            public void mouseClicked (MouseEvent e)
+            {
+                Color selectColor = JColorChooser.showDialog (null , "Select color" , null);
+                if (selectColor != null) color = selectColor;
+                else color = Color.BLACK;
+
+                btnColor.setBackground (color);
+            }
         });
     }
 
+    @bardiademon
     public void setCursorPoint (Point cursorPoint)
     {
         lblCursorPoint.setText (String.format ("X = %d , Y = %d" , cursorPoint.x , cursorPoint.y));
     }
 
+    @bardiademon
     public Color getColor ()
     {
         return color;
@@ -87,7 +106,7 @@ public class PaintView extends JFrame
         colorPicker = new BtnPanel ();
         text = new BtnPanel (SelectedTool.text);
         isFill = new JCheckBox ();
-        btnColor = new JButton ();
+        btnColor = new JPanel ();
         thickness = new JSlider ();
         jLabel1 = new JLabel ();
         rectShape = new BtnPanel (SelectedTool.rect);
@@ -107,7 +126,12 @@ public class PaintView extends JFrame
 
         whiteBoard = new WhiteBoard (this);
 
+        image = new BtnPanel (whiteBoard , SelectedTool.image);
+
         jRadioButton1.setText ("jRadioButton1");
+
+        btnColor.setBackground (Color.BLACK);
+        btnColor.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
 
         setDefaultCloseOperation (javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground (new java.awt.Color (204 , 204 , 204));
@@ -574,6 +598,19 @@ public class PaintView extends JFrame
                         .addGap (0 , 27 , Short.MAX_VALUE)
         );
 
+        image.setBackground (new java.awt.Color (255 , 255 , 255));
+
+        javax.swing.GroupLayout imageLayout = new javax.swing.GroupLayout (image);
+        image.setLayout (imageLayout);
+        imageLayout.setHorizontalGroup (
+                imageLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap (0 , 31 , Short.MAX_VALUE)
+        );
+        imageLayout.setVerticalGroup (
+                imageLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap (0 , 27 , Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout (jPanel3);
         jPanel3.setLayout (jPanel3Layout);
         jPanel3Layout.setHorizontalGroup (
@@ -586,11 +623,14 @@ public class PaintView extends JFrame
                                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent (bucketOfPaint , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent (eraser , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent (eraser , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap (0 , 0 , Short.MAX_VALUE))
                                         .addGroup (jPanel3Layout.createSequentialGroup ()
                                                 .addComponent (text , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent (colorPicker , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent (colorPicker , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
+                                                .addComponent (image , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup (
@@ -604,7 +644,8 @@ public class PaintView extends JFrame
                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup (jPanel3Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent (colorPicker , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent (text , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent (text , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent (image , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
         );
 
@@ -612,9 +653,6 @@ public class PaintView extends JFrame
         isFill.setFont (new java.awt.Font ("Dubai" , 0 , 14)); // NOI18N
         isFill.setForeground (new java.awt.Color (0 , 0 , 0));
         isFill.setText ("Fill");
-
-        btnColor.setFont (new java.awt.Font ("Dialog" , 0 , 12)); // NOI18N
-        btnColor.setText ("Color");
 
         thickness.setBackground (new java.awt.Color (255 , 255 , 255));
         thickness.setForeground (new java.awt.Color (0 , 0 , 0));
@@ -700,6 +738,19 @@ public class PaintView extends JFrame
         lblCursorPoint.setHorizontalAlignment (javax.swing.SwingConstants.CENTER);
         lblCursorPoint.setText ("X = 0 , Y = 0");
 
+        btnColor.setPreferredSize (new java.awt.Dimension (60 , 60));
+
+        javax.swing.GroupLayout btnColorLayout = new javax.swing.GroupLayout (btnColor);
+        btnColor.setLayout (btnColorLayout);
+        btnColorLayout.setHorizontalGroup (
+                btnColorLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap (0 , 60 , Short.MAX_VALUE)
+        );
+        btnColorLayout.setVerticalGroup (
+                btnColorLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap (0 , 60 , Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout (jPanel1);
         jPanel1.setLayout (jPanel1Layout);
         jPanel1Layout.setHorizontalGroup (
@@ -709,11 +760,11 @@ public class PaintView extends JFrame
                                 .addComponent (jPanel4 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap (32 , 32 , 32)
                                 .addComponent (jPanel3 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , 50 , Short.MAX_VALUE)
                                 .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent (isFill)
-                                        .addComponent (btnColor))
-                                .addGap (33 , 33 , 33)
+                                        .addComponent (btnColor , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap (37 , 37 , 37)
                                 .addComponent (pWHXY , javax.swing.GroupLayout.PREFERRED_SIZE , 251 , javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup (jPanel1Layout.createSequentialGroup ()
@@ -723,7 +774,7 @@ public class PaintView extends JFrame
                                                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , 16 , javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent (thickness , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addComponent (jLabel1))
-                                                .addContainerGap (15 , Short.MAX_VALUE))
+                                                .addContainerGap (24 , Short.MAX_VALUE))
                                         .addGroup (javax.swing.GroupLayout.Alignment.TRAILING , jPanel1Layout.createSequentialGroup ()
                                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
                                                 .addComponent (lblCursorPoint , javax.swing.GroupLayout.PREFERRED_SIZE , 129 , javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -735,48 +786,34 @@ public class PaintView extends JFrame
                                 .addContainerGap ()
                                 .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup (jPanel1Layout.createSequentialGroup ()
-                                                .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup (jPanel1Layout.createSequentialGroup ()
-                                                                .addComponent (isFill)
-                                                                .addGap (18 , 18 , 18)
-                                                                .addComponent (btnColor))
-                                                        .addComponent (jPanel3 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
+                                                .addComponent (thickness , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent (jLabel1)
+                                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
+                                                .addComponent (lblCursorPoint , javax.swing.GroupLayout.PREFERRED_SIZE , 31 , javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup (jPanel1Layout.createSequentialGroup ()
-                                                .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING , false)
+                                                .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent (jPanel3 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent (pWHXY , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup (jPanel1Layout.createSequentialGroup ()
-                                                                .addComponent (thickness , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent (jLabel1)
-                                                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
-                                                                .addComponent (lblCursorPoint , javax.swing.GroupLayout.PREFERRED_SIZE , 31 , javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent (jPanel4 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap (0 , 12 , Short.MAX_VALUE))))
-        );
-
-        whiteBoard.setBackground (new java.awt.Color (255 , 255 , 255));
-
-        javax.swing.GroupLayout whiteBoardLayout = new javax.swing.GroupLayout (whiteBoard);
-        whiteBoard.setLayout (whiteBoardLayout);
-        whiteBoardLayout.setHorizontalGroup (
-                whiteBoardLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap (0 , 0 , Short.MAX_VALUE)
-        );
-        whiteBoardLayout.setVerticalGroup (
-                whiteBoardLayout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap (0 , 451 , Short.MAX_VALUE)
+                                                        .addGroup (jPanel1Layout.createParallelGroup (javax.swing.GroupLayout.Alignment.TRAILING , false)
+                                                                .addGroup (javax.swing.GroupLayout.Alignment.LEADING , jPanel1Layout.createSequentialGroup ()
+                                                                        .addComponent (isFill)
+                                                                        .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
+                                                                        .addComponent (btnColor , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent (jPanel4 , javax.swing.GroupLayout.Alignment.LEADING , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap (0 , 0 , Short.MAX_VALUE)))
+                                .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout (getContentPane ());
         getContentPane ().setLayout (layout);
         layout.setHorizontalGroup (
                 layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup (javax.swing.GroupLayout.Alignment.TRAILING , layout.createSequentialGroup ()
+                        .addGroup (layout.createSequentialGroup ()
                                 .addContainerGap ()
-                                .addGroup (layout.createParallelGroup (javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
-                                        .addComponent (jPanel1 , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
+                                .addGroup (layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent (jPanel1 , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
+                                        .addComponent (whiteBoard , javax.swing.GroupLayout.Alignment.TRAILING , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
                                 .addContainerGap ())
         );
         layout.setVerticalGroup (
@@ -784,16 +821,17 @@ public class PaintView extends JFrame
                         .addGroup (layout.createSequentialGroup ()
                                 .addContainerGap ()
                                 .addComponent (jPanel1 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
+                                .addGap (18 , 18 , 18)
+                                .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , 397 , Short.MAX_VALUE)
                                 .addContainerGap ())
         );
 
         pack ();
     }// </editor-fold>
 
+    @bardiademon
     // Variables declaration - do not modify
-    private JButton btnColor;
+    private JPanel btnColor;
     private BtnPanel bucketOfPaint;
     private BtnPanel circleShape;
     private BtnPanel cloudCalloutShape;
@@ -845,5 +883,6 @@ public class PaintView extends JFrame
 
     public JLabel lblCursorPoint;
 
+    private BtnPanel image;
     // End of variables declaration
 }

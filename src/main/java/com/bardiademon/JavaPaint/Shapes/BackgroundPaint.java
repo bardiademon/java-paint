@@ -8,7 +8,9 @@ import com.bardiademon.JavaPaint.Shapes.Stars.FivePointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.FourPointStar;
 import com.bardiademon.JavaPaint.Shapes.Stars.SixPointStar;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.SelectedTool;
+import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -19,9 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+@bardiademon
 public final class BackgroundPaint
 {
 
+    @bardiademon
     public void paint (final Graphics2D g , final SelectedTool selectedTool , final Point point , final Size size)
     {
         if (selectedTool != null)
@@ -88,12 +92,16 @@ public final class BackgroundPaint
                 case lightning:
                     lightning (g , getShape (size));
                     break;
+                case image:
+                    image (g , getShape (size));
+                    break;
                 default:
                     break;
             }
         }
     }
 
+    @bardiademon
     private void hexagon (Graphics2D g , Shape shape)
     {
         final Hexagon hexagon = new Hexagon ();
@@ -101,6 +109,7 @@ public final class BackgroundPaint
         hexagon.paint (g);
     }
 
+    @bardiademon
     private void circle (final Graphics2D g , final Shape shape)
     {
         Point point = shape.getPoint ();
@@ -110,6 +119,7 @@ public final class BackgroundPaint
         g.fillOval (point.x , point.y , widthHeight.width , widthHeight.height);
     }
 
+    @bardiademon
     private void lightning (final Graphics2D g , final Shape shape)
     {
         final Lightning lightning = new Lightning ();
@@ -117,6 +127,7 @@ public final class BackgroundPaint
         lightning.paint (g);
     }
 
+    @bardiademon
     private void rightArrow (final Graphics2D g , final Shape shape)
     {
         final RightLeftArrow rightLeftArrow = new RightLeftArrow ();
@@ -124,6 +135,7 @@ public final class BackgroundPaint
         rightLeftArrow.paint (g);
     }
 
+    @bardiademon
     private void upArrow (final Graphics2D g , final Shape shape)
     {
         final UpDownArrow upDownArrow = new UpDownArrow ();
@@ -131,6 +143,7 @@ public final class BackgroundPaint
         upDownArrow.paint (g);
     }
 
+    @bardiademon
     private void bucketOfPaint (final Graphics2D g , final Shape shape)
     {
         final File file = Main.getFile ("ic_paint_bucket");
@@ -147,6 +160,24 @@ public final class BackgroundPaint
         }
     }
 
+    @bardiademon
+    private void image (final Graphics2D g , final Shape shape)
+    {
+        final File file = Main.getFile ("ic_wallpaper");
+        if (file != null)
+        {
+            try
+            {
+                Image imgBucketOfPaint = ImageIO.read (file).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR);
+                g.drawImage (imgBucketOfPaint , shape.getPoint ().x , shape.getSize ().height , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
+    }
+
+    @bardiademon
     private void rect (final Graphics2D g , final Shape shape)
     {
         Point point = shape.getPoint ();
@@ -156,6 +187,7 @@ public final class BackgroundPaint
         g.fillRect (point.x , point.y , size.width , size.height);
     }
 
+    @bardiademon
     private void roundRect (final Graphics2D g , final Shape shape)
     {
         Point point = shape.getPoint ();
@@ -165,6 +197,7 @@ public final class BackgroundPaint
         g.fillRoundRect (point.x , point.y , size.width , size.height , 3 , 3);
     }
 
+    @bardiademon
     private void rightTriangle (final Graphics2D g , final Shape shape)
     {
         final RightTriangle rightTriangle = new RightTriangle ();
@@ -172,6 +205,7 @@ public final class BackgroundPaint
         rightTriangle.paint (g);
     }
 
+    @bardiademon
     private void text (final Graphics2D g , final Shape shape)
     {
         File icA = Main.getFile ("ic_a");
@@ -187,6 +221,7 @@ public final class BackgroundPaint
         }
     }
 
+    @bardiademon
     private void polygon (final Graphics2D g , final Shape shape)
     {
         Point point = shape.getPoint ();
@@ -198,6 +233,7 @@ public final class BackgroundPaint
         g.drawLine (size.width + 5 , size.height - 5 , size.width + 5 , size.height);
     }
 
+    @bardiademon
     private void triangle (final Graphics2D g , final Size size)
     {
         g.setStroke (new BasicStroke (3));
@@ -214,10 +250,12 @@ public final class BackgroundPaint
         g.drawLine (point2.x , point2.y , point3.x , point3.y);
     }
 
+    @bardiademon
     public void heart (final Graphics2D g , final Size size)
     {
     }
 
+    @bardiademon
     private void diamond (final Graphics2D g , final Shape shape)
     {
         final Diamond diamond = new Diamond ();
@@ -225,6 +263,7 @@ public final class BackgroundPaint
         diamond.paint (g);
     }
 
+    @bardiademon
     private void line (final Graphics2D g , final Shape shape)
     {
         final Line line = new Line ();
@@ -235,6 +274,7 @@ public final class BackgroundPaint
         line.paint (g);
     }
 
+    @bardiademon
     private void fourStar (final Graphics2D g , final Shape shape)
     {
         final FourPointStar fourPointStar = new FourPointStar ();
@@ -242,6 +282,7 @@ public final class BackgroundPaint
         fourPointStar.paint (g);
     }
 
+    @bardiademon
     private void sixStar (final Graphics2D g , final Shape shape)
     {
         final SixPointStar fourPointStar = new SixPointStar ();
@@ -249,6 +290,7 @@ public final class BackgroundPaint
         fourPointStar.paint (g);
     }
 
+    @bardiademon
     private void fiveStar (final Graphics2D g , final Shape shape)
     {
         final FivePointStar fourPointStar = new FivePointStar ();
@@ -256,6 +298,7 @@ public final class BackgroundPaint
         fourPointStar.paint (g);
     }
 
+    @bardiademon
     private void pentagon (final Graphics2D g , final Shape shape)
     {
         final Pentagon pentagon = new Pentagon ();
@@ -263,6 +306,7 @@ public final class BackgroundPaint
         pentagon.paint (g);
     }
 
+    @bardiademon
     private void pen (final Graphics2D g , final Shape shape)
     {
         File icPen = Main.getFile ("ic_pen");
@@ -278,6 +322,7 @@ public final class BackgroundPaint
         }
     }
 
+    @bardiademon
     private Shape getShape (final Size size)
     {
         int width = size.width / 2;

@@ -3,40 +3,50 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.Shapes.Text;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
+
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+@bardiademon
 public final class TextTool extends ShapeTool implements Tools
 {
+    @bardiademon
     private final List <Text> texts = new ArrayList <> ();
 
+    @bardiademon
     private boolean ultimate;
 
+    @bardiademon
     public TextTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
     }
 
+    @bardiademon
     @Override
     public void mouseDragged (final Point point)
     {
         texts.get (getIndex ()).setSizeWithPoint (point);
     }
 
+    @bardiademon
     @Override
     public void mouseDragged (final Size size)
     {
         texts.get (getIndex ()).setSize (size);
     }
 
+    @bardiademon
     public void setUltimate ()
     {
         this.ultimate = true;
     }
 
+    @bardiademon
     @Override
     public void mousePressed (final Point point)
     {
@@ -58,17 +68,20 @@ public final class TextTool extends ShapeTool implements Tools
         setIndex (texts.size () - 1);
     }
 
+    @bardiademon
     public void repaint ()
     {
         whiteBoard.repaint ();
     }
 
+    @bardiademon
     @Override
     public void mouseReleased (final Point point)
     {
         texts.get (getIndex ()).afterPaint ();
     }
 
+    @bardiademon
     @Override
     public void paint (final Graphics2D g , final int index)
     {
@@ -80,6 +93,7 @@ public final class TextTool extends ShapeTool implements Tools
         }
     }
 
+    @bardiademon
     @Override
     public void setPoint (final Point point)
     {
@@ -87,6 +101,7 @@ public final class TextTool extends ShapeTool implements Tools
             texts.get (getIndex ()).setPoint (point);
     }
 
+    @bardiademon
     @Override
     public void remove (final int index)
     {
@@ -94,6 +109,7 @@ public final class TextTool extends ShapeTool implements Tools
             texts.remove (index);
     }
 
+    @bardiademon
     public WhiteBoard getWhiteBoard ()
     {
         return super.whiteBoard;

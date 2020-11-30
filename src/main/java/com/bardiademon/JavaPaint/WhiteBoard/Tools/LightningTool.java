@@ -2,33 +2,42 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Lightning;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
+
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+@bardiademon
 public final class LightningTool extends ShapeTool implements Tools
 {
+
+    @bardiademon
     private final List <Lightning> lightnings = new ArrayList <> ();
 
+    @bardiademon
     public LightningTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
     }
 
+    @bardiademon
     @Override
     public void mouseDragged (final Point point)
     {
         lightnings.get (getIndex ()).setSizeWithPoint (point);
     }
 
+    @bardiademon
     @Override
     public void mouseDragged (final Size size)
     {
         lightnings.get (getIndex ()).setSize (size);
     }
 
+    @bardiademon
     @Override
     public void mousePressed (final Point point)
     {
@@ -39,6 +48,7 @@ public final class LightningTool extends ShapeTool implements Tools
         setIndex (lightnings.size () - 1);
     }
 
+    @bardiademon
     @Override
     public void paint (final Graphics2D g , final int index)
     {
@@ -50,6 +60,7 @@ public final class LightningTool extends ShapeTool implements Tools
         }
     }
 
+    @bardiademon
     @Override
     public void setPoint (final Point point)
     {
@@ -57,6 +68,7 @@ public final class LightningTool extends ShapeTool implements Tools
             lightnings.get (getIndex ()).setPoint (point);
     }
 
+    @bardiademon
     @Override
     public void remove (final int index)
     {
@@ -64,6 +76,7 @@ public final class LightningTool extends ShapeTool implements Tools
             lightnings.remove (index);
     }
 
+    @bardiademon
     @Override
     public Point getPoint (final int index)
     {
@@ -72,6 +85,7 @@ public final class LightningTool extends ShapeTool implements Tools
         else return null;
     }
 
+    @bardiademon
     @Override
     public Point getAllPoint (final int index)
     {

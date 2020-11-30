@@ -2,7 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.Shapes.Shape;
+import com.bardiademon.JavaPaint.Shapes.*;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
@@ -24,16 +24,21 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.TextTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.Tools;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.TriangleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.UpDownArrowTool;
+import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
+
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -47,36 +52,51 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
-
-public final class WhiteBoard extends JPanel
+@bardiademon
+public final class WhiteBoard extends JLabel
 {
 
+    @bardiademon
     private Robot robot;
 
+    @bardiademon
     public static SelectedTool selectedTool = SelectedTool.pen;
 
+    @bardiademon
     private final PaintView paintView;
 
+    @bardiademon
     private final Map <String, Tools> tools = new LinkedHashMap <> ();
 
+    @bardiademon
     private final List <ArrangePainting> arrangePaintings = new ArrayList <> ();
 
+    @bardiademon
     private final Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
 
+    @bardiademon
     private ArrangePainting selectedArrangePainting;
 
+    @bardiademon
     private boolean moving = false, resizing = false;
 
+    @bardiademon
     private Color backgroundColor;
 
+    @bardiademon
     private Point selectedMousePoint;
 
+    @bardiademon
     private Tools tool;
 
+    @bardiademon
     private boolean polygonFinish = true;
 
+    @bardiademon
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
@@ -149,6 +169,7 @@ public final class WhiteBoard extends JPanel
                 }
             }
 
+            @bardiademon
             @Override
             public void mouseReleased (MouseEvent e)
             {
@@ -160,6 +181,7 @@ public final class WhiteBoard extends JPanel
                 }
             }
 
+            @bardiademon
             @Override
             public void mouseClicked (MouseEvent e)
             {
@@ -172,6 +194,7 @@ public final class WhiteBoard extends JPanel
 
         addMouseMotionListener (new MouseMotionListener ()
         {
+            @bardiademon
             @Override
             public void mouseDragged (MouseEvent e)
             {
@@ -228,6 +251,7 @@ public final class WhiteBoard extends JPanel
                 }
             }
 
+            @bardiademon
             @Override
             public void mouseMoved (MouseEvent e)
             {
@@ -275,9 +299,17 @@ public final class WhiteBoard extends JPanel
 
         onKeyListener ();
 
+        addComponentListener (new ComponentAdapter ()
+        {
+            @Override
+            public void componentResized (ComponentEvent e)
+            {
+                setBackgroundImage ();
+            }
+        });
     }
 
-
+    @bardiademon
     private void setFocus ()
     {
         setFocusable (true);
@@ -285,6 +317,7 @@ public final class WhiteBoard extends JPanel
         requestFocusInWindow ();
     }
 
+    @bardiademon
     private void onKeyListener ()
     {
         super.addKeyListener (new KeyListener ()
@@ -294,6 +327,7 @@ public final class WhiteBoard extends JPanel
             {
             }
 
+            @bardiademon
             @Override
             public void keyPressed (KeyEvent e)
             {
@@ -304,6 +338,7 @@ public final class WhiteBoard extends JPanel
                 }
             }
 
+            @bardiademon
             @Override
             public void keyReleased (KeyEvent e)
             {
@@ -317,6 +352,7 @@ public final class WhiteBoard extends JPanel
             {
             }
 
+            @bardiademon
             @Override
             public void keyPressed (KeyEvent e)
             {
@@ -328,6 +364,7 @@ public final class WhiteBoard extends JPanel
                 else invokeKeyReleased = true;
             }
 
+            @bardiademon
             @Override
             public void keyReleased (KeyEvent e)
             {
@@ -341,6 +378,7 @@ public final class WhiteBoard extends JPanel
             {
             }
 
+            @bardiademon
             @Override
             public void keyPressed (KeyEvent e)
             {
@@ -352,6 +390,7 @@ public final class WhiteBoard extends JPanel
                 else invokeKeyReleased = true;
             }
 
+            @bardiademon
             @Override
             public void keyReleased (KeyEvent e)
             {
@@ -365,6 +404,7 @@ public final class WhiteBoard extends JPanel
             {
             }
 
+            @bardiademon
             @Override
             public void keyPressed (KeyEvent e)
             {
@@ -376,6 +416,7 @@ public final class WhiteBoard extends JPanel
                 else invokeKeyReleased = true;
             }
 
+            @bardiademon
             @Override
             public void keyReleased (KeyEvent e)
             {
@@ -384,11 +425,13 @@ public final class WhiteBoard extends JPanel
         };
         final KeyListener yListener = new KeyListener ()
         {
+            @bardiademon
             @Override
             public void keyTyped (KeyEvent e)
             {
             }
 
+            @bardiademon
             @Override
             public void keyPressed (KeyEvent e)
             {
@@ -400,6 +443,7 @@ public final class WhiteBoard extends JPanel
                 else invokeKeyReleased = true;
             }
 
+            @bardiademon
             @Override
             public void keyReleased (KeyEvent e)
             {
@@ -412,13 +456,55 @@ public final class WhiteBoard extends JPanel
         paintView.txtY.addKeyListener (yListener);
     }
 
+    @bardiademon
     private boolean invokeKeyReleased = true;
 
+    @bardiademon
+    private File fileBackground;
+
+    @bardiademon
+    private BufferedImage read;
+
+    @bardiademon
+    public void setBackground ()
+    {
+        final JFileChooser chooser = new JFileChooser (fileBackground);
+        if (chooser.showOpenDialog (null) == JFileChooser.OPEN_DIALOG)
+        {
+            try
+            {
+                read = ImageIO.read (chooser.getSelectedFile ());
+                fileBackground = chooser.getSelectedFile ().getParentFile ();
+                setBackgroundImage ();
+            }
+            catch (IOException e)
+            {
+                System.err.println (e.getMessage ());
+                setIcon (null);
+            }
+        }
+        else setIcon (null);
+    }
+
+    @bardiademon
+    private void setBackgroundImage ()
+    {
+        if (read != null)
+        {
+            Image image = read.getScaledInstance (getWidth () , getHeight () , BufferedImage.TYPE_4BYTE_ABGR);
+            ImageIcon imageIcon = new ImageIcon (image);
+            setIcon (imageIcon);
+        }
+        else setIcon (null);
+    }
+
+    @bardiademon
     private enum WitchWHXY
     {
         w, h, x, y
     }
 
+    @bardiademon
     private void changeWHXY (final KeyEvent e , final WitchWHXY witchWHXY)
     {
         final String txtWidth = paintView.txtWidth.getText ();
@@ -490,6 +576,7 @@ public final class WhiteBoard extends JPanel
         }
     }
 
+    @bardiademon
     private void ctrlZ ()
     {
         int size = arrangePaintings.size ();
@@ -502,16 +589,18 @@ public final class WhiteBoard extends JPanel
         }
     }
 
+    @bardiademon
     @Override
-    public void paint (Graphics g)
+    public void paintComponent (Graphics g)
     {
-        super.paint (g);
+        super.paintComponent (g);
         final Graphics2D g2 = (Graphics2D) g;
 
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
 
+    @bardiademon
     private static final class ArrangePainting
     {
         private final String selectedTool;
@@ -533,6 +622,7 @@ public final class WhiteBoard extends JPanel
         }
     }
 
+    @bardiademon
     public void setCursor (final String name)
     {
         try
@@ -549,11 +639,13 @@ public final class WhiteBoard extends JPanel
         }
     }
 
+    @bardiademon
     public Robot getRobot ()
     {
         return robot;
     }
 
+    @bardiademon
     public void setWHXY (final Size size , final Point point)
     {
         if (size != null)
@@ -568,6 +660,7 @@ public final class WhiteBoard extends JPanel
         }
     }
 
+    @bardiademon
     public PaintView getPaintView ()
     {
         return paintView;

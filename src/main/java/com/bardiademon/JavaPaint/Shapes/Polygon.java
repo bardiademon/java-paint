@@ -1,5 +1,7 @@
 package com.bardiademon.JavaPaint.Shapes;
 
+import com.bardiademon.JavaPaint.bardiademon;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,27 +9,34 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+@bardiademon
 public final class Polygon extends Shape
 {
+    @bardiademon
     private final List <Polygons> polygons = new ArrayList <> ();
 
+    @bardiademon
     private boolean finish;
 
+    @bardiademon
     public void setPolygon (final Point point , final Color color , final int thickness)
     {
         polygons.add (new Polygons (point , color , thickness));
     }
 
+    @bardiademon
     public boolean isFinish ()
     {
         return finish;
     }
 
+    @bardiademon
     public void setFinish (boolean finish)
     {
         this.finish = finish;
     }
 
+    @bardiademon
     @Override
     public void paint (final Graphics2D g)
     {
@@ -59,13 +68,20 @@ public final class Polygon extends Shape
         }
     }
 
+    @bardiademon
     private final static class Polygons
     {
+        @bardiademon
         private final Point point;
+
+        @bardiademon
         private final Color color;
+
+        @bardiademon
         private final int thickness;
 
-        public Polygons (final Point point , final Color color , final int thickness)
+        @bardiademon
+        private Polygons (final Point point , final Color color , final int thickness)
         {
             this.point = point;
             this.color = color;

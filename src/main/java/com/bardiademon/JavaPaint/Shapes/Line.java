@@ -1,9 +1,12 @@
 package com.bardiademon.JavaPaint.Shapes;
 
+import com.bardiademon.JavaPaint.bardiademon;
+
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+@bardiademon
 public class Line extends Pen
 {
     private Point point1;
