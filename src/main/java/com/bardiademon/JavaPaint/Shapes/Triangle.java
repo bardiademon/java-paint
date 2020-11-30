@@ -15,16 +15,16 @@ public class Triangle extends Rectangle
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final Triangle triangle = new Triangle ();
-                    triangle.shape (Triangle.this);
-                    triangle.setPoint (point);
-                    triangle.setSize (size);
-                    triangle.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final Triangle triangle = new Triangle ();
+//                    triangle.shape (Triangle.this);
+//                    triangle.setPoint (point);
+//                    triangle.setSize (size);
+//                    triangle.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
 
         }

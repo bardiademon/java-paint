@@ -15,16 +15,16 @@ public final class Lightning extends Rectangle
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final Lightning lightning = new Lightning ();
-                    lightning.shape (Lightning.this);
-                    lightning.setPoint (point);
-                    lightning.setSize (size);
-                    lightning.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final Lightning lightning = new Lightning ();
+//                    lightning.shape (Lightning.this);
+//                    lightning.setPoint (point);
+//                    lightning.setSize (size);
+//                    lightning.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }

@@ -15,16 +15,16 @@ public final class SixPointStar extends Stars implements Star
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final SixPointStar sixPointStar = new SixPointStar ();
-                    sixPointStar.shape (SixPointStar.this);
-                    sixPointStar.setPoint (point);
-                    sixPointStar.setSize (size);
-                    sixPointStar.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final SixPointStar sixPointStar = new SixPointStar ();
+//                    sixPointStar.shape (SixPointStar.this);
+//                    sixPointStar.setPoint (point);
+//                    sixPointStar.setSize (size);
+//                    sixPointStar.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }

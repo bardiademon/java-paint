@@ -18,13 +18,13 @@ public final class Hexagon extends Rectangle
         {
             if (isFill ())
             {
-                fill ((point , size) -> {
-                    final Hexagon hexagon = new Hexagon ();
-                    hexagon.shape (Hexagon.this);
-                    hexagon.setPoint (point);
-                    hexagon.setSize (size);
-                    hexagon.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//                fill ((point , size) -> {
+//                    final Hexagon hexagon = new Hexagon ();
+//                    hexagon.shape (Hexagon.this);
+//                    hexagon.setPoint (point);
+//                    hexagon.setSize (size);
+//                    hexagon.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
             }
             draw (g);
         }

@@ -15,16 +15,16 @@ public final class RightTriangle extends Triangle
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final RightTriangle rightTriangle = new RightTriangle ();
-                    rightTriangle.shape (RightTriangle.this);
-                    rightTriangle.setPoint (point);
-                    rightTriangle.setSize (size);
-                    rightTriangle.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final RightTriangle rightTriangle = new RightTriangle ();
+//                    rightTriangle.shape (RightTriangle.this);
+//                    rightTriangle.setPoint (point);
+//                    rightTriangle.setSize (size);
+//                    rightTriangle.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }

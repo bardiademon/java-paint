@@ -15,16 +15,16 @@ public class FivePointStar extends Stars implements Star
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final FivePointStar fivePointStar = new FivePointStar ();
-                    fivePointStar.shape (FivePointStar.this);
-                    fivePointStar.setPoint (point);
-                    fivePointStar.setSize (size);
-                    fivePointStar.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final FivePointStar fivePointStar = new FivePointStar ();
+//                    fivePointStar.shape (FivePointStar.this);
+//                    fivePointStar.setPoint (point);
+//                    fivePointStar.setSize (size);
+//                    fivePointStar.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }

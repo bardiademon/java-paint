@@ -15,16 +15,16 @@ public final class FourPointStar extends Stars
     {
         if (getPoint () != null && getSize () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final FourPointStar fourPointStar = new FourPointStar ();
-                    fourPointStar.shape (FourPointStar.this);
-                    fourPointStar.setPoint (point);
-                    fourPointStar.setSize (size);
-                    fourPointStar.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final FourPointStar fourPointStar = new FourPointStar ();
+//                    fourPointStar.shape (FourPointStar.this);
+//                    fourPointStar.setPoint (point);
+//                    fourPointStar.setSize (size);
+//                    fourPointStar.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }

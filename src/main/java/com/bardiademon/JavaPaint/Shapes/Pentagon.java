@@ -15,16 +15,16 @@ public final class Pentagon extends Rectangle
     {
         if (getSize () != null && getPoint () != null)
         {
-            if (isFill ())
-            {
-                fill ((point , size) -> {
-                    final Pentagon pentagon = new Pentagon ();
-                    pentagon.shape (Pentagon.this);
-                    pentagon.setPoint (point);
-                    pentagon.setSize (size);
-                    pentagon.draw (g);
-                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
-            }
+//            if (isFill ())
+//            {
+//                fill ((point , size) -> {
+//                    final Pentagon pentagon = new Pentagon ();
+//                    pentagon.shape (Pentagon.this);
+//                    pentagon.setPoint (point);
+//                    pentagon.setSize (size);
+//                    pentagon.draw (g);
+//                } , size (getSize ().width , getSize ().height) , point (getPoint ().x , getPoint ().y));
+//            }
             draw (g);
         }
     }
