@@ -2,7 +2,8 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.Shapes.*;
+import com.bardiademon.JavaPaint.PreviousColors;
+import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
@@ -11,7 +12,7 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.HexagonTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LightningTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.LineTool;
-import com.bardiademon.JavaPaint.WhiteBoard.Tools.Pen;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.PenTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.PentagonTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.PolygonTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.RectTool;
@@ -59,7 +60,6 @@ import javax.swing.JLabel;
 @bardiademon
 public final class WhiteBoard extends JLabel
 {
-
     @bardiademon
     private Robot robot;
 
@@ -85,9 +85,6 @@ public final class WhiteBoard extends JLabel
     private boolean moving = false, resizing = false;
 
     @bardiademon
-    private Color backgroundColor;
-
-    @bardiademon
     private Point selectedMousePoint;
 
     @bardiademon
@@ -96,11 +93,43 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private boolean polygonFinish = true;
 
+    private final static SelectedColor SELECTED_COLOR = new SelectedColor ();
+
+    private static class SelectedColor
+    {
+        private Color color, backgroundColor;
+
+        private SelectedColor ()
+        {
+            color = Color.BLACK;
+            backgroundColor = Color.WHITE;
+        }
+    }
+
+    public static void SetColor (final Color color)
+    {
+        SELECTED_COLOR.color = color;
+    }
+
+    public static void SetBackgroundColor (final Color backgroundColor)
+    {
+        SELECTED_COLOR.backgroundColor = backgroundColor;
+    }
+
+    public static Color GetColor ()
+    {
+        return SELECTED_COLOR.color;
+    }
+
+    public static Color GetBackgroundColor ()
+    {
+        return SELECTED_COLOR.backgroundColor;
+    }
+
     @bardiademon
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
-
         try
         {
             this.robot = new Robot ();
@@ -109,7 +138,7 @@ public final class WhiteBoard extends JLabel
         {
         }
 
-        tools.put (SelectedTool.pen.name () , new Pen (this));
+        tools.put (SelectedTool.pen.name () , new PenTool (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
         tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
         tools.put (SelectedTool.circle.name () , new CircleTool (this));
@@ -129,7 +158,12 @@ public final class WhiteBoard extends JLabel
         tools.put (SelectedTool.lightning.name () , new LightningTool (this));
         tools.put (SelectedTool.polygon.name () , new PolygonTool (this));
 
-        paintView.thickness.addChangeListener (e -> WhiteBoard.this.repaint ());
+        paintView.thickness.addChangeListener (e ->
+        {
+            paintView.txtThickness.setText (String.valueOf (paintView.thickness.getValue ()));
+            WhiteBoard.this.repaint ();
+        });
+
 
         addMouseListener (new MouseAdapter ()
         {
@@ -582,7 +616,7 @@ public final class WhiteBoard extends JLabel
         int size = arrangePaintings.size ();
         if (size > 0)
         {
-            ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
+            final ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
             tools.get (arrangePainting.selectedTool).remove (arrangePainting.index);
             arrangePaintings.remove (size - 1);
             repaint ();

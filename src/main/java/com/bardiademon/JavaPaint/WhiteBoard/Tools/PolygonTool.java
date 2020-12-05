@@ -45,7 +45,7 @@ public final class PolygonTool extends ShapeTool implements Tools
             setIndex (polygons.size () - 1);
         }
 
-        polygons.get (polygons.size () - 1).setPolygon (point , whiteBoard.getPaintView ().getColor () , whiteBoard.getPaintView ().thickness.getValue ());
+        polygons.get (polygons.size () - 1).setPolygon (point , WhiteBoard.GetColor () , whiteBoard.getPaintView ().thickness.getValue ());
     }
 
     @bardiademon

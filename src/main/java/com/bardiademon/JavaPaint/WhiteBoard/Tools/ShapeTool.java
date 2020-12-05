@@ -27,10 +27,10 @@ public class ShapeTool implements Tools
     @bardiademon
     public Shape setShape (final Shape shape)
     {
-        shape.setColor (whiteBoard.getPaintView ().getColor ());
+        shape.setColor (WhiteBoard.GetColor ());
         shape.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         shape.setFill (whiteBoard.getPaintView ().isFill.isSelected ());
-        shape.setBackgroundColor (Color.BLACK);
+        shape.setBackgroundColor (WhiteBoard.GetBackgroundColor ());
         return shape;
     }
 

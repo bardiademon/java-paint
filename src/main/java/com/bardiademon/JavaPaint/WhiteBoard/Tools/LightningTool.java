@@ -27,14 +27,14 @@ public final class LightningTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        lightnings.get (getIndex ()).setSizeWithPoint (point);
+        lightnings.get (lightnings.size () - 1).setSizeWithPoint (point);
     }
 
     @bardiademon
     @Override
     public void mouseDragged (final Size size)
     {
-        lightnings.get (getIndex ()).setSize (size);
+        lightnings.get (lightnings.size () - 1).setSize (size);
     }
 
     @bardiademon

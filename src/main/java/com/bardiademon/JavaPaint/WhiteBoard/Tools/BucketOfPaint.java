@@ -44,7 +44,7 @@ public final class BucketOfPaint implements Tools
     @Override
     public void mousePressed (Point point)
     {
-        whiteBoard.setBackground (whiteBoard.getPaintView ().getColor ());
+        whiteBoard.setBackground (WhiteBoard.GetColor ());
     }
 
     @bardiademon

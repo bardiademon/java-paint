@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint;
 
 import java.io.File;
 
+import java.net.URLDecoder;
 import org.apache.commons.io.FilenameUtils;
 
 @bardiademon

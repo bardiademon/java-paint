@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public final class Pen extends ShapeTool implements Tools
+public final class PenTool extends ShapeTool implements Tools
 {
 
     @bardiademon
@@ -24,7 +24,7 @@ public final class Pen extends ShapeTool implements Tools
     private List <Rectangle> rectangles;
 
     @bardiademon
-    public Pen (final WhiteBoard _WhiteBoard)
+    public PenTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
         select ();

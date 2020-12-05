@@ -37,7 +37,7 @@ public final class LineTool extends ShapeTool implements Tools
     {
         final Line line = new Line ();
         line.setPoint1 (point);
-        line.setColor (whiteBoard.getPaintView ().getColor ());
+        line.setColor (WhiteBoard.GetColor ());
         line.setThickness (whiteBoard.getPaintView ().thickness.getValue ());
         lines.add (line);
         index = lines.size () - 1;

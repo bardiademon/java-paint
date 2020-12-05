@@ -27,7 +27,6 @@ public final class Circle extends Rectangle
             }
 
             g.setColor (getColor ());
-            System.out.println (getColor ());
             g.drawOval (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height);
 
         }
