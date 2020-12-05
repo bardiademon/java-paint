@@ -14,14 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public final class PenTool extends ShapeTool implements Tools
+public class PenTool extends ShapeTool implements Tools
 {
 
     @bardiademon
-    private final List <List <Rectangle>> rec = new ArrayList <> ();
+    protected final List <List <Rectangle>> rec = new ArrayList <> ();
 
     @bardiademon
     private List <Rectangle> rectangles;
+
+    protected boolean isEraser;
 
     @bardiademon
     public PenTool (final WhiteBoard _WhiteBoard)
@@ -92,9 +94,17 @@ public final class PenTool extends ShapeTool implements Tools
             Point pre = null;
             for (Rectangle rec : rectangle)
             {
-                g.setColor (rec.getColor ());
-                if (rec.getBackgroundColor () != null)
-                    g.setBackground (rec.getBackgroundColor ());
+                if (isEraser)
+                {
+                    g.setColor (whiteBoard.getBackgroundColor ());
+                    g.setBackground (whiteBoard.getBackgroundColor ());
+                }
+                else
+                {
+                    g.setColor (rec.getColor ());
+                    if (rec.getBackgroundColor () != null)
+                        g.setBackground (rec.getBackgroundColor ());
+                }
 
                 g.setStroke (new BasicStroke (rec.getThickness ()));
 

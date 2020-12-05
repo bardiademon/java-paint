@@ -2,11 +2,11 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.PreviousColors;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.EraserTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FourPointStarTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.HexagonTool;
@@ -28,14 +28,13 @@ import com.bardiademon.JavaPaint.WhiteBoard.Tools.UpDownArrowTool;
 import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
-import java.awt.AWTException;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.Robot;
+
 import java.awt.Toolkit;
 
 import java.awt.event.ComponentAdapter;
@@ -52,6 +51,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -60,8 +60,9 @@ import javax.swing.JLabel;
 @bardiademon
 public final class WhiteBoard extends JLabel
 {
-    @bardiademon
-    private Robot robot;
+
+//    @bardiademon
+//    private Robot robot;
 
     @bardiademon
     public static SelectedTool selectedTool = SelectedTool.pen;
@@ -130,13 +131,13 @@ public final class WhiteBoard extends JLabel
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
-        try
-        {
-            this.robot = new Robot ();
-        }
-        catch (AWTException ignored)
-        {
-        }
+//        try
+//        {
+//            this.robot = new Robot ();
+//        }
+//        catch (AWTException ignored)
+//        {
+//        }
 
         tools.put (SelectedTool.pen.name () , new PenTool (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
@@ -157,6 +158,7 @@ public final class WhiteBoard extends JLabel
         tools.put (SelectedTool.hexagon.name () , new HexagonTool (this));
         tools.put (SelectedTool.lightning.name () , new LightningTool (this));
         tools.put (SelectedTool.polygon.name () , new PolygonTool (this));
+        tools.put (SelectedTool.eraser.name () , new EraserTool (this));
 
         paintView.thickness.addChangeListener (e ->
         {
@@ -289,6 +291,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseMoved (MouseEvent e)
             {
+                if (selectedTool != null) tools.get (selectedTool.name ()).select ();
+
                 setFocus ();
                 paintView.setCursorPoint (e.getPoint ());
 
@@ -513,7 +517,6 @@ public final class WhiteBoard extends JLabel
             }
             catch (IOException e)
             {
-                System.err.println (e.getMessage ());
                 setIcon (null);
             }
         }
@@ -524,12 +527,14 @@ public final class WhiteBoard extends JLabel
     private void setBackgroundImage ()
     {
         if (read != null)
-        {
-            Image image = read.getScaledInstance (getWidth () , getHeight () , BufferedImage.TYPE_4BYTE_ABGR);
-            ImageIcon imageIcon = new ImageIcon (image);
-            setIcon (imageIcon);
-        }
+            setIcon (new ImageIcon (read.getScaledInstance (getWidth () , getHeight () , BufferedImage.TYPE_4BYTE_ABGR)));
         else setIcon (null);
+    }
+
+
+    public Color getBackgroundColor ()
+    {
+        return getBackground ();
     }
 
     @bardiademon
@@ -619,15 +624,16 @@ public final class WhiteBoard extends JLabel
             final ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
             tools.get (arrangePainting.selectedTool).remove (arrangePainting.index);
             arrangePaintings.remove (size - 1);
+            polygonFinish = true;
             repaint ();
         }
     }
 
     @bardiademon
     @Override
-    public void paintComponent (Graphics g)
+    public void paint (Graphics g)
     {
-        super.paintComponent (g);
+        super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
 
         arrangePaintings.forEach ((ap) ->
@@ -671,12 +677,6 @@ public final class WhiteBoard extends JLabel
         catch (IOException ignored)
         {
         }
-    }
-
-    @bardiademon
-    public Robot getRobot ()
-    {
-        return robot;
     }
 
     @bardiademon

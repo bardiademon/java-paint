@@ -29,8 +29,6 @@ public final class BtnPanel extends JPanel
     {
         this.selectedTool = _SelectedTool;
 
-        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-
         addMouseListener (new MouseAdapter ()
         {
             @Override

@@ -64,6 +64,9 @@ public final class PolygonTool extends ShapeTool implements Tools
     public void remove (final int index)
     {
         if (index >= 0 && index < polygons.size ())
+        {
+            mouseDbClick (null);
             polygons.remove (index);
+        }
     }
 }

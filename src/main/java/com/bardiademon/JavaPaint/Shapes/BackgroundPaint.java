@@ -95,6 +95,9 @@ public final class BackgroundPaint
                 case image:
                     image (g , getShape (size));
                     break;
+                case eraser:
+                    eraser (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -209,6 +212,22 @@ public final class BackgroundPaint
     private void text (final Graphics2D g , final Shape shape)
     {
         File icA = Main.getFile ("ic_a");
+        if (icA != null)
+        {
+            try
+            {
+                g.drawImage (ImageIO.read (icA).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR) , shape.getPoint ().x , shape.getPoint ().y , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
+    }
+
+    @bardiademon
+    private void eraser (final Graphics2D g , final Shape shape)
+    {
+        File icA = Main.getFile ("ic_eraser");
         if (icA != null)
         {
             try
