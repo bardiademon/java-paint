@@ -22,6 +22,9 @@ public interface Tools
     void mousePressed (final Point point);
 
     @bardiademon
+    void mousePressed (final Point point , final int button);
+
+    @bardiademon
     void mouseReleased (final Point point);
 
     @bardiademon
@@ -47,4 +50,10 @@ public interface Tools
 
     @bardiademon
     void mouseDbClick (final Point point);
+
+    @bardiademon
+    boolean isPaint ();
+
+    @bardiademon
+    void setPaint (final boolean paint);
 }

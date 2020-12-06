@@ -5,6 +5,7 @@ import com.bardiademon.JavaPaint.PaintView;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.ColorPickerTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.EraserTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.FivePointStarTool;
@@ -29,12 +30,15 @@ import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
 import java.awt.Point;
 
+import java.awt.Robot;
 import java.awt.Toolkit;
 
 import java.awt.event.ComponentAdapter;
@@ -51,7 +55,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -61,8 +64,8 @@ import javax.swing.JLabel;
 public final class WhiteBoard extends JLabel
 {
 
-//    @bardiademon
-//    private Robot robot;
+    @bardiademon
+    private Robot robot;
 
     @bardiademon
     public static SelectedTool selectedTool = SelectedTool.pen;
@@ -131,13 +134,13 @@ public final class WhiteBoard extends JLabel
     public WhiteBoard (final PaintView _PaintView)
     {
         this.paintView = _PaintView;
-//        try
-//        {
-//            this.robot = new Robot ();
-//        }
-//        catch (AWTException ignored)
-//        {
-//        }
+        try
+        {
+            this.robot = new Robot ();
+        }
+        catch (AWTException ignored)
+        {
+        }
 
         tools.put (SelectedTool.pen.name () , new PenTool (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
@@ -159,6 +162,7 @@ public final class WhiteBoard extends JLabel
         tools.put (SelectedTool.lightning.name () , new LightningTool (this));
         tools.put (SelectedTool.polygon.name () , new PolygonTool (this));
         tools.put (SelectedTool.eraser.name () , new EraserTool (this));
+        tools.put (SelectedTool.color_picker.name () , new ColorPickerTool (this));
 
         paintView.thickness.addChangeListener (e ->
         {
@@ -181,12 +185,22 @@ public final class WhiteBoard extends JLabel
                     {
                         tool.select ();
 
+                        if (!tool.isPaint ())
+                        {
+                            tool.mousePressed (e.getPoint ());
+                            tool.mousePressed (e.getPoint () , e.getButton ());
+                            return;
+                        }
+
                         if (polygonFinish)
                         {
                             if (selectedTool.equals (SelectedTool.polygon) && e.getClickCount () >= 2)
                                 tool.mouseDbClick (e.getPoint ());
                             else
+                            {
                                 tool.mousePressed (e.getPoint ());
+                                tool.mousePressed (e.getPoint () , e.getButton ());
+                            }
 
                             selectedArrangePainting = new ArrangePainting (selectedTool.name ());
                             selectedArrangePainting.setIndex (tool.getIndex ());
@@ -194,7 +208,11 @@ public final class WhiteBoard extends JLabel
                             final ArrangePainting arrangePainting = selectedArrangePainting;
                             arrangePaintings.add (arrangePainting);
                         }
-                        else tool.mousePressed (e.getPoint ());
+                        else
+                        {
+                            tool.mousePressed (e.getPoint ());
+                            tool.mousePressed (e.getPoint () , e.getButton ());
+                        }
 
                         if (selectedTool.equals (SelectedTool.polygon))
                             polygonFinish = e.getClickCount () >= 2;
@@ -265,7 +283,6 @@ public final class WhiteBoard extends JLabel
                                 selectedMousePoint = e.getPoint ();
 
                                 tool.setIndex (selectedArrangePainting.getIndex ());
-
 
                                 if (moving)
                                     tool.setPoint (Shape.point (x , y));
@@ -618,7 +635,7 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private void ctrlZ ()
     {
-        int size = arrangePaintings.size ();
+        final int size = arrangePaintings.size ();
         if (size > 0)
         {
             final ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
@@ -692,6 +709,11 @@ public final class WhiteBoard extends JLabel
             paintView.txtX.setText (String.valueOf (point.x));
             paintView.txtY.setText (String.valueOf (point.y));
         }
+    }
+
+    public Robot getRobot ()
+    {
+        return robot;
     }
 
     @bardiademon

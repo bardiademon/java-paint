@@ -170,7 +170,7 @@ public final class PaintView extends JFrame
         pen = new BtnPanel (SelectedTool.pen);
         bucketOfPaint = new BtnPanel (SelectedTool.bucket_of_paint);
         eraser = new BtnPanel (SelectedTool.eraser);
-        colorPicker = new BtnPanel ();
+        colorPicker = new BtnPanel (SelectedTool.color_picker);
         text = new BtnPanel (SelectedTool.text);
         isFill = new JCheckBox ();
         thickness = new JSlider ();
@@ -1179,11 +1179,11 @@ public final class PaintView extends JFrame
 
     private JLabel jLabel2;
     private JLabel jLabel3;
-    private BtnColor btnColor;
-    private BtnColor btnBGColor;
+    public BtnColor btnColor;
+    public BtnColor btnBGColor;
 
 
-    private PreviousColors color1;
+    public PreviousColors color1;
     private PreviousColors color2;
     private PreviousColors color3;
     private PreviousColors color4;

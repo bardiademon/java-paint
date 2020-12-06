@@ -15,6 +15,8 @@ public class ShapeTool implements Tools
     @bardiademon
     protected int index;
 
+    private boolean paint;
+
     @bardiademon
     protected final WhiteBoard whiteBoard;
 
@@ -22,6 +24,7 @@ public class ShapeTool implements Tools
     protected ShapeTool (final WhiteBoard _WhiteBoard)
     {
         whiteBoard = _WhiteBoard;
+        setPaint (true);
     }
 
     @bardiademon
@@ -64,6 +67,12 @@ public class ShapeTool implements Tools
     @bardiademon
     @Override
     public void mousePressed (Point point)
+    {
+
+    }
+
+    @Override
+    public void mousePressed (Point point , int button)
     {
 
     }
@@ -128,5 +137,19 @@ public class ShapeTool implements Tools
     public Point getAllPoint (final int index)
     {
         return null;
+    }
+
+    @bardiademon
+    @Override
+    public boolean isPaint ()
+    {
+        return paint;
+    }
+
+    @bardiademon
+    @Override
+    public void setPaint (boolean paint)
+    {
+        this.paint = paint;
     }
 }

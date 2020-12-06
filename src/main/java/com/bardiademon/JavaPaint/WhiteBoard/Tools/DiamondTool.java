@@ -26,7 +26,7 @@ public final class DiamondTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        diamonds.get (index).setSizeWithPoint (point);
+        diamonds.get (diamonds.size () - 1).setSizeWithPoint (point);
     }
 
     @bardiademon

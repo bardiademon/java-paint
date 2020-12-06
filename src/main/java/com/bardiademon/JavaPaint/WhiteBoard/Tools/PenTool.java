@@ -43,7 +43,7 @@ public class PenTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Point point)
     {
-        List <Rectangle> rectangles = rec.get (getIndex ());
+        List <Rectangle> rectangles = rec.get (rec.size () - 1);
         rectangles.add (pen (point));
     }
 
@@ -51,7 +51,7 @@ public class PenTool extends ShapeTool implements Tools
     @Override
     public void mouseDragged (final Size size)
     {
-        List <Rectangle> rectangles = rec.get (getIndex ());
+        List <Rectangle> rectangles = rec.get (rec.size () - 1);
         rectangles.add (pen (Shape.point (size.width , size.height)));
     }
 

@@ -98,6 +98,9 @@ public final class BackgroundPaint
                 case eraser:
                     eraser (g , getShape (size));
                     break;
+                case color_picker:
+                    colorPicker (g , getShape (size));
+                    break;
                 default:
                     break;
             }
@@ -212,6 +215,22 @@ public final class BackgroundPaint
     private void text (final Graphics2D g , final Shape shape)
     {
         File icA = Main.getFile ("ic_a");
+        if (icA != null)
+        {
+            try
+            {
+                g.drawImage (ImageIO.read (icA).getScaledInstance (shape.getSize ().width , shape.getSize ().height , BufferedImage.TYPE_4BYTE_ABGR) , shape.getPoint ().x , shape.getPoint ().y , null);
+            }
+            catch (IOException ignored)
+            {
+            }
+        }
+    }
+
+    @bardiademon
+    private void colorPicker (final Graphics2D g , final Shape shape)
+    {
+        File icA = Main.getFile ("ic_color_picker");
         if (icA != null)
         {
             try

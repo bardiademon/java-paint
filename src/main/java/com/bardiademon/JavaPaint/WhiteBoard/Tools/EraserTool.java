@@ -2,15 +2,18 @@ package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
+import com.bardiademon.JavaPaint.bardiademon;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+@bardiademon
 public final class EraserTool extends PenTool implements Tools
 {
 
+    @bardiademon
     public EraserTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
@@ -18,6 +21,7 @@ public final class EraserTool extends PenTool implements Tools
         whiteBoard.getPaintView ().thickness.setValue (10);
     }
 
+    @bardiademon
     @Override
     public void select ()
     {
