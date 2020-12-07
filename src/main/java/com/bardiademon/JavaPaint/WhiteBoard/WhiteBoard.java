@@ -3,7 +3,7 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
 import com.bardiademon.JavaPaint.Shapes.Shape;
-import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaint;
+import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaintTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.ColorPickerTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.DiamondTool;
@@ -35,7 +35,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Point;
 
 import java.awt.Robot;
@@ -154,7 +153,7 @@ public final class WhiteBoard extends JLabel
         tools.put (SelectedTool.six_point_star.name () , new SixPointStarTool (this));
         tools.put (SelectedTool.right_arrow.name () , new RightLeftArrowTool (this));
         tools.put (SelectedTool.up_arrow.name () , new UpDownArrowTool (this));
-        tools.put (SelectedTool.bucket_of_paint.name () , new BucketOfPaint (this));
+        tools.put (SelectedTool.bucket_of_paint.name () , new BucketOfPaintTool (this));
         tools.put (SelectedTool.right_triangle.name () , new RightTriangleTool (this));
         tools.put (SelectedTool.text.name () , new TextTool (this));
         tools.put (SelectedTool.pentagon.name () , new PentagonTool (this));
@@ -189,6 +188,7 @@ public final class WhiteBoard extends JLabel
                         {
                             tool.mousePressed (e.getPoint ());
                             tool.mousePressed (e.getPoint () , e.getButton ());
+                            selectedArrangePainting = null;
                             return;
                         }
 
@@ -228,11 +228,12 @@ public final class WhiteBoard extends JLabel
             public void mouseReleased (MouseEvent e)
             {
                 tool = WhiteBoard.this.tools.get (selectedTool.name ());
-                if (tool != null)
+                if (tool != null && tool.isPaint ())
                 {
                     tool.mouseReleased (e.getPoint ());
                     repaint ();
                 }
+                else selectedArrangePainting = null;
             }
 
             @bardiademon
@@ -252,10 +253,11 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseDragged (MouseEvent e)
             {
+                paintView.setMousePosition (e.getPoint ());
                 if (selectedArrangePainting != null)
                 {
                     tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
-                    if (tool != null)
+                    if (tool != null && tool.isPaint ())
                     {
                         if (moving || resizing)
                         {
@@ -308,47 +310,52 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseMoved (MouseEvent e)
             {
-                if (selectedTool != null) tools.get (selectedTool.name ()).select ();
-
                 setFocus ();
-                paintView.setCursorPoint (e.getPoint ());
-
-                if (selectedArrangePainting != null)
+                paintView.setMousePosition (e.getPoint ());
+                if (selectedTool != null)
                 {
-                    tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
-                    if (tool != null)
-                    {
-                        final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
-                        final Point allPoint = tool.getAllPoint (selectedArrangePainting.getIndex ());
-                        if (point != null && allPoint != null)
-                        {
-                            if (moving = ((e.getX () > point.x && e.getY () > point.y) && (e.getX () < allPoint.x && e.getY () < allPoint.y)))
-                            {
-                                setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR));
-                                return;
-                            }
-                            else
-                            {
-                                final Point leftUp = Shape.point (point.x , point.y);
-                                final Point rightUp = Shape.point (allPoint.x , point.y);
-                                final Point leftDown = Shape.point (point.x , allPoint.y);
-                                final Point rightDown = Shape.point (allPoint.x , allPoint.y);
+                    tool = WhiteBoard.this.tools.get (selectedTool.name ());
+                    tool.select ();
+                    if (!tool.isPaint ()) return;
 
-                                if (Shape.PointComparison (e.getPoint () , leftUp)
-                                        || Shape.PointComparison (e.getPoint () , rightUp)
-                                        || Shape.PointComparison (e.getPoint () , leftDown)
-                                        || Shape.PointComparison (e.getPoint () , rightDown))
+                    if (selectedArrangePainting != null)
+                    {
+                        tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
+                        if (tool != null && tool.isPaint ())
+                        {
+                            final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
+                            final Point allPoint = tool.getAllPoint (selectedArrangePainting.getIndex ());
+                            if (point != null && allPoint != null)
+                            {
+                                if (moving = ((e.getX () > point.x && e.getY () > point.y) && (e.getX () < allPoint.x && e.getY () < allPoint.y)))
                                 {
-                                    moving = false;
-                                    resizing = true;
-                                    setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+                                    setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR));
+                                    return;
                                 }
-                                else tool.select ();
+                                else
+                                {
+                                    final Point leftUp = Shape.point (point.x , point.y);
+                                    final Point rightUp = Shape.point (allPoint.x , point.y);
+                                    final Point leftDown = Shape.point (point.x , allPoint.y);
+                                    final Point rightDown = Shape.point (allPoint.x , allPoint.y);
+
+                                    if (Shape.PointComparison (e.getPoint () , leftUp)
+                                            || Shape.PointComparison (e.getPoint () , rightUp)
+                                            || Shape.PointComparison (e.getPoint () , leftDown)
+                                            || Shape.PointComparison (e.getPoint () , rightDown))
+                                    {
+                                        moving = false;
+                                        resizing = true;
+                                        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+                                    }
+                                    else tool.select ();
+                                }
                             }
                         }
+                        else selectedArrangePainting = null;
                     }
+                    moving = false;
                 }
-                moving = false;
             }
         });
 
@@ -652,6 +659,7 @@ public final class WhiteBoard extends JLabel
     {
         super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
+
 
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));

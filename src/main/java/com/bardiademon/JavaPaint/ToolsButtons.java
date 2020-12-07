@@ -12,23 +12,15 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 @bardiademon
-public final class BtnPanel extends JPanel
+public final class ToolsButtons extends JPanel
 {
     @bardiademon
     private final SelectedTool selectedTool;
 
     @bardiademon
-    public BtnPanel ()
-    {
-        selectedTool = null;
-        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-    }
-
-    @bardiademon
-    public BtnPanel (final WhiteBoard whiteBoard , final SelectedTool _SelectedTool)
+    public ToolsButtons (final WhiteBoard whiteBoard , final SelectedTool _SelectedTool)
     {
         this.selectedTool = _SelectedTool;
-
         addMouseListener (new MouseAdapter ()
         {
             @Override
@@ -40,7 +32,7 @@ public final class BtnPanel extends JPanel
     }
 
     @bardiademon
-    public BtnPanel (final SelectedTool _SelectedTool)
+    public ToolsButtons (final SelectedTool _SelectedTool)
     {
         this.selectedTool = _SelectedTool;
         repaint ();

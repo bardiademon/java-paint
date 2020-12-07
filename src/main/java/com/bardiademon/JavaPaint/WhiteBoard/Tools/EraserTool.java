@@ -34,6 +34,6 @@ public final class EraserTool extends PenTool implements Tools
         graphics.setColor (Color.BLACK);
         graphics.setStroke (new BasicStroke (5));
         graphics.drawRect (0 , 0 , size , size);
-        whiteBoard.setCursor (Toolkit.getDefaultToolkit ().createCustomCursor (read , Shape.point (0 , 0) , "eraser"));
+        whiteBoard.setCursor (Toolkit.getDefaultToolkit ().createCustomCursor (read , Shape.point (10 , 10) , "eraser"));
     }
 }

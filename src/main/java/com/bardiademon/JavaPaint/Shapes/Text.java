@@ -122,9 +122,19 @@ public final class Text extends Rectangle
         textTool.repaint ();
     }
 
+    public void setFont (final Font font)
+    {
+        this.font = font;
+    }
+
+    public void setText (String text)
+    {
+        this.text = text;
+    }
+
     @bardiademon
     @Override
-    public void paint (Graphics2D g)
+    public void paint (final Graphics2D g)
     {
         if (getSize () != null && getPoint () != null)
         {
@@ -162,17 +172,22 @@ public final class Text extends Rectangle
                 if (textWidth > getSize ().width)
                 {
                     setSize (size ((textWidth - getSize ().width + getSize ().width) , getSize ().height));
-                    textTool.repaint ();
+                    if (textTool != null) textTool.repaint ();
                     return;
                 }
 
-                fText.setNullSlidersListener ();
+                if (fText != null) fText.setNullSlidersListener ();
                 g.drawString (text , textPoint.x , textPoint.y);
-                fText.setMinMaxSlider ();
+                if (fText != null) fText.setMinMaxSlider ();
             }
 
 
         }
+    }
+
+    public void setUltimate (final boolean ultimate)
+    {
+        this.ultimate = ultimate;
     }
 
     @bardiademon

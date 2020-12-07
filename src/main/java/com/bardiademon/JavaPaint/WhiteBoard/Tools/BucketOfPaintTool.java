@@ -8,10 +8,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public final class BucketOfPaint extends ShapeTool implements Tools
+public final class BucketOfPaintTool extends ShapeTool implements Tools
 {
     @bardiademon
-    public BucketOfPaint (final WhiteBoard _WhiteBoard)
+    public BucketOfPaintTool (final WhiteBoard _WhiteBoard)
     {
         super (_WhiteBoard);
         setPaint (false);

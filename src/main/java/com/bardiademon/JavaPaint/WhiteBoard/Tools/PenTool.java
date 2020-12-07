@@ -98,15 +98,18 @@ public class PenTool extends ShapeTool implements Tools
                 {
                     g.setColor (whiteBoard.getBackgroundColor ());
                     g.setBackground (whiteBoard.getBackgroundColor ());
+
+                    g.setStroke (new BasicStroke (20));
                 }
                 else
                 {
                     g.setColor (rec.getColor ());
                     if (rec.getBackgroundColor () != null)
                         g.setBackground (rec.getBackgroundColor ());
+
+                    g.setStroke (new BasicStroke (rec.getThickness ()));
                 }
 
-                g.setStroke (new BasicStroke (rec.getThickness ()));
 
                 g.drawLine (rec.getPoint ().x , rec.getPoint ().y , rec.getPoint ().x , rec.getPoint ().y);
 

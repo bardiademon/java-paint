@@ -35,10 +35,17 @@ public final class ColorPickerTool extends ShapeTool implements Tools
         else
         {
             if (paintView.selectedPreviousColor_BC != null)
+            {
                 paintView.selectedPreviousColor_BC.setColor (colorPicker);
+                paintView.selectedPreviousColor_BC = null;
+            }
 
             if (paintView.selectedPreviousColor_C != null)
+            {
                 paintView.selectedPreviousColor_C.setColor (colorPicker);
+                paintView.selectedPreviousColor_C = null;
+
+            }
         }
     }
 }
