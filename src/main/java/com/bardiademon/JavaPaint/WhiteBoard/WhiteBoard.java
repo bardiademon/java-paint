@@ -35,7 +35,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.HeadlessException;
 import java.awt.Point;
 
 import java.awt.Robot;
@@ -533,21 +532,26 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     public void setBackground ()
     {
-        final JFileChooser chooser = new JFileChooser (fileBackground);
-        if (chooser.showOpenDialog (null) == JFileChooser.OPEN_DIALOG)
+        paintView.questionForSave (() ->
         {
-            try
+            clear ();
+            final JFileChooser chooser = new JFileChooser (fileBackground);
+            if (chooser.showOpenDialog (null) == JFileChooser.OPEN_DIALOG)
             {
-                read = ImageIO.read (chooser.getSelectedFile ());
-                fileBackground = chooser.getSelectedFile ().getParentFile ();
-                setBackgroundImage ();
+                try
+                {
+                    read = ImageIO.read (chooser.getSelectedFile ());
+                    fileBackground = chooser.getSelectedFile ().getParentFile ();
+                    setBackgroundImage ();
+                }
+                catch (IOException e)
+                {
+                    setIcon (null);
+                }
             }
-            catch (IOException e)
-            {
-                setIcon (null);
-            }
-        }
-        else setIcon (null);
+            else setIcon (null);
+        });
+
     }
 
     @bardiademon
@@ -653,6 +657,9 @@ public final class WhiteBoard extends JLabel
             arrangePaintings.remove (size - 1);
             polygonFinish = true;
             repaint ();
+
+            if (arrangePaintings.size () == 0)
+                paintView.saved = true;
         }
     }
 
@@ -693,11 +700,6 @@ public final class WhiteBoard extends JLabel
         public void setIndex (int index)
         {
             this.index = index;
-        }
-
-        public String getSelectedTool ()
-        {
-            return selectedTool;
         }
     }
 

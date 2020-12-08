@@ -36,7 +36,7 @@ import javax.swing.event.DocumentListener;
 public final class PaintView extends JFrame
 {
 
-    public boolean saved;
+    public boolean saved = true;
 
     // C => Color
     public PreviousColors selectedPreviousColor_C;
@@ -86,13 +86,7 @@ public final class PaintView extends JFrame
             @Override
             public void windowClosing (WindowEvent e)
             {
-                questionForSave (() ->
-                {
-                    whiteBoard.clear ();
-                    dispose ();
-                    System.gc ();
-                    System.exit (0);
-                });
+                close ();
             }
         });
     }
@@ -123,12 +117,12 @@ public final class PaintView extends JFrame
     }
 
 
-    private interface OnClickQuestionForSave
+    public interface OnClickQuestionForSave
     {
         void Doing ();
     }
 
-    private void questionForSave (final OnClickQuestionForSave onClick)
+    public void questionForSave (final OnClickQuestionForSave onClick)
     {
         if (!saved)
         {
@@ -152,6 +146,7 @@ public final class PaintView extends JFrame
                     break;
             }
         }
+        else onClick.Doing ();
     }
 
     @bardiademon
@@ -186,6 +181,17 @@ public final class PaintView extends JFrame
 
             }
         };
+    }
+
+    private void close ()
+    {
+        questionForSave (() ->
+        {
+            whiteBoard.clear ();
+            dispose ();
+            System.gc ();
+            System.exit (0);
+        });
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -299,15 +305,17 @@ public final class PaintView extends JFrame
         btnColor.setBackground (Color.BLACK);
         btnColor.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
 
+        jRadioButton1.setText ("jRadioButton1");
+
+        setDefaultCloseOperation (WindowConstants.DO_NOTHING_ON_CLOSE);
+
         initComponents2 ();
         afterInitComponents ();
     }
 
     private void initComponents2 ()
     {
-        jRadioButton1.setText ("jRadioButton1");
 
-        setDefaultCloseOperation (WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground (new java.awt.Color (204 , 204 , 204));
 
         jPanel1.setBackground (new java.awt.Color (204 , 204 , 204));
@@ -1257,10 +1265,22 @@ public final class PaintView extends JFrame
         });
         menuFileSaveAs.setText ("Save as");
 
+        final JMenuItem menuFileExit = new JMenuItem ();
+        setActionMenu (menuFileExit , null , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                close ();
+            }
+        });
+        menuFileExit.setText ("Exit");
+
         menuFile.add (menuFileNew);
         menuFile.add (menuFileOpenImage);
         menuFile.add (menuFileSave);
         menuFile.add (menuFileSaveAs);
+        menuFile.add (menuFileExit);
 
         final JMenu menuEdit = new JMenu ("Edit");
 
