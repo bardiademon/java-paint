@@ -8,14 +8,21 @@ import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -66,10 +73,7 @@ public final class PaintView extends JFrame
         });
 
         setLocationRelativeTo (null);
-
-        setOnClick ();
     }
-
 
     private void onChangeTxtThickness ()
     {
@@ -97,16 +101,9 @@ public final class PaintView extends JFrame
     }
 
     @bardiademon
-    private void setOnClick ()
-    {
-
-    }
-
-    @bardiademon
     public void setMousePosition (final Point mousePosition)
     {
         this.mousePosition.setPoint (mousePosition);
-//        mousePosition.setText (String.format ("X = %d , Y = %d" , cursorPoint.x , cursorPoint.y));
     }
 
     public PreviousColor getPreviousColor (final PreviousColors previousColor)
@@ -243,7 +240,10 @@ public final class PaintView extends JFrame
         image = new ToolsButtons (whiteBoard , SelectedTool.image);
 
         colorsPanel = new JPanel ();
-        toolBar = new JToolBar ();
+        menu = new javax.swing.JMenuBar ();
+
+        btnColor.setBackground (Color.BLACK);
+        btnColor.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
 
         initComponents2 ();
         afterInitComponents ();
@@ -253,8 +253,6 @@ public final class PaintView extends JFrame
     {
         jRadioButton1.setText ("jRadioButton1");
 
-        btnColor.setBackground (Color.BLACK);
-        btnColor.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
         setDefaultCloseOperation (javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground (new java.awt.Color (204 , 204 , 204));
 
@@ -1117,15 +1115,12 @@ public final class PaintView extends JFrame
 
         whiteBoard.setBackground (new java.awt.Color (255 , 255 , 255));
 
-        toolBar.setRollover (true);
+        setJMenuBar (menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout (getContentPane ());
         getContentPane ().setLayout (layout);
         layout.setHorizontalGroup (
                 layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup (layout.createSequentialGroup ()
-                                .addComponent (toolBar , javax.swing.GroupLayout.PREFERRED_SIZE , 467 , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap (0 , 0 , Short.MAX_VALUE))
                         .addGroup (layout.createSequentialGroup ()
                                 .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE)
                                 .addGroup (layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING , false)
@@ -1133,16 +1128,15 @@ public final class PaintView extends JFrame
                                                 .addGap (3 , 3 , 3)
                                                 .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
                                         .addComponent (jPanel1 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap (javax.swing.GroupLayout.DEFAULT_SIZE , Short.MAX_VALUE))
+                                .addContainerGap ())
         );
         layout.setVerticalGroup (
                 layout.createParallelGroup (javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup (layout.createSequentialGroup ()
-                                .addComponent (toolBar , javax.swing.GroupLayout.PREFERRED_SIZE , 25 , javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap (31 , 31 , 31)
                                 .addComponent (jPanel1 , javax.swing.GroupLayout.PREFERRED_SIZE , javax.swing.GroupLayout.DEFAULT_SIZE , javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap (javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , 379 , Short.MAX_VALUE)
+                                .addComponent (whiteBoard , javax.swing.GroupLayout.DEFAULT_SIZE , 358 , Short.MAX_VALUE)
                                 .addContainerGap ())
         );
 
@@ -1154,9 +1148,125 @@ public final class PaintView extends JFrame
         final int defaultThickness = 3;
         thickness.setValue (defaultThickness);
         txtThickness.setText (String.valueOf (defaultThickness));
+
+        setMenu ();
     }
 
+    private void setMenu ()
+    {
+        final ActionMenuItem actionMenuItem = new ActionMenuItem ();
+
+        final JMenu menuFile = new JMenu ("File");
+
+        final JMenuItem menuFileNew = new JMenuItem ("New");
+        final JMenu menuFileOpen = new JMenu ("Open");
+
+        final JMenuItem menuFileOpenImage = new JMenuItem ();
+        setActionMenu (menuFileOpenImage , KeyStroke.getKeyStroke (KeyEvent.VK_I , KeyEvent.CTRL_DOWN_MASK) , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.fileOpenImage ();
+            }
+        });
+        menuFileOpenImage.setText ("Image");
+
+        final JMenuItem menuFileOpenPaint = new JMenuItem ();
+        setActionMenu (menuFileOpenPaint , KeyStroke.getKeyStroke (KeyEvent.VK_P , KeyEvent.CTRL_DOWN_MASK) , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.fileOpenPaint ();
+            }
+        });
+        menuFileOpenPaint.setText ("Paint");
+
+        menuFileOpen.add (menuFileOpenImage);
+        menuFileOpen.add (menuFileOpenPaint);
+
+        final JMenuItem menuFileSave = new JMenuItem ();
+        setActionMenu (menuFileSave , KeyStroke.getKeyStroke (KeyEvent.VK_S , KeyEvent.CTRL_DOWN_MASK) , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.fileSave ();
+            }
+        });
+        menuFileSave.setText ("Save");
+
+        final JMenuItem menuFileSaveAs = new JMenuItem ();
+        setActionMenu (menuFileSaveAs , null , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.fileSaveAs ();
+            }
+        });
+        menuFileSaveAs.setText ("Save as");
+
+        menuFile.add (menuFileNew);
+        menuFile.add (menuFileOpen);
+        menuFile.add (menuFileSave);
+        menuFile.add (menuFileSaveAs);
+
+        final JMenu menuEdit = new JMenu ("Edit");
+
+        final JMenuItem menuEditUndo = new JMenuItem ();
+        setActionMenu (menuEditUndo , null , new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.editUndo ();
+            }
+        });
+        menuEditUndo.setText ("Undo");
+
+        menuEdit.add (menuEditUndo);
+
+        menu.add (menuFile);
+        menu.add (menuEdit);
+    }
+
+    private void setActionMenu (JMenuItem menuItem , final Object value , Action action)
+    {
+        if (value != null) action.putValue (Action.ACCELERATOR_KEY , value);
+        menuItem.setAction (action);
+    }
     // </editor-fold>
+
+
+    private final class ActionMenuItem
+    {
+        private void fileOpenImage ()
+        {
+            whiteBoard.setBackground ();
+        }
+
+        private void fileOpenPaint ()
+        {
+
+        }
+
+        private void fileSave ()
+        {
+
+        }
+
+        private void fileSaveAs ()
+        {
+
+        }
+
+        private void editUndo ()
+        {
+            whiteBoard.ctrlZ ();
+        }
+    }
 
     @bardiademon
     // Variables declaration - do not modify
@@ -1233,6 +1343,8 @@ public final class PaintView extends JFrame
     public JTextField txtThickness;
 
     private JPanel colorsPanel;
-    private JToolBar toolBar;
+
+
+    private JMenuBar menu;
     // End of variables declaration
 }

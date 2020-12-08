@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
-public class BtnColor extends JPanel
+public final class BtnColor extends JPanel
 {
     private final Listener listener;
 

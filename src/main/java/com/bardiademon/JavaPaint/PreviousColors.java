@@ -3,7 +3,6 @@ package com.bardiademon.JavaPaint;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
@@ -20,9 +19,6 @@ public final class PreviousColors extends JPanel
 
     @bardiademon
     private final ColorFor colorFor;
-
-    @bardiademon
-    private PaintView.PreviousColor previousColor;
 
     @bardiademon
     public PreviousColors (final ColorFor _ColorFor)

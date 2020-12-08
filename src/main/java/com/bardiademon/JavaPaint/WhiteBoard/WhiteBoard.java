@@ -2,7 +2,6 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
-import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaintTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
@@ -641,7 +640,7 @@ public final class WhiteBoard extends JLabel
     }
 
     @bardiademon
-    private void ctrlZ ()
+    public void ctrlZ ()
     {
         final int size = arrangePaintings.size ();
         if (size > 0)
