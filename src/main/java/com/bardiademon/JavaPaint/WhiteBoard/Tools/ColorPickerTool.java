@@ -1,6 +1,7 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
 import com.bardiademon.JavaPaint.PaintView;
+import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import java.awt.Color;
 import java.awt.MouseInfo;
@@ -17,7 +18,7 @@ public final class ColorPickerTool extends ShapeTool implements Tools
     @Override
     public void select ()
     {
-        whiteBoard.setCursor ("ic_color_picker");
+        whiteBoard.setCursor ("ic_color_picker" , Shape.point (5 , 30));
     }
 
     @Override

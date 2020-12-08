@@ -19,6 +19,8 @@ public final class MousePosition extends JLabel
 
     private Text text;
 
+    private Rectangle rectangle;
+
     public MousePosition (final Robot robot)
     {
         super ("X = 0 , Y = 0");
@@ -27,9 +29,12 @@ public final class MousePosition extends JLabel
 
     public void setPoint (final Point point)
     {
-        if (text == null) setText ();
-        text.setText (String.format ("X = %d , Y = %d" , point.x , point.y));
-        repaint ();
+        new Thread (() ->
+        {
+            if (text == null) setText ();
+            text.setText (String.format ("X = %d , Y = %d" , point.x , point.y));
+            repaint ();
+        }).start ();
     }
 
     public void setText ()
@@ -39,10 +44,15 @@ public final class MousePosition extends JLabel
         text.setSize (Shape.size (getWidth () , getHeight ()));
         text.setUltimate (true);
         text.setPoint (Shape.point (0 , 0));
-        text.setFont (new Font (Font.SERIF , Font.PLAIN , 12));
+        text.setFont (new Font (Font.SANS_SERIF , Font.PLAIN , 12));
         text.apply ();
         text.setPoint (Shape.point (text.ctpX (5) , text.ctpY (50)));
         setBackground (Color.BLACK);
+
+        rectangle = new Rectangle ();
+        rectangle.setPoint (Shape.point (0 , 0));
+        rectangle.setSize (Shape.size (getWidth () , getHeight ()));
+        rectangle.setThickness (5);
     }
 
     @Override
@@ -51,12 +61,7 @@ public final class MousePosition extends JLabel
         if (text != null)
         {
             final Point location = MouseInfo.getPointerInfo ().getLocation ();
-            final Rectangle rectangle = new Rectangle ();
-            rectangle.setPoint (Shape.point (0 , 0));
-            rectangle.setSize (Shape.size (getWidth () , getHeight ()));
             rectangle.setColor (robot.getPixelColor (location.x , location.y));
-            rectangle.setThickness (5);
-
             final Graphics2D g2 = (Graphics2D) g;
             text.paint (g2);
             rectangle.paint (g2);

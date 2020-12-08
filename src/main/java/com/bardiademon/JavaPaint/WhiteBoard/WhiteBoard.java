@@ -2,6 +2,7 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
+import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaintTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
@@ -688,7 +689,7 @@ public final class WhiteBoard extends JLabel
     }
 
     @bardiademon
-    public void setCursor (final String name)
+    public void setCursor (final String name , final Point hotspot)
     {
         try
         {
@@ -696,7 +697,7 @@ public final class WhiteBoard extends JLabel
             if (icPen != null)
             {
                 BufferedImage read = ImageIO.read (icPen);
-                setCursor (defaultToolkit.createCustomCursor ((read.getScaledInstance (read.getWidth () , read.getHeight () , BufferedImage.TYPE_INT_ARGB)) , Shape.point (10 , 10) , "pen"));
+                setCursor (defaultToolkit.createCustomCursor ((read.getScaledInstance (read.getWidth () , read.getHeight () , BufferedImage.TYPE_INT_ARGB)) , hotspot , "pen"));
             }
         }
         catch (IOException ignored)

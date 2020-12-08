@@ -36,7 +36,7 @@ public class PenTool extends ShapeTool implements Tools
     @Override
     public void select ()
     {
-        whiteBoard.setCursor ("ic_pen");
+        whiteBoard.setCursor ("ic_pen" , Shape.point (5 , 30));
     }
 
     @bardiademon
@@ -98,7 +98,6 @@ public class PenTool extends ShapeTool implements Tools
                 {
                     g.setColor (whiteBoard.getBackgroundColor ());
                     g.setBackground (whiteBoard.getBackgroundColor ());
-
                     g.setStroke (new BasicStroke (20));
                 }
                 else
