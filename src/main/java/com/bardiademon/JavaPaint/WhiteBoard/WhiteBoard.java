@@ -35,6 +35,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.Point;
 
 import java.awt.Robot;
@@ -175,6 +176,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mousePressed (MouseEvent e)
             {
+                paintView.saved = false;
+
                 selectedMousePoint = e.getPoint ();
 
                 if (!moving && !resizing)
@@ -653,20 +656,26 @@ public final class WhiteBoard extends JLabel
         }
     }
 
+    public void clear ()
+    {
+        selectedArrangePainting = null;
+        selectedTool = SelectedTool.pen;
+        arrangePaintings.clear ();
+        repaint ();
+    }
+
     @bardiademon
     @Override
     public void paint (Graphics g)
     {
         super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
-
-
         arrangePaintings.forEach ((ap) ->
                 tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
     }
 
     @bardiademon
-    private static final class ArrangePainting
+    public static final class ArrangePainting
     {
         private final String selectedTool;
         private int index;
@@ -684,6 +693,11 @@ public final class WhiteBoard extends JLabel
         public void setIndex (int index)
         {
             this.index = index;
+        }
+
+        public String getSelectedTool ()
+        {
+            return selectedTool;
         }
     }
 
@@ -722,6 +736,11 @@ public final class WhiteBoard extends JLabel
     public Robot getRobot ()
     {
         return robot;
+    }
+
+    public Map <String, Tools> getTools ()
+    {
+        return tools;
     }
 
     @bardiademon

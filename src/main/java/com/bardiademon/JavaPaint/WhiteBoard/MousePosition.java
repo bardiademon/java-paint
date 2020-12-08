@@ -21,6 +21,9 @@ public final class MousePosition extends JLabel
 
     private Rectangle rectangle;
 
+    private boolean fromText;
+    private Color color;
+
     public MousePosition (final Robot robot)
     {
         super ("X = 0 , Y = 0");
@@ -33,6 +36,18 @@ public final class MousePosition extends JLabel
         {
             if (text == null) setText ();
             text.setText (String.format ("X = %d , Y = %d" , point.x , point.y));
+            repaint ();
+        }).start ();
+    }
+
+    public void text (final String text , final Color color)
+    {
+        new Thread (() ->
+        {
+            if (text == null) setText ();
+            this.text.setText (text);
+            this.color = color;
+            fromText = true;
             repaint ();
         }).start ();
     }
@@ -61,7 +76,15 @@ public final class MousePosition extends JLabel
         if (text != null)
         {
             final Point location = MouseInfo.getPointerInfo ().getLocation ();
-            rectangle.setColor (robot.getPixelColor (location.x , location.y));
+
+            if (!fromText)
+                rectangle.setColor (robot.getPixelColor (location.x , location.y));
+            else
+            {
+                fromText = false;
+                rectangle.setColor (color);
+            }
+
             final Graphics2D g2 = (Graphics2D) g;
             text.paint (g2);
             rectangle.paint (g2);
