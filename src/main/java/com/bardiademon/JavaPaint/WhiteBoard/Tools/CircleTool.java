@@ -5,13 +5,14 @@ import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public final class CircleTool extends ShapeTool implements Tools
+public final class CircleTool extends ShapeTool <Circle> implements Tools <Circle>
 {
 
     @bardiademon
@@ -62,6 +63,75 @@ public final class CircleTool extends ShapeTool implements Tools
         circles.get (index).setPoint (point);
     }
 
+
+    @Override
+    public boolean isFill (final int index)
+    {
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).isFill ();
+        else return super.isFill (index);
+    }
+
+    @Override
+    public int getThickness (final int index)
+    {
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).getThickness ();
+        else return super.getThickness (index);
+    }
+
+    @Override
+    public Color getColor (final int index)
+    {
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).getColor ();
+        else return super.getColor (index);
+    }
+
+    @Override
+    public Color getBackgroundColor (final int index)
+    {
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).getBackgroundColor ();
+        else return super.getBackgroundColor (index);
+    }
+
+    @Override
+    public void setFill (final int index , final boolean fill)
+    {
+        if (checkIndex (index , circles.size ()))
+            circles.get (index).setFill (fill);
+    }
+
+    @Override
+    public void setThickness (final int index , final int thickness)
+    {
+        if (checkIndex (index , circles.size ()))
+            circles.get (index).setThickness (thickness);
+    }
+
+    @Override
+    public void setColor (final int index , final Color color)
+    {
+        if (checkIndex (index , circles.size ()))
+            circles.get (index).setColor (color);
+    }
+
+    @Override
+    public void setBackgroundColor (final int index , final Color color)
+    {
+        if (checkIndex (index , circles.size ()))
+            circles.get (index).setBackgroundColor (color);
+    }
+
+    @Override
+    public Size getSize (final int index)
+    {
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).getSize ();
+        else return null;
+    }
+
     @bardiademon
     @Override
     public void mouseReleased (final Point point)
@@ -93,9 +163,21 @@ public final class CircleTool extends ShapeTool implements Tools
     @Override
     public Point getPoint (final int index)
     {
-        if (index >= 0 && index < circles.size ())
-            return circles.get (getIndex ()).getPoint ();
+        if (checkIndex (index , circles.size ()))
+            return circles.get (index).getPoint ();
         else return super.getPoint (index);
+    }
+
+    @Override
+    public void setPoint (final Point point , final int index)
+    {
+        circles.get (index).setPoint (point);
+    }
+
+    @Override
+    public void setSize (final Size size , int index)
+    {
+        circles.get (index).setSize (size);
     }
 
     @bardiademon
@@ -105,5 +187,27 @@ public final class CircleTool extends ShapeTool implements Tools
         if (index >= 0 && index < circles.size ())
             return circles.get (index).getAllPoint ();
         else return super.getAllPoint (index);
+    }
+
+    @Override
+    public void paint (final Graphics2D g , final int index , final Point point , final Size size)
+    {
+        if (checkIndex (index , circles.size ()))
+        {
+            final Circle circle = circles.get (index);
+            final Size tmpSize = circle.getSize ();
+            final Point tmpPoint = circle.getPoint ();
+            circle.setSize (size);
+            circle.setPoint (point);
+            circle.paint (g);
+            circle.setSize (tmpSize);
+            circle.setPoint (tmpPoint);
+        }
+    }
+
+    @Override
+    public String shapeName ()
+    {
+        return "Circle";
     }
 }

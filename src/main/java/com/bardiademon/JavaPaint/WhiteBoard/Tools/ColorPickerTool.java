@@ -6,8 +6,9 @@ import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import java.awt.Color;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import javafx.scene.control.ColorPicker;
 
-public final class ColorPickerTool extends ShapeTool implements Tools
+public final class ColorPickerTool extends ShapeTool <ColorPicker> implements Tools <ColorPicker>
 {
     public ColorPickerTool (final WhiteBoard _WhiteBoard)
     {

@@ -5,13 +5,14 @@ import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public final class FourPointStarTool extends ShapeTool implements Tools
+public final class FourPointStarTool extends ShapeTool <FourPointStar> implements Tools <FourPointStar>
 {
     @bardiademon
     private final List <FourPointStar> fourPointStars = new ArrayList <> ();
@@ -25,6 +26,88 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     {
         super (_WhiteBoard);
         this.whiteBoard = _WhiteBoard;
+    }
+
+    @Override
+    public Size getSize (int index)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            return fourPointStars.get (index).getSize ();
+        else return null;
+    }
+
+    @Override
+    public void setPoint (final Point point , final int index)
+    {
+        if (index >= 0 && index < fourPointStars.size ())
+            fourPointStars.get (index).setPoint (point);
+    }
+
+    @Override
+    public void setSize (final Size size , int index)
+    {
+        if (index >= 0 && index < fourPointStars.size ())
+            fourPointStars.get (index).setSize (size);
+    }
+
+    @Override
+    public boolean isFill (final int index)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            return fourPointStars.get (index).isFill ();
+        else return super.isFill (index);
+    }
+
+    @Override
+    public int getThickness (final int index)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            return fourPointStars.get (index).getThickness ();
+        else return super.getThickness (index);
+    }
+
+    @Override
+    public Color getColor (final int index)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            return fourPointStars.get (index).getColor ();
+        else return super.getColor (index);
+    }
+
+    @Override
+    public Color getBackgroundColor (final int index)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            return fourPointStars.get (index).getBackgroundColor ();
+        else return super.getBackgroundColor (index);
+    }
+
+    @Override
+    public void setFill (final int index , final boolean fill)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            fourPointStars.get (index).setFill (fill);
+    }
+
+    @Override
+    public void setThickness (final int index , final int thickness)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            fourPointStars.get (index).setThickness (thickness);
+    }
+
+    @Override
+    public void setColor (final int index , final Color color)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            fourPointStars.get (index).setColor (color);
+    }
+
+    @Override
+    public void setBackgroundColor (final int index , final Color color)
+    {
+        if (checkIndex (index , fourPointStars.size ()))
+            fourPointStars.get (index).setBackgroundColor (color);
     }
 
     @bardiademon
@@ -98,7 +181,7 @@ public final class FourPointStarTool extends ShapeTool implements Tools
     public Point getPoint (final int index)
     {
         if (index >= 0 && index < fourPointStars.size ())
-            return fourPointStars.get (getIndex ()).getPoint ();
+            return fourPointStars.get (index).getPoint ();
         else return super.getPoint (index);
     }
 

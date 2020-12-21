@@ -2,6 +2,8 @@ package com.bardiademon.JavaPaint.WhiteBoard;
 
 import com.bardiademon.JavaPaint.Main;
 import com.bardiademon.JavaPaint.PaintView;
+import com.bardiademon.JavaPaint.Shapes.Pen;
+import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.BucketOfPaintTool;
 import com.bardiademon.JavaPaint.WhiteBoard.Tools.CircleTool;
@@ -63,6 +65,8 @@ import javax.swing.JLabel;
 public final class WhiteBoard extends JLabel
 {
 
+    private boolean active = true;
+
     @bardiademon
     private Robot robot;
 
@@ -73,7 +77,7 @@ public final class WhiteBoard extends JLabel
     private final PaintView paintView;
 
     @bardiademon
-    private final Map <String, Tools> tools = new LinkedHashMap <> ();
+    private final Map <String, Tools <?>> tools = new LinkedHashMap <> ();
 
     @bardiademon
     private final List <ArrangePainting> arrangePaintings = new ArrayList <> ();
@@ -91,7 +95,7 @@ public final class WhiteBoard extends JLabel
     private Point selectedMousePoint;
 
     @bardiademon
-    private Tools tool;
+    private Tools <?> tool;
 
     @bardiademon
     private boolean polygonFinish = true;
@@ -141,11 +145,11 @@ public final class WhiteBoard extends JLabel
         {
         }
 
-        tools.put (SelectedTool.pen.name () , new PenTool (this));
+        tools.put (SelectedTool.pen.name () , new PenTool <Pen> (this));
         tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
         tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
         tools.put (SelectedTool.circle.name () , new CircleTool (this));
-        tools.put (SelectedTool.rect.name () , new RectTool (this));
+        tools.put (SelectedTool.rect.name () , new RectTool <Rectangle> (this));
         tools.put (SelectedTool.line.name () , new LineTool (this));
         tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
         tools.put (SelectedTool.triangle.name () , new TriangleTool (this));
@@ -165,6 +169,8 @@ public final class WhiteBoard extends JLabel
 
         paintView.thickness.addChangeListener (e ->
         {
+            if (!active) return;
+
             paintView.txtThickness.setText (String.valueOf (paintView.thickness.getValue ()));
             WhiteBoard.this.repaint ();
         });
@@ -175,6 +181,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mousePressed (MouseEvent e)
             {
+                if (!active) return;
+
                 paintView.saved = false;
 
                 selectedMousePoint = e.getPoint ();
@@ -229,6 +237,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseReleased (MouseEvent e)
             {
+                if (!active) return;
+
                 tool = WhiteBoard.this.tools.get (selectedTool.name ());
                 if (tool != null && tool.isPaint ())
                 {
@@ -242,6 +252,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseClicked (MouseEvent e)
             {
+                if (!active) return;
+
                 setFocus ();
 
                 WhiteBoard.this.setFocusable (true);
@@ -255,6 +267,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseDragged (MouseEvent e)
             {
+                if (!active) return;
+
                 paintView.setMousePosition (e.getPoint ());
                 if (selectedArrangePainting != null)
                 {
@@ -312,6 +326,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void mouseMoved (MouseEvent e)
             {
+                if (!active) return;
+
                 setFocus ();
                 paintView.setMousePosition (e.getPoint ());
                 if (selectedTool != null)
@@ -368,6 +384,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void componentResized (ComponentEvent e)
             {
+                if (!active) return;
+
                 setBackgroundImage ();
             }
         });
@@ -376,6 +394,8 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private void setFocus ()
     {
+        if (!active) return;
+
         setFocusable (true);
         setRequestFocusEnabled (true);
         requestFocusInWindow ();
@@ -395,6 +415,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyPressed (KeyEvent e)
             {
+                if (!active) return;
+
                 if (e.getKeyCode () == 90)
                 {
                     if (arrangePaintings.size () > 0)
@@ -420,6 +442,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyPressed (KeyEvent e)
             {
+                if (!active) return;
+
                 if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
                 {
                     changeWHXY (e , WitchWHXY.w);
@@ -446,6 +470,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyPressed (KeyEvent e)
             {
+                if (!active) return;
+
                 if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
                 {
                     changeWHXY (e , WitchWHXY.h);
@@ -472,6 +498,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyPressed (KeyEvent e)
             {
+                if (!active) return;
+
                 if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
                 {
                     changeWHXY (e , WitchWHXY.x);
@@ -484,6 +512,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyReleased (KeyEvent e)
             {
+                if (!active) return;
+
                 if (invokeKeyReleased) changeWHXY (e , WitchWHXY.x);
             }
         };
@@ -499,6 +529,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyPressed (KeyEvent e)
             {
+                if (!active) return;
+
                 if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
                 {
                     changeWHXY (e , WitchWHXY.y);
@@ -511,6 +543,8 @@ public final class WhiteBoard extends JLabel
             @Override
             public void keyReleased (KeyEvent e)
             {
+                if (!active) return;
+
                 if (invokeKeyReleased) changeWHXY (e , WitchWHXY.y);
             }
         };
@@ -518,6 +552,11 @@ public final class WhiteBoard extends JLabel
         paintView.txtHeight.addKeyListener (hListener);
         paintView.txtX.addKeyListener (xListener);
         paintView.txtY.addKeyListener (yListener);
+    }
+
+    public List <ArrangePainting> getArrangePaintings ()
+    {
+        return arrangePaintings;
     }
 
     @bardiademon
@@ -529,11 +568,35 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private BufferedImage read;
 
+    public void setActive (boolean active)
+    {
+        this.active = active;
+        if (!active)
+        {
+            File icDisable = Main.getFile ("ic_disable");
+            if (icDisable != null)
+            {
+                try
+                {
+                    setCursor (Toolkit.getDefaultToolkit ().createCustomCursor (ImageIO.read (icDisable) , Shape.point (15 , 15) , "disable"));
+                }
+                catch (IOException ignored)
+                {
+                }
+            }
+
+        }
+    }
+
     @bardiademon
     public void setBackground ()
     {
+        if (!active) return;
+
         paintView.questionForSave (() ->
         {
+            if (!active) return;
+
             clear ();
             final JFileChooser chooser = new JFileChooser (fileBackground);
             if (chooser.showOpenDialog (null) == JFileChooser.OPEN_DIALOG)
@@ -557,6 +620,8 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private void setBackgroundImage ()
     {
+        if (!active) return;
+
         if (read != null)
             setIcon (new ImageIcon (read.getScaledInstance (getWidth () , getHeight () , BufferedImage.TYPE_4BYTE_ABGR)));
         else setIcon (null);
@@ -577,6 +642,8 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private void changeWHXY (final KeyEvent e , final WitchWHXY witchWHXY)
     {
+        if (!active) return;
+
         final String txtWidth = paintView.txtWidth.getText ();
         final String txtHeight = paintView.txtHeight.getText ();
         final String txtX = paintView.txtX.getText ();
@@ -633,7 +700,7 @@ public final class WhiteBoard extends JLabel
 
                 if (selectedArrangePainting != null)
                 {
-                    Tools tools = this.tools.get (selectedArrangePainting.selectedTool);
+                    Tools <?> tools = this.tools.get (selectedArrangePainting.selectedTool);
                     tools.setIndex (selectedArrangePainting.getIndex ());
                     tools.setPoint (point);
                     tools.mouseDragged (size);
@@ -649,6 +716,8 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     public void ctrlZ ()
     {
+        if (!active) return;
+
         final int size = arrangePaintings.size ();
         if (size > 0)
         {
@@ -665,9 +734,13 @@ public final class WhiteBoard extends JLabel
 
     public void clear ()
     {
+        if (!active) return;
+
         selectedArrangePainting = null;
         selectedTool = SelectedTool.pen;
         arrangePaintings.clear ();
+        setBackground (Color.WHITE);
+        setIcon (null);
         repaint ();
     }
 
@@ -675,6 +748,8 @@ public final class WhiteBoard extends JLabel
     @Override
     public void paint (Graphics g)
     {
+        if (!active) return;
+
         super.paint (g);
         final Graphics2D g2 = (Graphics2D) g;
         arrangePaintings.forEach ((ap) ->
@@ -701,11 +776,18 @@ public final class WhiteBoard extends JLabel
         {
             this.index = index;
         }
+
+        public String getSelectedTool ()
+        {
+            return selectedTool;
+        }
     }
 
     @bardiademon
     public void setCursor (final String name , final Point hotspot)
     {
+        if (!active) return;
+
         try
         {
             final File icPen = Main.getFile (name);
@@ -723,6 +805,8 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     public void setWHXY (final Size size , final Point point)
     {
+        if (!active) return;
+
         if (size != null)
         {
             paintView.txtWidth.setText (String.valueOf (size.width));
@@ -740,7 +824,7 @@ public final class WhiteBoard extends JLabel
         return robot;
     }
 
-    public Map <String, Tools> getTools ()
+    public Map <String, Tools <?>> getTools ()
     {
         return tools;
     }

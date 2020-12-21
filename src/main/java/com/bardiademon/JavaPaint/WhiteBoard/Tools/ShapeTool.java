@@ -4,12 +4,13 @@ import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public class ShapeTool implements Tools
+public class ShapeTool <T> implements Tools <T>
 {
     @bardiademon
     protected int index;
@@ -51,50 +52,92 @@ public class ShapeTool implements Tools
 
     @bardiademon
     @Override
-    public void mouseDragged (Point point)
+    public void mouseDragged (final Point point)
     {
 
     }
 
     @bardiademon
     @Override
-    public void mouseDragged (Size size)
+    public void mouseDragged (final Size size)
     {
 
     }
 
     @bardiademon
     @Override
-    public void mousePressed (Point point)
+    public void mousePressed (final Point point)
     {
 
     }
 
     @Override
-    public void mousePressed (Point point , int button)
-    {
-
-    }
-
-    @bardiademon
-    @Override
-    public void mouseReleased (Point point)
+    public void mousePressed (final Point point , final int button)
     {
 
     }
 
     @bardiademon
     @Override
-    public void paint (Graphics2D g , final int index)
+    public void mouseReleased (final Point point)
     {
 
     }
 
     @bardiademon
     @Override
-    public void setPoint (Point point)
+    public void paint (final Graphics2D g , final int index)
     {
 
+    }
+
+    @Override
+    public void paint (final Graphics2D g , final int index , final Point point , final Size size)
+    {
+        System.out.println ("Not supported!");
+    }
+
+    @bardiademon
+    @Override
+    public void setPoint (final Point point)
+    {
+
+    }
+
+    @Override
+    public void setPoint (final Point point , final int index)
+    {
+
+    }
+
+    @Override
+    public void setSize (final Size size , final int index)
+    {
+
+    }
+
+    @Override
+    public boolean isFill (final int index)
+    {
+        return false;
+    }
+
+    @Override
+    public int getThickness (final int index)
+    {
+        return 0;
+    }
+
+    @Override
+    public Color getColor (final int index)
+    {
+        return null;
+    }
+
+    @Override
+    public Color getBackgroundColor (final int index)
+    {
+        return null;
     }
 
     @bardiademon
@@ -150,5 +193,61 @@ public class ShapeTool implements Tools
     public void setPaint (boolean paint)
     {
         this.paint = paint;
+    }
+
+    protected boolean checkIndex (final int index , final int max)
+    {
+        return (index >= 0 && index < max);
+    }
+
+    @Override
+    public String shapeName ()
+    {
+        return this.getClass ().getSimpleName ();
+    }
+
+    @Override
+    public Size getSize (int index)
+    {
+        return null;
+    }
+
+    @Override
+    public void setFill (int index , boolean fill)
+    {
+
+    }
+
+    @Override
+    public void setThickness (int index , int thickness)
+    {
+
+    }
+
+    @Override
+    public void setColor (int index , Color color)
+    {
+
+    }
+
+    @Override
+    public void setBackgroundColor (int index , Color color)
+    {
+
+    }
+
+    @Override
+    public String toString (final int index)
+    {
+        return "ShapeTool{" +
+                "index=" + index +
+                ", paint=" + paint +
+                '}';
+    }
+
+    @Override
+    public T getShape (int index)
+    {
+        return null;
     }
 }

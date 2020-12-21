@@ -26,13 +26,7 @@ public final class Text extends Rectangle
     private Font font;
 
     @bardiademon
-    private Color color;
-
-    @bardiademon
-    private Color backGroundColor;
-
-    @bardiademon
-    private String text;
+    private String text = null;
 
     @bardiademon
     private Point textPoint;
@@ -67,14 +61,14 @@ public final class Text extends Rectangle
             @Override
             public void onChangedTextColor (final Color _Color)
             {
-                color = _Color;
+                Text.super.setColor (_Color);
                 textTool.repaint ();
             }
 
             @Override
             public void onChangedBackgroundColor (final Color _Color)
             {
-                backGroundColor = _Color;
+                Text.super.setBackgroundColor (_Color);
                 textTool.repaint ();
             }
 
@@ -117,8 +111,6 @@ public final class Text extends Rectangle
             }
         } , this);
         fText.setSlider ();
-
-        setArc (size (0 , 0));
         textTool.repaint ();
     }
 
@@ -144,16 +136,16 @@ public final class Text extends Rectangle
             g.setColor (getColor ());
             g.setStroke (new BasicStroke (getThickness ()));
 
-            if (!ultimate || (backGroundColor != null) || ((getArc () != null) && getArc ().width > 0))
+            if (!ultimate || (getBackgroundColor () != null) || ((getArc () != null) && getArc ().width > 0))
             {
-                if (backGroundColor == null)
+                if (getBackgroundColor () == null)
                 {
                     g.setColor (Color.BLACK);
                     g.drawRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
                 }
                 else
                 {
-                    g.setColor (backGroundColor);
+                    g.setColor (getBackgroundColor ());
                     g.fillRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
                 }
             }
@@ -164,7 +156,7 @@ public final class Text extends Rectangle
             if (text != null)
             {
                 if (font != null) g.setFont (font);
-                if (color != null) g.setColor (color);
+                if (getColor () != null) g.setColor (getColor ());
                 else g.setColor (Color.BLACK);
 
                 textWidth = g.getFontMetrics ().stringWidth (text);
@@ -188,6 +180,11 @@ public final class Text extends Rectangle
     public void setUltimate (final boolean ultimate)
     {
         this.ultimate = ultimate;
+    }
+
+    public String getText ()
+    {
+        return text;
     }
 
     @bardiademon

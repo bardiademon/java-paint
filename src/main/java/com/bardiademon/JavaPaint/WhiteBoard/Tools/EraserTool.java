@@ -1,5 +1,6 @@
 package com.bardiademon.JavaPaint.WhiteBoard.Tools;
 
+import com.bardiademon.JavaPaint.Shapes.Pen;
 import com.bardiademon.JavaPaint.Shapes.Shape;
 import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.bardiademon.JavaPaint.bardiademon;
@@ -10,7 +11,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 @bardiademon
-public final class EraserTool extends PenTool implements Tools
+public final class EraserTool extends PenTool <Pen> implements Tools <Pen>
 {
 
     @bardiademon

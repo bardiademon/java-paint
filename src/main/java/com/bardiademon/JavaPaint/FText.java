@@ -44,9 +44,11 @@ public final class FText extends JFrame
     @bardiademon
     private final On on;
 
+    private String strText;
+
     @bardiademon
-    /**
-     * Creates new form FText
+    /*
+      Creates new form FText
      */
     public FText (final On _On , final Text _Text)
     {
@@ -56,7 +58,6 @@ public final class FText extends JFrame
         else
         {
             initComponents ();
-
             addWindowListener (new WindowAdapter ()
             {
                 @Override
@@ -69,6 +70,20 @@ public final class FText extends JFrame
             setLocationRelativeTo (null);
             setVisible (true);
             on ();
+            if ((strText = text.getText ()) != null)
+            {
+                txtText.setText (strText);
+                sArc.setValue (text.getArc ().width);
+//                on.onChangedArc (sArc.getValue ());
+                jpBackgroundColor.setBackground (text.getBackgroundColor ());
+                jpTextColor.setBackground (text.getColor ());
+
+                color = text.getColor ();
+                backgroundColor = text.getBackgroundColor ();
+
+                on.onChangedTextColor (color);
+                on.onChangedBackgroundColor (backgroundColor);
+            }
         }
     }
 
@@ -218,7 +233,11 @@ public final class FText extends JFrame
 
         sArc.addChangeListener (e -> on.onChangedArc (sArc.getValue ()));
 
-        btnCancel.addActionListener (e -> on.onCancel ());
+        btnCancel.addActionListener (e ->
+        {
+            if (strText == null) on.onCancel ();
+            else FText.this.dispose ();
+        });
 
         btnApply.addActionListener (e -> on.onApply ());
     }

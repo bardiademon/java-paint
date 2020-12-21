@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public final class RoundRectangleTool extends RectTool implements Tools
+public final class RoundRectangleTool extends RectTool <Rectangle> implements Tools <Rectangle>
 {
     @bardiademon
     public RoundRectangleTool (WhiteBoard _WhiteBoard)

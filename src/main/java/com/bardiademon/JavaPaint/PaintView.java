@@ -1,5 +1,6 @@
 package com.bardiademon.JavaPaint;
 
+import com.bardiademon.JavaPaint.DrawnShapes.DrawnShapes;
 import com.bardiademon.JavaPaint.Shapes.BackgroundPaint;
 import com.bardiademon.JavaPaint.WhiteBoard.MousePosition;
 import com.bardiademon.JavaPaint.WhiteBoard.Save.SaveAsImage;
@@ -1212,7 +1213,7 @@ public final class PaintView extends JFrame
         setMenu ();
     }
 
-    ActionMenuItem actionMenuItem;
+    private ActionMenuItem actionMenuItem;
 
     private void setMenu ()
     {
@@ -1297,8 +1298,20 @@ public final class PaintView extends JFrame
 
         menuEdit.add (menuEditUndo);
 
+
+        final JMenuItem drawnShapes = new JMenuItem (new AbstractAction ()
+        {
+            @Override
+            public void actionPerformed (ActionEvent e)
+            {
+                actionMenuItem.drawnShapes ();
+            }
+        });
+        drawnShapes.setText ("Drawn Shapes");
+
         menu.add (menuFile);
         menu.add (menuEdit);
+        menu.add (drawnShapes);
     }
 
     private void setActionMenu (JMenuItem menuItem , final Object value , Action action)
@@ -1350,9 +1363,19 @@ public final class PaintView extends JFrame
         {
             whiteBoard.ctrlZ ();
         }
+
+        private void drawnShapes ()
+        {
+            new DrawnShapes (PaintView.this);
+        }
     }
 
     // </editor-fold>
+
+    public WhiteBoard getWhiteBoard ()
+    {
+        return whiteBoard;
+    }
 
     @bardiademon
     // Variables declaration - do not modify

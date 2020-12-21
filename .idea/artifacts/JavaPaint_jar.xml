@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="JavaPaint:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaPaint_jar</output-path>
+    <root id="root">
+      <element id="archive" name="JavaPaint.jar">
+        <element id="module-output" name="JavaPaint" />
+      </element>
+      <element id="library" level="project" name="Maven: commons-io:commons-io:2.8.0" />
+      <element id="library" level="project" name="Maven: com.rover12421.opensource:JFontChooser:1.0.5-3" />
+    </root>
+  </artifact>
+</component>

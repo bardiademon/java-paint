@@ -7,6 +7,7 @@ import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public class PenTool extends ShapeTool implements Tools
+public class PenTool <T> extends ShapeTool <T> implements Tools <T>
 {
 
     @bardiademon
@@ -118,6 +119,50 @@ public class PenTool extends ShapeTool implements Tools
                 pre = rec.getPoint ();
             }
         }
+    }
+
+    @Override
+    public int getThickness (final int index)
+    {
+        if (checkIndex (index , rec.size ()))
+            return rec.get (index).get (0).getThickness ();
+        else return super.getThickness (index);
+    }
+
+    @Override
+    public Color getColor (final int index)
+    {
+        if (checkIndex (index , rec.size ()))
+            return rec.get (index).get (0).getColor ();
+        else return super.getColor (index);
+    }
+
+
+    @Override
+    public void setFill (final int index , final boolean fill)
+    {
+        if (checkIndex (index , rec.size ()))
+            for (Rectangle rectangle : rec.get (index))
+                rectangle.setFill (fill);
+        else super.setFill (index , fill);
+    }
+
+    @Override
+    public void setThickness (final int index , final int thickness)
+    {
+        if (checkIndex (index , rec.size ()))
+            for (Rectangle rectangle : rec.get (index))
+                rectangle.setThickness (thickness);
+        else super.setThickness (index , thickness);
+    }
+
+    @Override
+    public void setColor (final int index , final Color color)
+    {
+        if (checkIndex (index , rec.size ()))
+            for (Rectangle rectangle : rec.get (index))
+                rectangle.setColor (color);
+        else super.setColor (index , color);
     }
 
     @bardiademon

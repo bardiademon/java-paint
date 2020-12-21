@@ -6,13 +6,14 @@ import com.bardiademon.JavaPaint.WhiteBoard.WhiteBoard;
 import com.bardiademon.JavaPaint.bardiademon;
 import com.sun.glass.ui.Size;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 @bardiademon
-public final class LineTool extends ShapeTool implements Tools
+public final class LineTool extends ShapeTool <Line> implements Tools <Line>
 {
 
     @bardiademon
@@ -24,11 +25,60 @@ public final class LineTool extends ShapeTool implements Tools
         super (_WhiteBoard);
     }
 
+    @Override
+    public Point getPoint (int index)
+    {
+        if (checkIndex (index , lines.size ()))
+            return lines.get (index).getPoint1 ();
+        else return null;
+    }
+
+    @Override
+    public int getThickness (final int index)
+    {
+        if (checkIndex (index , lines.size ()))
+            return lines.get (index).getThickness ();
+        else return super.getThickness (index);
+    }
+
+    @Override
+    public Color getColor (final int index)
+    {
+        if (checkIndex (index , lines.size ()))
+            return lines.get (index).getColor ();
+        else return super.getColor (index);
+    }
+
+    @Override
+    public void setThickness (final int index , final int thickness)
+    {
+        if (checkIndex (index , lines.size ()))
+            lines.get (index).setThickness (thickness);
+    }
+
+    @Override
+    public void setColor (final int index , final Color color)
+    {
+        if (checkIndex (index , lines.size ()))
+            lines.get (index).setColor (color);
+    }
+
     @bardiademon
     @Override
     public void mouseDragged (final Point point)
     {
         lines.get (index).setPoint2 (point);
+    }
+
+    @Override
+    public Size getSize (int index)
+    {
+        if (checkIndex (index , lines.size ()))
+        {
+            final Point line = lines.get (index).getPoint2 ();
+            return Shape.size (line.x , line.y);
+        }
+        else return null;
     }
 
     @bardiademon
