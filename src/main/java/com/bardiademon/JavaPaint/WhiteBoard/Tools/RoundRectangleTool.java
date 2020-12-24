@@ -27,14 +27,6 @@ public final class RoundRectangleTool extends RectTool <Rectangle> implements To
 
     @bardiademon
     @Override
-    public void remove (int index)
-    {
-        if (index >= 0 && index < rectangles.size ())
-            rectangles.remove (index);
-    }
-
-    @bardiademon
-    @Override
     public void paint (final Graphics2D g , final int index)
     {
         if (index >= 0 && index < rectangles.size ())
@@ -43,23 +35,5 @@ public final class RoundRectangleTool extends RectTool <Rectangle> implements To
             whiteBoard.setWHXY (rectangle.getSize () , rectangle.getPoint ());
             rectangle.paint (g);
         }
-    }
-
-    @bardiademon
-    @Override
-    public Point getPoint (final int index)
-    {
-        if (index >= 0 && index < rectangles.size ())
-            return rectangles.get (getIndex ()).getPoint ();
-        else return super.getPoint (index);
-    }
-
-    @bardiademon
-    @Override
-    public Point getAllPoint (final int index)
-    {
-        if (index >= 0 && index < rectangles.size ())
-            return rectangles.get (index).getAllPoint ();
-        else return super.getAllPoint (index);
     }
 }

@@ -124,7 +124,7 @@ public class RectTool <T> extends ShapeTool <T> implements Tools <T>
     @Override
     public void mouseDragged (final Size size)
     {
-        rectangles.get (index).setSize (size);
+        rectangles.get (rectangles.size () - 1).setSize (size);
     }
 
     @bardiademon
