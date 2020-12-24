@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: com.bardiademon.JavaPaint.Main
-Class-Path: commons-io-2.8.0.jar JFontChooser-1.0.5-3.jar
+Class-Path: JFontChooser-1.0.5-3.jar commons-io-2.8.0.jar
 
