@@ -8,8 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 @bardiademon
-public final class PreviousColors extends JPanel
-{
+public final class PreviousColors extends JPanel {
 
     @bardiademon
     private boolean setColor;
@@ -21,54 +20,45 @@ public final class PreviousColors extends JPanel
     private final ColorFor colorFor;
 
     @bardiademon
-    public PreviousColors (final ColorFor _ColorFor)
-    {
-        this.colorFor = _ColorFor;
+    public PreviousColors(final ColorFor colorFor) {
+        this.colorFor = colorFor;
 
-        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
-    public void setPreviousColor (PaintView.PreviousColor previousColor)
-    {
-        addMouseListener (new MouseAdapter ()
-        {
+    public void setPreviousColor(PaintView.PreviousColor previousColor) {
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e)
-            {
-                previousColor.onClick (color);
+            public void mouseClicked(MouseEvent e) {
+                previousColor.onClick(color);
             }
         });
     }
 
     @bardiademon
-    public void setColor (final Color color)
-    {
+    public void setColor(final Color color) {
         setColor = true;
         this.color = color;
-        setBackground (color);
+        setBackground(color);
     }
 
     @bardiademon
-    public Color getColor ()
-    {
+    public Color getColor() {
         return color;
     }
 
     @bardiademon
-    public ColorFor getColorFor ()
-    {
+    public ColorFor getColorFor() {
         return colorFor;
     }
 
     @bardiademon
-    public enum ColorFor
-    {
+    public enum ColorFor {
         color, bgcolor
     }
 
     @bardiademon
-    public boolean isSetColor ()
-    {
+    public boolean isSetColor() {
         return setColor;
     }
 }

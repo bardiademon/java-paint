@@ -62,8 +62,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 @bardiademon
-public final class WhiteBoard extends JLabel
-{
+public final class WhiteBoard extends JLabel {
 
     private boolean active = true;
 
@@ -77,13 +76,13 @@ public final class WhiteBoard extends JLabel
     private final PaintView paintView;
 
     @bardiademon
-    private final Map <String, Tools <?>> tools = new LinkedHashMap <> ();
+    private final Map<String, Tools<?>> tools = new LinkedHashMap<>();
 
     @bardiademon
-    private final List <ArrangePainting> arrangePaintings = new ArrayList <> ();
+    private final List<ArrangePainting> arrangePaintings = new ArrayList<>();
 
     @bardiademon
-    private final Toolkit defaultToolkit = Toolkit.getDefaultToolkit ();
+    private final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
 
     @bardiademon
     private ArrangePainting selectedArrangePainting;
@@ -95,220 +94,189 @@ public final class WhiteBoard extends JLabel
     private Point selectedMousePoint;
 
     @bardiademon
-    private Tools <?> tool;
+    private Tools<?> tool;
 
     @bardiademon
     private boolean polygonFinish = true;
 
-    private final static SelectedColor SELECTED_COLOR = new SelectedColor ();
+    private final static SelectedColor SELECTED_COLOR = new SelectedColor();
 
-    private static class SelectedColor
-    {
+    private static class SelectedColor {
         private Color color, backgroundColor;
 
-        private SelectedColor ()
-        {
+        private SelectedColor() {
             color = Color.BLACK;
             backgroundColor = Color.WHITE;
         }
     }
 
-    public static void SetColor (final Color color)
-    {
+    public static void SetColor(final Color color) {
         SELECTED_COLOR.color = color;
     }
 
-    public static void SetBackgroundColor (final Color backgroundColor)
-    {
+    public static void SetBackgroundColor(final Color backgroundColor) {
         SELECTED_COLOR.backgroundColor = backgroundColor;
     }
 
-    public static Color GetColor ()
-    {
+    public static Color GetColor() {
         return SELECTED_COLOR.color;
     }
 
-    public static Color GetBackgroundColor ()
-    {
+    public static Color GetBackgroundColor() {
         return SELECTED_COLOR.backgroundColor;
     }
 
     @bardiademon
-    public WhiteBoard (final PaintView _PaintView)
-    {
+    public WhiteBoard(final PaintView _PaintView) {
         this.paintView = _PaintView;
-        try
-        {
-            this.robot = new Robot ();
-        }
-        catch (AWTException ignored)
-        {
+        try {
+            this.robot = new Robot();
+        } catch (AWTException ignored) {
         }
 
-        tools.put (SelectedTool.pen.name () , new PenTool <Pen> (this));
-        tools.put (SelectedTool.four_point_star.name () , new FourPointStarTool (this));
-        tools.put (SelectedTool.five_point_star.name () , new FivePointStarTool (this));
-        tools.put (SelectedTool.circle.name () , new CircleTool (this));
-        tools.put (SelectedTool.rect.name () , new RectTool <Rectangle> (this));
-        tools.put (SelectedTool.line.name () , new LineTool (this));
-        tools.put (SelectedTool.round_rect.name () , new RoundRectangleTool (this));
-        tools.put (SelectedTool.triangle.name () , new TriangleTool (this));
-        tools.put (SelectedTool.diamond.name () , new DiamondTool (this));
-        tools.put (SelectedTool.six_point_star.name () , new SixPointStarTool (this));
-        tools.put (SelectedTool.right_arrow.name () , new RightLeftArrowTool (this));
-        tools.put (SelectedTool.up_arrow.name () , new UpDownArrowTool (this));
-        tools.put (SelectedTool.bucket_of_paint.name () , new BucketOfPaintTool (this));
-        tools.put (SelectedTool.right_triangle.name () , new RightTriangleTool (this));
-        tools.put (SelectedTool.text.name () , new TextTool (this));
-        tools.put (SelectedTool.pentagon.name () , new PentagonTool (this));
-        tools.put (SelectedTool.hexagon.name () , new HexagonTool (this));
-        tools.put (SelectedTool.lightning.name () , new LightningTool (this));
-        tools.put (SelectedTool.polygon.name () , new PolygonTool (this));
-        tools.put (SelectedTool.eraser.name () , new EraserTool (this));
-        tools.put (SelectedTool.color_picker.name () , new ColorPickerTool (this));
+        tools.put(SelectedTool.pen.name() , new PenTool<Pen>(this));
+        tools.put(SelectedTool.four_point_star.name() , new FourPointStarTool(this));
+        tools.put(SelectedTool.five_point_star.name() , new FivePointStarTool(this));
+        tools.put(SelectedTool.circle.name() , new CircleTool(this));
+        tools.put(SelectedTool.rect.name() , new RectTool<Rectangle>(this));
+        tools.put(SelectedTool.line.name() , new LineTool(this));
+        tools.put(SelectedTool.round_rect.name() , new RoundRectangleTool(this));
+        tools.put(SelectedTool.triangle.name() , new TriangleTool(this));
+        tools.put(SelectedTool.diamond.name() , new DiamondTool(this));
+        tools.put(SelectedTool.six_point_star.name() , new SixPointStarTool(this));
+        tools.put(SelectedTool.right_arrow.name() , new RightLeftArrowTool(this));
+        tools.put(SelectedTool.up_arrow.name() , new UpDownArrowTool(this));
+        tools.put(SelectedTool.bucket_of_paint.name() , new BucketOfPaintTool(this));
+        tools.put(SelectedTool.right_triangle.name() , new RightTriangleTool(this));
+        tools.put(SelectedTool.text.name() , new TextTool(this));
+        tools.put(SelectedTool.pentagon.name() , new PentagonTool(this));
+        tools.put(SelectedTool.hexagon.name() , new HexagonTool(this));
+        tools.put(SelectedTool.lightning.name() , new LightningTool(this));
+        tools.put(SelectedTool.polygon.name() , new PolygonTool(this));
+        tools.put(SelectedTool.eraser.name() , new EraserTool(this));
+        tools.put(SelectedTool.color_picker.name() , new ColorPickerTool(this));
 
-        paintView.thickness.addChangeListener (e ->
+        paintView.thickness.addChangeListener(e ->
         {
             if (!active) return;
 
-            paintView.txtThickness.setText (String.valueOf (paintView.thickness.getValue ()));
-            WhiteBoard.this.repaint ();
+            paintView.txtThickness.setText(String.valueOf(paintView.thickness.getValue()));
+            WhiteBoard.this.repaint();
         });
 
 
-        addMouseListener (new MouseAdapter ()
-        {
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed (MouseEvent e)
-            {
+            public void mousePressed(MouseEvent e) {
                 if (!active) return;
 
                 paintView.saved = false;
 
-                selectedMousePoint = e.getPoint ();
+                selectedMousePoint = e.getPoint();
 
-                if (!moving && !resizing)
-                {
-                    tool = WhiteBoard.this.tools.get (selectedTool.name ());
-                    if (tool != null)
-                    {
-                        tool.select ();
+                if (!moving && !resizing) {
+                    tool = WhiteBoard.this.tools.get(selectedTool.name());
+                    if (tool != null) {
+                        tool.select();
 
-                        if (!tool.isPaint ())
-                        {
-                            tool.mousePressed (e.getPoint ());
-                            tool.mousePressed (e.getPoint () , e.getButton ());
+                        if (!tool.isPaint()) {
+                            tool.mousePressed(e.getPoint());
+                            tool.mousePressed(e.getPoint() , e.getButton());
                             selectedArrangePainting = null;
                             return;
                         }
 
-                        if (polygonFinish)
-                        {
-                            if (selectedTool.equals (SelectedTool.polygon) && e.getClickCount () >= 2)
-                                tool.mouseDbClick (e.getPoint ());
-                            else
-                            {
-                                tool.mousePressed (e.getPoint ());
-                                tool.mousePressed (e.getPoint () , e.getButton ());
+                        if (polygonFinish) {
+                            if (selectedTool.equals(SelectedTool.polygon) && e.getClickCount() >= 2)
+                                tool.mouseDbClick(e.getPoint());
+                            else {
+                                tool.mousePressed(e.getPoint());
+                                tool.mousePressed(e.getPoint() , e.getButton());
                             }
 
-                            selectedArrangePainting = new ArrangePainting (selectedTool.name ());
-                            selectedArrangePainting.setIndex (tool.getIndex ());
+                            selectedArrangePainting = new ArrangePainting(selectedTool.name());
+                            selectedArrangePainting.setIndex(tool.getIndex());
 
                             final ArrangePainting arrangePainting = selectedArrangePainting;
-                            arrangePaintings.add (arrangePainting);
-                        }
-                        else
-                        {
-                            tool.mousePressed (e.getPoint ());
-                            tool.mousePressed (e.getPoint () , e.getButton ());
+                            arrangePaintings.add(arrangePainting);
+                        } else {
+                            tool.mousePressed(e.getPoint());
+                            tool.mousePressed(e.getPoint() , e.getButton());
                         }
 
-                        if (selectedTool.equals (SelectedTool.polygon))
-                            polygonFinish = e.getClickCount () >= 2;
+                        if (selectedTool.equals(SelectedTool.polygon))
+                            polygonFinish = e.getClickCount() >= 2;
                         else polygonFinish = true;
 
-                        repaint ();
+                        repaint();
                     }
                 }
             }
 
             @bardiademon
             @Override
-            public void mouseReleased (MouseEvent e)
-            {
+            public void mouseReleased(MouseEvent e) {
                 if (!active) return;
 
-                tool = WhiteBoard.this.tools.get (selectedTool.name ());
-                if (tool != null && tool.isPaint ())
-                {
-                    tool.mouseReleased (e.getPoint ());
-                    repaint ();
-                }
-                else selectedArrangePainting = null;
+                tool = WhiteBoard.this.tools.get(selectedTool.name());
+                if (tool != null && tool.isPaint()) {
+                    tool.mouseReleased(e.getPoint());
+                    repaint();
+                } else selectedArrangePainting = null;
             }
 
             @bardiademon
             @Override
-            public void mouseClicked (MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 if (!active) return;
 
-                setFocus ();
+                setFocus();
 
-                WhiteBoard.this.setFocusable (true);
-                WhiteBoard.this.setRequestFocusEnabled (true);
+                WhiteBoard.this.setFocusable(true);
+                WhiteBoard.this.setRequestFocusEnabled(true);
             }
         });
 
-        addMouseMotionListener (new MouseMotionListener ()
-        {
+        addMouseMotionListener(new MouseMotionListener() {
             @bardiademon
             @Override
-            public void mouseDragged (MouseEvent e)
-            {
+            public void mouseDragged(MouseEvent e) {
                 if (!active) return;
 
-                paintView.setMousePosition (e.getPoint ());
-                if (selectedArrangePainting != null)
-                {
-                    tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
-                    if (tool != null && tool.isPaint ())
-                    {
-                        if (moving || resizing)
-                        {
-                            final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
-                            if (point != null)
-                            {
+                paintView.setMousePosition(e.getPoint());
+                if (selectedArrangePainting != null) {
+                    tool = WhiteBoard.this.tools.get(selectedArrangePainting.selectedTool);
+                    if (tool != null && tool.isPaint()) {
+                        if (moving || resizing) {
+                            final Point point = tool.getPoint(selectedArrangePainting.getIndex());
+                            if (point != null) {
                                 int x = point.x, y = point.y;
 
-                                final int xM = Math.abs (selectedMousePoint.x - e.getX ());
-                                if (xM != 0)
-                                {
-                                    if (selectedMousePoint.x > e.getX ())
+                                final int xM = Math.abs(selectedMousePoint.x - e.getX());
+                                if (xM != 0) {
+                                    if (selectedMousePoint.x > e.getX())
                                         x = point.x - xM;
                                     else x = point.x + xM;
                                 }
 
-                                final int yM = Math.abs (selectedMousePoint.y - e.getY ());
-                                if (yM != 0)
-                                {
-                                    if (selectedMousePoint.y > e.getY ())
+                                final int yM = Math.abs(selectedMousePoint.y - e.getY());
+                                if (yM != 0) {
+                                    if (selectedMousePoint.y > e.getY())
                                         y = point.y - yM;
                                     else y = point.y + yM;
                                 }
 
-                                selectedMousePoint = e.getPoint ();
+                                selectedMousePoint = e.getPoint();
 
-                                tool.setIndex (selectedArrangePainting.getIndex ());
+                                tool.setIndex(selectedArrangePainting.getIndex());
 
                                 if (moving)
-                                    tool.setPoint (Shape.point (x , y));
+                                    tool.setPoint(Shape.point(x , y));
                                 else if (resizing)
-                                    tool.mouseDragged (Shape.sizeWithPoint (e.getPoint () , Shape.point (x , y)));
+                                    tool.mouseDragged(Shape.sizeWithPoint(e.getPoint() , Shape.point(x , y)));
 
-                                setWHXY (null , tool.getPoint (selectedArrangePainting.getIndex ()));
-                                repaint ();
+                                setWHXY(null , tool.getPoint(selectedArrangePainting.getIndex()));
+                                repaint();
 
                                 resizing = false;
 
@@ -316,246 +284,201 @@ public final class WhiteBoard extends JLabel
                             }
                         }
 
-                        tool.mouseDragged (e.getPoint ());
-                        repaint ();
+                        tool.mouseDragged(e.getPoint());
+                        repaint();
                     }
                 }
             }
 
             @bardiademon
             @Override
-            public void mouseMoved (MouseEvent e)
-            {
+            public void mouseMoved(MouseEvent e) {
                 if (!active) return;
 
-                setFocus ();
-                paintView.setMousePosition (e.getPoint ());
-                if (selectedTool != null)
-                {
-                    tool = WhiteBoard.this.tools.get (selectedTool.name ());
-                    tool.select ();
-                    if (!tool.isPaint ()) return;
+                setFocus();
+                paintView.setMousePosition(e.getPoint());
+                if (selectedTool != null) {
+                    tool = WhiteBoard.this.tools.get(selectedTool.name());
+                    tool.select();
+                    if (!tool.isPaint()) return;
 
-                    if (selectedArrangePainting != null)
-                    {
-                        tool = WhiteBoard.this.tools.get (selectedArrangePainting.selectedTool);
-                        if (tool != null && tool.isPaint ())
-                        {
-                            final Point point = tool.getPoint (selectedArrangePainting.getIndex ());
-                            final Point allPoint = tool.getAllPoint (selectedArrangePainting.getIndex ());
-                            if (point != null && allPoint != null)
-                            {
-                                if (moving = ((e.getX () > point.x && e.getY () > point.y) && (e.getX () < allPoint.x && e.getY () < allPoint.y)))
-                                {
-                                    setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR));
+                    if (selectedArrangePainting != null) {
+                        tool = WhiteBoard.this.tools.get(selectedArrangePainting.selectedTool);
+                        if (tool != null && tool.isPaint()) {
+                            final Point point = tool.getPoint(selectedArrangePainting.getIndex());
+                            final Point allPoint = tool.getAllPoint(selectedArrangePainting.getIndex());
+                            if (point != null && allPoint != null) {
+                                if (moving = ((e.getX() > point.x && e.getY() > point.y) && (e.getX() < allPoint.x && e.getY() < allPoint.y))) {
+                                    setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
                                     return;
-                                }
-                                else
-                                {
-                                    final Point leftUp = Shape.point (point.x , point.y);
-                                    final Point rightUp = Shape.point (allPoint.x , point.y);
-                                    final Point leftDown = Shape.point (point.x , allPoint.y);
-                                    final Point rightDown = Shape.point (allPoint.x , allPoint.y);
+                                } else {
+                                    final Point leftUp = Shape.point(point.x , point.y);
+                                    final Point rightUp = Shape.point(allPoint.x , point.y);
+                                    final Point leftDown = Shape.point(point.x , allPoint.y);
+                                    final Point rightDown = Shape.point(allPoint.x , allPoint.y);
 
-                                    if (Shape.PointComparison (e.getPoint () , leftUp)
-                                            || Shape.PointComparison (e.getPoint () , rightUp)
-                                            || Shape.PointComparison (e.getPoint () , leftDown)
-                                            || Shape.PointComparison (e.getPoint () , rightDown))
-                                    {
+                                    if (Shape.PointComparison(e.getPoint() , leftUp)
+                                            || Shape.PointComparison(e.getPoint() , rightUp)
+                                            || Shape.PointComparison(e.getPoint() , leftDown)
+                                            || Shape.PointComparison(e.getPoint() , rightDown)) {
                                         moving = false;
                                         resizing = true;
-                                        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-                                    }
-                                    else tool.select ();
+                                        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                    } else tool.select();
                                 }
                             }
-                        }
-                        else selectedArrangePainting = null;
+                        } else selectedArrangePainting = null;
                     }
                     moving = false;
                 }
             }
         });
 
-        onKeyListener ();
+        onKeyListener();
 
-        addComponentListener (new ComponentAdapter ()
-        {
+        addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized (ComponentEvent e)
-            {
+            public void componentResized(ComponentEvent e) {
                 if (!active) return;
 
-                setBackgroundImage ();
+                setBackgroundImage();
             }
         });
     }
 
     @bardiademon
-    private void setFocus ()
-    {
+    private void setFocus() {
         if (!active) return;
 
-        setFocusable (true);
-        setRequestFocusEnabled (true);
-        requestFocusInWindow ();
+        setFocusable(true);
+        setRequestFocusEnabled(true);
+        requestFocusInWindow();
     }
 
     @bardiademon
-    private void onKeyListener ()
-    {
-        super.addKeyListener (new KeyListener ()
-        {
+    private void onKeyListener() {
+        super.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped (KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @bardiademon
             @Override
-            public void keyPressed (KeyEvent e)
-            {
+            public void keyPressed(KeyEvent e) {
                 if (!active) return;
 
-                if (e.getKeyCode () == 90)
-                {
-                    if (arrangePaintings.size () > 0)
-                        ctrlZ ();
+                if (e.getKeyCode() == 90) {
+                    if (arrangePaintings.size() > 0)
+                        ctrlZ();
                 }
             }
 
             @bardiademon
             @Override
-            public void keyReleased (KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
             }
         });
 
-        final KeyListener wListener = new KeyListener ()
-        {
+        final KeyListener wListener = new KeyListener() {
             @Override
-            public void keyTyped (KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @bardiademon
             @Override
-            public void keyPressed (KeyEvent e)
-            {
+            public void keyPressed(KeyEvent e) {
                 if (!active) return;
 
-                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
-                {
-                    changeWHXY (e , WitchWHXY.w);
+                if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
+                    changeWHXY(e , WitchWHXY.w);
                     invokeKeyReleased = false;
-                }
-                else invokeKeyReleased = true;
+                } else invokeKeyReleased = true;
             }
 
             @bardiademon
             @Override
-            public void keyReleased (KeyEvent e)
-            {
-                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.w);
+            public void keyReleased(KeyEvent e) {
+                if (invokeKeyReleased) changeWHXY(e , WitchWHXY.w);
             }
         };
-        final KeyListener hListener = new KeyListener ()
-        {
+        final KeyListener hListener = new KeyListener() {
             @Override
-            public void keyTyped (KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @bardiademon
             @Override
-            public void keyPressed (KeyEvent e)
-            {
+            public void keyPressed(KeyEvent e) {
                 if (!active) return;
 
-                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
-                {
-                    changeWHXY (e , WitchWHXY.h);
+                if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
+                    changeWHXY(e , WitchWHXY.h);
                     invokeKeyReleased = false;
-                }
-                else invokeKeyReleased = true;
+                } else invokeKeyReleased = true;
             }
 
             @bardiademon
             @Override
-            public void keyReleased (KeyEvent e)
-            {
-                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.h);
+            public void keyReleased(KeyEvent e) {
+                if (invokeKeyReleased) changeWHXY(e , WitchWHXY.h);
             }
         };
-        final KeyListener xListener = new KeyListener ()
-        {
+        final KeyListener xListener = new KeyListener() {
             @Override
-            public void keyTyped (KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @bardiademon
             @Override
-            public void keyPressed (KeyEvent e)
-            {
+            public void keyPressed(KeyEvent e) {
                 if (!active) return;
 
-                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
-                {
-                    changeWHXY (e , WitchWHXY.x);
+                if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
+                    changeWHXY(e , WitchWHXY.x);
                     invokeKeyReleased = false;
-                }
-                else invokeKeyReleased = true;
+                } else invokeKeyReleased = true;
             }
 
             @bardiademon
             @Override
-            public void keyReleased (KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
                 if (!active) return;
 
-                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.x);
+                if (invokeKeyReleased) changeWHXY(e , WitchWHXY.x);
             }
         };
-        final KeyListener yListener = new KeyListener ()
-        {
+        final KeyListener yListener = new KeyListener() {
             @bardiademon
             @Override
-            public void keyTyped (KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @bardiademon
             @Override
-            public void keyPressed (KeyEvent e)
-            {
+            public void keyPressed(KeyEvent e) {
                 if (!active) return;
 
-                if (e.getKeyCode () == 38 || e.getKeyCode () == 40)
-                {
-                    changeWHXY (e , WitchWHXY.y);
+                if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
+                    changeWHXY(e , WitchWHXY.y);
                     invokeKeyReleased = false;
-                }
-                else invokeKeyReleased = true;
+                } else invokeKeyReleased = true;
             }
 
             @bardiademon
             @Override
-            public void keyReleased (KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
                 if (!active) return;
 
-                if (invokeKeyReleased) changeWHXY (e , WitchWHXY.y);
+                if (invokeKeyReleased) changeWHXY(e , WitchWHXY.y);
             }
         };
-        paintView.txtWidth.addKeyListener (wListener);
-        paintView.txtHeight.addKeyListener (hListener);
-        paintView.txtX.addKeyListener (xListener);
-        paintView.txtY.addKeyListener (yListener);
+        paintView.txtWidth.addKeyListener(wListener);
+        paintView.txtHeight.addKeyListener(hListener);
+        paintView.txtX.addKeyListener(xListener);
+        paintView.txtY.addKeyListener(yListener);
     }
 
-    public List <ArrangePainting> getArrangePaintings ()
-    {
+    public List<ArrangePainting> getArrangePaintings() {
         return arrangePaintings;
     }
 
@@ -568,20 +491,14 @@ public final class WhiteBoard extends JLabel
     @bardiademon
     private BufferedImage read;
 
-    public void setActive (boolean active)
-    {
+    public void setActive(boolean active) {
         this.active = active;
-        if (!active)
-        {
-            File icDisable = Main.getFile ("ic_disable");
-            if (icDisable != null)
-            {
-                try
-                {
-                    setCursor (Toolkit.getDefaultToolkit ().createCustomCursor (ImageIO.read (icDisable) , Shape.point (15 , 15) , "disable"));
-                }
-                catch (IOException ignored)
-                {
+        if (!active) {
+            File icDisable = Main.getFile("ic_disable");
+            if (icDisable != null) {
+                try {
+                    setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageIO.read(icDisable) , Shape.point(15 , 15) , "disable"));
+                } catch (IOException ignored) {
                 }
             }
 
@@ -589,249 +506,209 @@ public final class WhiteBoard extends JLabel
     }
 
     @bardiademon
-    public void setBackground ()
-    {
+    public void setBackground() {
         if (!active) return;
 
-        paintView.questionForSave (() ->
+        paintView.questionForSave(() ->
         {
             if (!active) return;
 
-            clear ();
-            final JFileChooser chooser = new JFileChooser (fileBackground);
-            if (chooser.showOpenDialog (null) == JFileChooser.OPEN_DIALOG)
-            {
-                try
-                {
-                    read = ImageIO.read (chooser.getSelectedFile ());
-                    fileBackground = chooser.getSelectedFile ().getParentFile ();
-                    setBackgroundImage ();
+            clear();
+            final JFileChooser chooser = new JFileChooser(fileBackground);
+            if (chooser.showOpenDialog(null) == JFileChooser.OPEN_DIALOG) {
+                try {
+                    read = ImageIO.read(chooser.getSelectedFile());
+                    fileBackground = chooser.getSelectedFile().getParentFile();
+                    setBackgroundImage();
+                } catch (IOException e) {
+                    setIcon(null);
                 }
-                catch (IOException e)
-                {
-                    setIcon (null);
-                }
-            }
-            else setIcon (null);
+            } else setIcon(null);
         });
 
     }
 
     @bardiademon
-    private void setBackgroundImage ()
-    {
+    private void setBackgroundImage() {
         if (!active) return;
 
         if (read != null)
-            setIcon (new ImageIcon (read.getScaledInstance (getWidth () , getHeight () , BufferedImage.TYPE_4BYTE_ABGR)));
-        else setIcon (null);
+            setIcon(new ImageIcon(read.getScaledInstance(getWidth() , getHeight() , BufferedImage.TYPE_4BYTE_ABGR)));
+        else setIcon(null);
     }
 
 
-    public Color getBackgroundColor ()
-    {
-        return getBackground ();
+    public Color getBackgroundColor() {
+        return getBackground();
     }
 
     @bardiademon
-    private enum WitchWHXY
-    {
+    private enum WitchWHXY {
         w, h, x, y
     }
 
     @bardiademon
-    private void changeWHXY (final KeyEvent e , final WitchWHXY witchWHXY)
-    {
+    private void changeWHXY(final KeyEvent e , final WitchWHXY witchWHXY) {
         if (!active) return;
 
-        final String txtWidth = paintView.txtWidth.getText ();
-        final String txtHeight = paintView.txtHeight.getText ();
-        final String txtX = paintView.txtX.getText ();
-        final String txtY = paintView.txtY.getText ();
+        final String txtWidth = paintView.txtWidth.getText();
+        final String txtHeight = paintView.txtHeight.getText();
+        final String txtX = paintView.txtX.getText();
+        final String txtY = paintView.txtY.getText();
 
-        if ((txtWidth != null && !txtWidth.equals ("")) && (txtHeight != null && !txtHeight.equals ("")) && (txtX != null && !txtX.equals ("")) && (txtY != null && !txtY.equals ("")))
-        {
-            try
-            {
-                int width = Integer.parseInt (txtWidth);
-                int height = Integer.parseInt (txtHeight);
-                int x = Integer.parseInt (txtX);
-                int y = Integer.parseInt (txtY);
+        if ((txtWidth != null && !txtWidth.equals("")) && (txtHeight != null && !txtHeight.equals("")) && (txtX != null && !txtX.equals("")) && (txtY != null && !txtY.equals(""))) {
+            try {
+                int width = Integer.parseInt(txtWidth);
+                int height = Integer.parseInt(txtHeight);
+                int x = Integer.parseInt(txtX);
+                int y = Integer.parseInt(txtY);
 
-                if (e.getKeyCode () == 38)
-                {
-                    switch (witchWHXY)
-                    {
+                if (e.getKeyCode() == 38) {
+                    switch (witchWHXY) {
                         case w:
-                            paintView.txtWidth.setText (String.valueOf (++width));
+                            paintView.txtWidth.setText(String.valueOf(++width));
                             break;
                         case h:
-                            paintView.txtHeight.setText (String.valueOf (++height));
+                            paintView.txtHeight.setText(String.valueOf(++height));
                             break;
                         case x:
-                            paintView.txtX.setText (String.valueOf (++x));
+                            paintView.txtX.setText(String.valueOf(++x));
                             break;
                         case y:
-                            paintView.txtY.setText (String.valueOf (++y));
+                            paintView.txtY.setText(String.valueOf(++y));
                             break;
                     }
-                }
-                else if (e.getKeyCode () == 40)
-                {
-                    switch (witchWHXY)
-                    {
+                } else if (e.getKeyCode() == 40) {
+                    switch (witchWHXY) {
                         case w:
-                            paintView.txtWidth.setText (String.valueOf (--width));
+                            paintView.txtWidth.setText(String.valueOf(--width));
                             break;
                         case h:
-                            paintView.txtHeight.setText (String.valueOf (--height));
+                            paintView.txtHeight.setText(String.valueOf(--height));
                             break;
                         case x:
-                            paintView.txtX.setText (String.valueOf (--x));
+                            paintView.txtX.setText(String.valueOf(--x));
                             break;
                         case y:
-                            paintView.txtY.setText (String.valueOf (--y));
+                            paintView.txtY.setText(String.valueOf(--y));
                             break;
                     }
                 }
 
-                final Point point = Shape.point (x , y);
-                final Size size = Shape.size (width , height);
+                final Point point = Shape.point(x , y);
+                final Size size = Shape.size(width , height);
 
-                if (selectedArrangePainting != null)
-                {
-                    Tools <?> tools = this.tools.get (selectedArrangePainting.selectedTool);
-                    tools.setIndex (selectedArrangePainting.getIndex ());
-                    tools.setPoint (point);
-                    tools.mouseDragged (size);
-                    repaint ();
+                if (selectedArrangePainting != null) {
+                    Tools<?> tools = this.tools.get(selectedArrangePainting.selectedTool);
+                    tools.setIndex(selectedArrangePainting.getIndex());
+                    tools.setPoint(point);
+                    tools.mouseDragged(size);
+                    repaint();
                 }
-            }
-            catch (Exception ignored)
-            {
+            } catch (Exception ignored) {
             }
         }
     }
 
     @bardiademon
-    public void ctrlZ ()
-    {
+    public void ctrlZ() {
         if (!active) return;
 
-        final int size = arrangePaintings.size ();
-        if (size > 0)
-        {
-            final ArrangePainting arrangePainting = arrangePaintings.get (size - 1);
-            tools.get (arrangePainting.selectedTool).remove (arrangePainting.index);
-            arrangePaintings.remove (size - 1);
+        final int size = arrangePaintings.size();
+        if (size > 0) {
+            final ArrangePainting arrangePainting = arrangePaintings.get(size - 1);
+            tools.get(arrangePainting.selectedTool).remove(arrangePainting.index);
+            arrangePaintings.remove(size - 1);
             polygonFinish = true;
-            repaint ();
+            repaint();
 
-            if (arrangePaintings.size () == 0)
+            if (arrangePaintings.size() == 0)
                 paintView.saved = true;
         }
     }
 
-    public void clear ()
-    {
+    public void clear() {
         if (!active) return;
 
         selectedArrangePainting = null;
         selectedTool = SelectedTool.pen;
-        arrangePaintings.clear ();
-        setBackground (Color.WHITE);
-        setIcon (null);
-        repaint ();
+        arrangePaintings.clear();
+        setBackground(Color.WHITE);
+        setIcon(null);
+        repaint();
     }
 
     @bardiademon
     @Override
-    public void paint (Graphics g)
-    {
+    public void paint(Graphics g) {
         if (!active) return;
 
-        super.paint (g);
+        super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;
-        arrangePaintings.forEach ((ap) ->
-                tools.get (ap.selectedTool).paint (g2 , ap.getIndex ()));
+        arrangePaintings.forEach((ap) ->
+                tools.get(ap.selectedTool).paint(g2 , ap.getIndex()));
     }
 
     @bardiademon
-    public static final class ArrangePainting
-    {
+    public static final class ArrangePainting {
         private final String selectedTool;
         private int index;
 
-        public ArrangePainting (final String _SelectedTool)
-        {
+        public ArrangePainting(final String _SelectedTool) {
             this.selectedTool = _SelectedTool;
         }
 
-        public int getIndex ()
-        {
+        public int getIndex() {
             return index;
         }
 
-        public void setIndex (int index)
-        {
+        public void setIndex(int index) {
             this.index = index;
         }
 
-        public String getSelectedTool ()
-        {
+        public String getSelectedTool() {
             return selectedTool;
         }
     }
 
     @bardiademon
-    public void setCursor (final String name , final Point hotspot)
-    {
+    public void setCursor(final String name , final Point hotspot) {
         if (!active) return;
 
-        try
-        {
-            final File icPen = Main.getFile (name);
-            if (icPen != null)
-            {
-                BufferedImage read = ImageIO.read (icPen);
-                setCursor (defaultToolkit.createCustomCursor ((read.getScaledInstance (read.getWidth () , read.getHeight () , BufferedImage.TYPE_INT_ARGB)) , hotspot , "pen"));
+        try {
+            final File icPen = Main.getFile(name);
+            if (icPen != null) {
+                BufferedImage read = ImageIO.read(icPen);
+                setCursor(defaultToolkit.createCustomCursor((read.getScaledInstance(read.getWidth() , read.getHeight() , BufferedImage.TYPE_INT_ARGB)) , hotspot , "pen"));
             }
-        }
-        catch (IOException ignored)
-        {
+        } catch (IOException ignored) {
         }
     }
 
     @bardiademon
-    public void setWHXY (final Size size , final Point point)
-    {
+    public void setWHXY(final Size size , final Point point) {
         if (!active) return;
 
-        if (size != null)
-        {
-            paintView.txtWidth.setText (String.valueOf (size.width));
-            paintView.txtHeight.setText (String.valueOf (size.height));
+        if (size != null) {
+            paintView.txtWidth.setText(String.valueOf(size.width));
+            paintView.txtHeight.setText(String.valueOf(size.height));
         }
-        if (point != null)
-        {
-            paintView.txtX.setText (String.valueOf (point.x));
-            paintView.txtY.setText (String.valueOf (point.y));
+        if (point != null) {
+            paintView.txtX.setText(String.valueOf(point.x));
+            paintView.txtY.setText(String.valueOf(point.y));
         }
     }
 
-    public Robot getRobot ()
-    {
+    public Robot getRobot() {
         return robot;
     }
 
-    public Map <String, Tools <?>> getTools ()
-    {
+    public Map<String, Tools<?>> getTools() {
         return tools;
     }
 
     @bardiademon
-    public PaintView getPaintView ()
-    {
+    public PaintView getPaintView() {
         return paintView;
     }
 }

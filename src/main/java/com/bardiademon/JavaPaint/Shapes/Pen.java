@@ -5,8 +5,7 @@ import com.bardiademon.JavaPaint.bardiademon;
 import java.awt.Color;
 
 @bardiademon
-public class Pen
-{
+public class Pen {
     @bardiademon
     private Color color;
 
@@ -14,26 +13,22 @@ public class Pen
     private int thickness;
 
     @bardiademon
-    public Color getColor ()
-    {
+    public Color getColor() {
         return color;
     }
 
     @bardiademon
-    public void setColor (Color color)
-    {
+    public void setColor(Color color) {
         this.color = color;
     }
 
     @bardiademon
-    public int getThickness ()
-    {
+    public int getThickness() {
         return thickness;
     }
 
     @bardiademon
-    public void setThickness (int thickness)
-    {
+    public void setThickness(int thickness) {
         this.thickness = thickness;
     }
 }

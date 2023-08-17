@@ -11,8 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public final class Text extends Rectangle
-{
+public final class Text extends Rectangle {
     @bardiademon
     private final TextTool textTool;
 
@@ -35,167 +34,141 @@ public final class Text extends Rectangle
     private int textWidth;
 
     @bardiademon
-    public Text (final TextTool textTool)
-    {
+    public Text(final TextTool textTool) {
         this.textTool = textTool;
     }
 
     @bardiademon
-    public void close ()
-    {
-        if (fText != null) fText.dispose ();
+    public void close() {
+        if (fText != null) fText.dispose();
     }
 
     @bardiademon
-    public void afterPaint ()
-    {
-        fText = new FText (new FText.On ()
-        {
+    public void afterPaint() {
+        fText = new FText(new FText.On() {
             @Override
-            public void onChangedFont (final Font _Font)
-            {
+            public void onChangedFont(final Font _Font) {
                 font = _Font;
-                textTool.repaint ();
+                textTool.repaint();
             }
 
             @Override
-            public void onChangedTextColor (final Color _Color)
-            {
-                Text.super.setColor (_Color);
-                textTool.repaint ();
+            public void onChangedTextColor(final Color _Color) {
+                Text.super.setColor(_Color);
+                textTool.repaint();
             }
 
             @Override
-            public void onChangedBackgroundColor (final Color _Color)
-            {
-                Text.super.setBackgroundColor (_Color);
-                textTool.repaint ();
+            public void onChangedBackgroundColor(final Color _Color) {
+                Text.super.setBackgroundColor(_Color);
+                textTool.repaint();
             }
 
             @Override
-            public void onChangedText (final String Text)
-            {
+            public void onChangedText(final String Text) {
                 text = Text;
-                textTool.repaint ();
+                textTool.repaint();
             }
 
             @Override
-            public void onChangedPoint (final Point _Point)
-            {
+            public void onChangedPoint(final Point _Point) {
                 textPoint = _Point;
-                textTool.repaint ();
+                textTool.repaint();
             }
 
             @Override
-            public void onChangedArc (int value)
-            {
-                setArc (Shape.size (value , value));
-                textTool.repaint ();
+            public void onChangedArc(int value) {
+                setArc(Shape.size(value , value));
+                textTool.repaint();
             }
 
             @Override
-            public void onCancel ()
-            {
-                fText.dispose ();
-                textTool.remove (textTool.getIndex ());
-                textTool.repaint ();
+            public void onCancel() {
+                fText.dispose();
+                textTool.remove(textTool.getIndex());
+                textTool.repaint();
             }
 
             @Override
-            public void onApply ()
-            {
-                fText.dispose ();
+            public void onApply() {
+                fText.dispose();
                 ultimate = true;
-                textTool.setUltimate ();
-                textTool.repaint ();
+                textTool.setUltimate();
+                textTool.repaint();
             }
         } , this);
-        fText.setSlider ();
-        textTool.repaint ();
+        fText.setSlider();
+        textTool.repaint();
     }
 
-    public void setFont (final Font font)
-    {
+    public void setFont(final Font font) {
         this.font = font;
     }
 
-    public void setText (String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 
     @bardiademon
     @Override
-    public void paint (final Graphics2D g)
-    {
-        if (getSize () != null && getPoint () != null)
-        {
-            apply ();
+    public void paint(final Graphics2D g) {
+        if (getSize() != null && getPoint() != null) {
+            apply();
 
-            g.setBackground (getBackgroundColor ());
-            g.setColor (getColor ());
-            g.setStroke (new BasicStroke (getThickness ()));
+            g.setBackground(getBackgroundColor());
+            g.setColor(getColor());
+            g.setStroke(new BasicStroke(getThickness()));
 
-            if (!ultimate || (getBackgroundColor () != null) || ((getArc () != null) && getArc ().width > 0))
-            {
-                if (getBackgroundColor () == null)
-                {
-                    g.setColor (Color.BLACK);
-                    g.drawRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
-                }
-                else
-                {
-                    g.setColor (getBackgroundColor ());
-                    g.fillRoundRect (getPoint ().x , getPoint ().y , getSize ().width , getSize ().height , getArc ().width , getArc ().height);
+            if (!ultimate || (getBackgroundColor() != null) || ((getArc() != null) && getArc().width > 0)) {
+                if (getBackgroundColor() == null) {
+                    g.setColor(Color.BLACK);
+                    g.drawRoundRect(getPoint().x , getPoint().y , getSize().width , getSize().height , getArc().width , getArc().height);
+                } else {
+                    g.setColor(getBackgroundColor());
+                    g.fillRoundRect(getPoint().x , getPoint().y , getSize().width , getSize().height , getArc().width , getArc().height);
                 }
             }
 
             if (textPoint == null)
-                textPoint = point (ctpFirstHalfX (2) , ctpFirstHalfY (20));
+                textPoint = point(ctpFirstHalfX(2) , ctpFirstHalfY(20));
 
-            if (text != null)
-            {
-                if (font != null) g.setFont (font);
-                if (getColor () != null) g.setColor (getColor ());
-                else g.setColor (Color.BLACK);
+            if (text != null) {
+                if (font != null) g.setFont(font);
+                if (getColor() != null) g.setColor(getColor());
+                else g.setColor(Color.BLACK);
 
-                textWidth = g.getFontMetrics ().stringWidth (text);
+                textWidth = g.getFontMetrics().stringWidth(text);
 
-                if (textWidth > getSize ().width)
-                {
-                    setSize (size ((textWidth - getSize ().width + getSize ().width) , getSize ().height));
-                    if (textTool != null) textTool.repaint ();
+                if (textWidth > getSize().width) {
+                    setSize(size((textWidth - getSize().width + getSize().width) , getSize().height));
+                    if (textTool != null) textTool.repaint();
                     return;
                 }
 
-                if (fText != null) fText.setNullSlidersListener ();
-                g.drawString (text , textPoint.x , textPoint.y);
-                if (fText != null) fText.setMinMaxSlider ();
+                if (fText != null) fText.setNullSlidersListener();
+                g.drawString(text , textPoint.x , textPoint.y);
+                if (fText != null) fText.setMinMaxSlider();
             }
 
 
         }
     }
 
-    public void setUltimate (final boolean ultimate)
-    {
+    public void setUltimate(final boolean ultimate) {
         this.ultimate = ultimate;
     }
 
-    public String getText ()
-    {
+    public String getText() {
         return text;
     }
 
     @bardiademon
-    public int getTextWidth ()
-    {
+    public int getTextWidth() {
         return textWidth;
     }
 
     @bardiademon
-    public Point getTextPoint ()
-    {
+    public Point getTextPoint() {
         return textPoint;
     }
 }

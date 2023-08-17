@@ -9,8 +9,5 @@
         <module name="JavaPaint" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="JavaPaint" target="8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -7,34 +7,28 @@ import java.awt.event.MouseEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
-public final class BtnColor extends JPanel
-{
+public final class BtnColor extends JPanel {
     private final Listener listener;
 
-    public BtnColor (final Listener _Listener)
-    {
-        super ();
-        listener = _Listener;
-        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-        addMouseListener (new MouseAdapter ()
-        {
+    public BtnColor(final Listener listener) {
+        super();
+        this.listener = listener;
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e)
-            {
-                setColor (JColorChooser.showDialog (null , "Select color" , null));
+            public void mouseClicked(MouseEvent e) {
+                setColor(JColorChooser.showDialog(null , "Select color" , null));
             }
         });
     }
 
-    public void setColor (Color color)
-    {
+    public void setColor(Color color) {
         if (color == null) color = Color.BLACK;
-        listener.OnClick (color);
-        BtnColor.this.setBackground (color);
+        listener.OnClick(color);
+        BtnColor.this.setBackground(color);
     }
 
-    public interface Listener
-    {
-        void OnClick (final Color _Color);
+    public interface Listener {
+        void OnClick(final Color _Color);
     }
 }

@@ -4,6 +4,5 @@ import com.bardiademon.JavaPaint.Shapes.Rectangle;
 import com.bardiademon.JavaPaint.bardiademon;
 
 @bardiademon
-public class Arrow extends Rectangle
-{
+public class Arrow extends Rectangle {
 }

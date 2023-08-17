@@ -1,17 +1,14 @@
 package com.bardiademon.JavaPaint;
 
 @bardiademon
-public final class Mth
-{
+public final class Mth {
     @bardiademon
-    private Mth ()
-    {
+    private Mth() {
 
     }
 
     @bardiademon
-    public static int percentageOfAValue (int all , int percent)
-    {
+    public static int percentageOfAValue(int all , int percent) {
         return (percent * all) / 100;
     }
 }

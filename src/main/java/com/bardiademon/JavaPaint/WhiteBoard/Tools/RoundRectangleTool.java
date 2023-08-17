@@ -9,31 +9,26 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public final class RoundRectangleTool extends RectTool <Rectangle> implements Tools <Rectangle>
-{
+public final class RoundRectangleTool extends RectTool<Rectangle> implements Tools<Rectangle> {
     @bardiademon
-    public RoundRectangleTool (WhiteBoard _WhiteBoard)
-    {
-        super (_WhiteBoard);
+    public RoundRectangleTool(WhiteBoard whiteBoard) {
+        super(whiteBoard);
     }
 
     @bardiademon
     @Override
-    public void mousePressed (Point point)
-    {
-        super.mousePressed (point);
-        rectangles.get (getIndex ()).setArc (new Size (20 , 20));
+    public void mousePressed(Point point) {
+        super.mousePressed(point);
+        rectangles.get(getIndex()).setArc(new Size(20 , 20));
     }
 
     @bardiademon
     @Override
-    public void paint (final Graphics2D g , final int index)
-    {
-        if (index >= 0 && index < rectangles.size ())
-        {
-            final Rectangle rectangle = rectangles.get (index);
-            whiteBoard.setWHXY (rectangle.getSize () , rectangle.getPoint ());
-            rectangle.paint (g);
+    public void paint(final Graphics2D g , final int index) {
+        if (index >= 0 && index < rectangles.size()) {
+            final Rectangle rectangle = rectangles.get(index);
+            whiteBoard.setWHXY(rectangle.getSize() , rectangle.getPoint());
+            rectangle.paint(g);
         }
     }
 }

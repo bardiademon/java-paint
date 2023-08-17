@@ -12,38 +12,31 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 @bardiademon
-public final class ToolsButtons extends JPanel
-{
+public final class ToolsButtons extends JPanel {
     @bardiademon
     private final SelectedTool selectedTool;
 
     @bardiademon
-    public ToolsButtons (final WhiteBoard whiteBoard , final SelectedTool _SelectedTool)
-    {
-        this.selectedTool = _SelectedTool;
-        addMouseListener (new MouseAdapter ()
-        {
+    public ToolsButtons(final WhiteBoard whiteBoard , final SelectedTool selectedTool) {
+        this.selectedTool = selectedTool;
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e)
-            {
-                whiteBoard.setBackground ();
+            public void mouseClicked(MouseEvent e) {
+                whiteBoard.setBackground();
             }
         });
     }
 
     @bardiademon
-    public ToolsButtons (final SelectedTool _SelectedTool)
-    {
+    public ToolsButtons(final SelectedTool _SelectedTool) {
         this.selectedTool = _SelectedTool;
-        repaint ();
+        repaint();
 
-        setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        addMouseListener (new MouseAdapter ()
-        {
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 WhiteBoard.selectedTool = selectedTool;
             }
         });
@@ -51,9 +44,8 @@ public final class ToolsButtons extends JPanel
 
     @bardiademon
     @Override
-    public void paint (Graphics g)
-    {
-        super.paint (g);
-        PaintView.BACKGROUND_PAINT.paint (((Graphics2D) g) , selectedTool , Shape.point (getX () , getY ()) , Shape.size (getWidth () , getHeight ()));
+    public void paint(Graphics g) {
+        super.paint(g);
+        PaintView.BACKGROUND_PAINT.paint(((Graphics2D) g) , selectedTool , Shape.point(getX() , getY()) , Shape.size(getWidth() , getHeight()));
     }
 }

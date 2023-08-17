@@ -8,19 +8,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public final class BucketOfPaintTool extends ShapeTool implements Tools
-{
+public final class BucketOfPaintTool extends ShapeTool implements Tools {
     @bardiademon
-    public BucketOfPaintTool (final WhiteBoard _WhiteBoard)
-    {
-        super (_WhiteBoard);
-        setPaint (false);
+    public BucketOfPaintTool(final WhiteBoard whiteBoard) {
+        super(whiteBoard);
+        setPaint(false);
     }
 
     @bardiademon
     @Override
-    public void mousePressed (Point point)
-    {
-        whiteBoard.setBackground (WhiteBoard.GetColor ());
+    public void mousePressed(Point point) {
+        whiteBoard.setBackground(WhiteBoard.GetColor());
     }
 }

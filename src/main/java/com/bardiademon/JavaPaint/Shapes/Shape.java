@@ -8,8 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 @bardiademon
-public class Shape extends Pen
-{
+public class Shape extends Pen {
     @bardiademon
     private Color backgroundColor;
 
@@ -23,123 +22,105 @@ public class Shape extends Pen
     private Size size;
 
     @bardiademon
-    public static Point point (final int x , final int y)
-    {
-        return new Point (x , y);
+    public static Point point(final int x , final int y) {
+        return new Point(x , y);
     }
 
     @bardiademon
-    public static boolean PointComparison (Point point1 , Point point2)
-    {
+    public static boolean PointComparison(Point point1 , Point point2) {
         return (point1.x == point2.x && point1.y == point2.y);
     }
 
     @bardiademon
-    public void setSizeWithPoint (final Point point)
-    {
-        if (getPoint () != null)
-            setSize (Shape.size (point.x - getPoint ().x , point.y - getPoint ().y));
+    public void setSizeWithPoint(final Point point) {
+        if (getPoint() != null)
+            setSize(Shape.size(point.x - getPoint().x , point.y - getPoint().y));
     }
 
     @bardiademon
-    public static Size sizeWithPoint (final Point point1 , Point point2)
-    {
-        return Shape.size (point1.x - point2.x , point1.y - point2.y);
+    public static Size sizeWithPoint(final Point point1 , Point point2) {
+        return Shape.size(point1.x - point2.x , point1.y - point2.y);
     }
 
     @bardiademon
-    public static Size size (final int width , final int height)
-    {
-        return new Size (width , height);
+    public static Size size(final int width , final int height) {
+        return new Size(width , height);
     }
 
     @bardiademon
-    public boolean isFill ()
-    {
+    public boolean isFill() {
         return fill;
     }
 
     @bardiademon
-    public void setFill (boolean fill)
-    {
+    public void setFill(boolean fill) {
         this.fill = fill;
     }
 
     @bardiademon
-    public Point getPoint ()
-    {
+    public Point getPoint() {
         return point;
     }
 
     @bardiademon
-    public void setPoint (Point point)
-    {
+    public void setPoint(Point point) {
         this.point = point;
     }
 
     @bardiademon
-    public Size getSize ()
-    {
+    public Size getSize() {
         return size;
     }
 
     @bardiademon
-    public void setSize (Size size)
-    {
+    public void setSize(Size size) {
         this.size = size;
     }
 
     @bardiademon
-    public void shape (Shape shape)
-    {
-        setColor (shape.getColor ());
-        setFill (shape.isFill ());
-        setThickness (shape.getThickness ());
-        setBackgroundColor (shape.getBackgroundColor ());
-        setPoint (shape.getPoint ());
-        setSize (shape.getSize ());
+    public void shape(Shape shape) {
+        setColor(shape.getColor());
+        setFill(shape.isFill());
+        setThickness(shape.getThickness());
+        setBackgroundColor(shape.getBackgroundColor());
+        setPoint(shape.getPoint());
+        setSize(shape.getSize());
     }
 
     @bardiademon
-    public Color getBackgroundColor ()
-    {
+    public Color getBackgroundColor() {
         return backgroundColor;
     }
 
     @bardiademon
-    public void setBackgroundColor (Color backgroundColor)
-    {
+    public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
     @bardiademon
-    public void paint (final Graphics2D g)
-    {
-        g.drawString ("Java Paint" , 0 , 0);
+    public void paint(final Graphics2D g) {
+        g.drawString("Java Paint" , 0 , 0);
     }
 
     @bardiademon
-    protected void draw (final Graphics2D g)
-    {
-        g.drawString ("Java Paint" , 0 , 0);
+    protected void draw(final Graphics2D g) {
+        g.drawString("Java Paint" , 0 , 0);
     }
 
     @bardiademon
     @Override
-    public String toString ()
-    {
+    public String toString() {
         return "Shape{" +
-                "color=" + getColor () +
+                "color=" + getColor() +
                 ", fill=" + fill +
                 ", point=" + point +
-                ", thickness=" + getThickness () +
+                ", thickness=" + getThickness() +
                 ", size=" + size +
                 '}';
     }
 
     @bardiademon
-    protected void fill (final Doing doing , final Size size , final Point point)
-    {
+    protected void fill(final Doing doing , final Size size , final Point point) {
 //        if (size != null && point != null)
 //        {
 //            int counter = 0;
@@ -169,8 +150,7 @@ public class Shape extends Pen
     }
 
     @bardiademon
-    public interface Doing
-    {
-        void Draw (final Point point , final Size size);
+    public interface Doing {
+        void Draw(final Point point , final Size size);
     }
 }
